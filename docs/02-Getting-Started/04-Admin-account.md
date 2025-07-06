@@ -23,7 +23,7 @@ Replace the `<username>` with your email's username
 e.g: `myaccount123@gmail.com` the username is `myaccount123`
 
 :::danger
-Make sure to use a strong password for the admin's account.
+Make sure to use a very strong password for the admin's account.
 :::
 
 ---

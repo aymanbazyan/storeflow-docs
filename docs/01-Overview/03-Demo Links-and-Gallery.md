@@ -82,6 +82,12 @@
 
 ---
 
+### Bundle Reviews
+
+![Bundle Reviews](../../static/gallery/12.1.png)
+
+---
+
 ### User Account Overview
 
 ![User Account Overview](../../static/gallery/13.png)
@@ -298,4 +304,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There's even more details to see in the website!
 
-_Last updated on July 3, 2025 by Ayman._
+_Last updated on July 6, 2025 by Ayman._

@@ -42,7 +42,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 - **Sales**: Set up discounts on products and sets, with a simple discount calculator.
 - **Discount Codes:** Create and manage custom discount codes for customers.
-- **Promotions:** Run sitewide sales and feature promotional items on the storefront.
+- **Promotions:** Run sitewide sales and feature promotional and new items on the storefront.
 
 #### **Store Customization**
 
@@ -69,7 +69,7 @@ A clean and intuitive interface for customers to browse, shop, and purchase.
 - **Payment Options:** Includes Cash on Delivery, with planned support for **Credit Card** and **PayPal**.
 - **Printable Invoices:** Customers can generate and print PDF invoices for their orders.
 - **Automated Email Notifications:** Customers automatically receive emails for important order updates (e.g., confirmation, rejection, admin's notes).
-- **Reviews:** Customers will be able to leave reviews (Stars and a Comment) in products that has been delivered.
+- **Reviews:** Customers will be able to leave reviews (Stars rate and a Comment) in products and sets that has been delivered.
 
 ---
 
@@ -87,7 +87,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on July 2, 2025 by Ayman._
+_Last updated on July 6, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->

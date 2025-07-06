@@ -21,186 +21,90 @@ The single source of truth for the database structure is the `prisma/schema.pris
 ```mermaid
 erDiagram
     Users {
-        String slug PK
-        DateTime created_at
-        String email "unique"
-        String passwordHash
-        String displayName
-        Boolean isAdmin
-        String passwordResetToken "Optional, unique"
-        DateTime passwordResetExpires "Optional"
-        Boolean emailVerified "Optional"
-        String emailVerificationToken "Optional, unique"
-        DateTime emailVerificationExpires "Optional"
-    }
-
-    RequestLogs {
-        Int slug PK
-        String identifier
-        DateTime timestamp
+        string slug PK
+        string email UK
+        string displayName
+        boolean isAdmin
+        datetime created_at
     }
 
     Categories {
-        String slug PK
-        String name
-        String img "Optional"
-        Boolean is_featured
-        DateTime created_at
-    }
-
-    Config {
-        String slug PK
-        String tos "Optional"
-        String about_us "Optional"
-        String mission "Optional"
-        String partners_description "Optional"
-        String connect_description "Optional"
-        String[] delivery_policies "Array"
-        Boolean checkoutEnableCod
-        Boolean checkoutEnableCreditCard
+        string slug PK
+        string name
+        boolean is_featured
+        datetime created_at
     }
 
     Products {
-        String slug PK
-        DateTime created_at
-        String name
-        Float price
-        String category FK "Links to Categories.slug"
-        String description
-        Int discount
-        Int quantity
-        Int items_sold
-        Boolean featured_promotion
-        Boolean top_selling
-        String[] images "Array"
-        Float averageRating
-        Int reviewCount
-    }
-
-    Reviews {
-        String slug PK
-        DateTime created_at
-        DateTime updated_at
-        Decimal rate
-        String productSlug FK "Links to Products.slug"
-        String userSlug FK "Links to Users.slug"
-        String comment "Optional"
+        string slug PK
+        string name
+        float price
+        string category FK
+        string description
+        int quantity
+        float averageRating
+        datetime created_at
     }
 
     Sets {
-        String slug PK
-        String name
-        String[] images "Array"
-        String made_by
-        String description
-        String[] tags "Array"
-        DateTime created_at
-        Float price
-        Float discount
-        Int items_sold
-        Boolean featured_promotion
-        Boolean top_selling
+        string slug PK
+        string name
+        string description
+        float price
+        float averageRating
+        datetime created_at
     }
+
+    Categories ||--o{ Products : categorizes
+    Products ||--o{ SetComponents : "part of"
+    Sets ||--o{ SetComponents : "composed of"
 
     SetComponents {
-        String setSlug PK,FK "Links to Sets.slug"
-        String productSlug PK,FK "Links to Products.slug"
-        Int quantity "Quantity of product per set"
+        string setSlug PK,FK
+        string productSlug PK,FK
+        int quantity
     }
 
-    Team {
-        String slug PK
-        String name
-        String role "Optional"
-        String img "Optional"
-        DateTime created_at
-    }
+```
 
-    Partners {
-        String slug PK
-        String img
-        DateTime created_at
-    }
-
-    Gallery {
-        String slug PK
-        String name
-        String img
-        DateTime created_at
-    }
-
-    Themes {
-        String slug PK
-        Json themeStringObj
-        String headerTextColor "Optional"
-        String img "Optional"
-        DateTime created_at
+```mermaid
+erDiagram
+    Users {
+        string slug PK
+        string email UK
+        string displayName
     }
 
     Orders {
-        String slug PK
-        DateTime created_at
-        String name
-        String email FK "Links to Users.email"
-        String address
-        String city
-        String region "Optional"
-        String postal_code "Optional"
-        String notes "Optional"
-        String payment_method
-        Decimal shipping_fee
-        Decimal sub_total
-        String phone
-        String status
-        String admin_note "Optional"
-        Int items_qty
-        String discount_code "Optional, FK to DiscountCodes.slug"
-        Decimal discount_amount
-        String idempotencyKey "Optional, unique"
+        string slug PK
+        string email FK
+        string payment_method
+        decimal sub_total
+        string status
+        datetime created_at
     }
 
     OrderItems {
-        String slug PK
-        String order_slug FK "Links to Orders.slug"
-        String product_slug "Optional, FK to Products.slug"
-        String set_slug "Optional, FK to Sets.slug"
-        String item_type "'product' or 'set'"
-        Int quantity
-        Decimal unit_price "Price at time of order"
+        string slug PK
+        string order_slug FK
+        string product_slug FK
+        string set_slug FK
+        string item_type
+        int quantity
+        decimal unit_price
     }
 
     DiscountCodes {
-        String slug PK "The discount code text"
-        DateTime created_at
-        DateTime expires_at "Optional"
-        String discount_type "'percentage' or 'fixed_amount'"
-        Decimal discount_value
-        Int max_uses "Optional"
-        Int used_count
-        Decimal minimum_order_amount "Optional"
-        Boolean is_active
+        string slug PK
+        string discount_type
+        decimal discount_value
+        boolean is_active
     }
 
-    %% --- Relationships ---
-    Users ||--o{ Orders : "places"
-    Users }o--o{ Products : "wishlists"
-    Users }o--o{ Sets : "wishlists"
-    Users ||--o{ Reviews : "writes"
+    Users ||--o{ Orders : places
+    Orders ||--o{ OrderItems : contains
+    DiscountCodes ||--o{ Orders : "applied to"
 
-    Categories ||--o{ Products : "has"
-
-    Products }o--o{ Products : "related to"
-    Products ||--o{ SetComponents : "is part of"
-    Products ||--o{ Reviews : "has"
-    Products }o--|| OrderItems : "can be an"
-
-    Sets }o--o{ Sets : "related to"
-    Sets ||--|{ SetComponents : "is composed of"
-    Sets }o--|| OrderItems : "can be an"
-
-    Orders ||--|{ OrderItems : "contains"
-
-    DiscountCodes }o--|{ Orders : "applies to"
 ```
 
 ---
@@ -244,7 +148,7 @@ Here is a comprehensive breakdown of the project's architecture:
   - `seed-fake-info.js`: A script to populate the database with dummy data for testing.
 
 - **`src/`**: The main source code for the entire application.
-  - `middleware-out.js`: A build artifact from Next.js middleware compilation.
+  <!-- - `middleware-out.js`: A build artifact from Next.js middleware compilation. -->
   - **`app/`**: The core of the Next.js application, using the App Router.
     - `layout.js`, `page.js`, `error.js`, `loading.js`, `not-found.js`: Root-level special files that define the main layout, homepage, and global states.
     - **`about/`**: The "About Us" page.
@@ -286,6 +190,7 @@ Here is a comprehensive breakdown of the project's architecture:
     - `db.js`: Initializes and exports the Prisma client instance.
     - `email.js`: Service for sending emails.
     - `rate-limiter-db.js`: Logic for API rate limiting.
+    - `...`
   - **`styles/`**: Global stylesheets.
     - `globals.css`: Main stylesheet for Tailwind CSS and other global styles.
 
@@ -293,4 +198,4 @@ Here is a comprehensive breakdown of the project's architecture:
 
 ---
 
-_Last updated on July 2, 2025 by Ayman._
+_Last updated on July 6, 2025 by Ayman._
