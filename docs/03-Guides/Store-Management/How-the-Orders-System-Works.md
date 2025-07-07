@@ -50,7 +50,7 @@ graph TD;
 ```mermaid
 graph TD;
 
-        L{Is status delivered}-->J(Allow user to leave a review)
+        L{Is status delivered?<br/>OR<br/>Is the user an admin?}-->J(Allow user to comment in reviews)
 ```
 
 :::note
@@ -61,4 +61,4 @@ And when you delete the order log, the user won't be able to see it from their s
 
 ---
 
-_Last updated on July 2, 2025 by Ayman._
+_Last updated on July 7, 2025 by Ayman._

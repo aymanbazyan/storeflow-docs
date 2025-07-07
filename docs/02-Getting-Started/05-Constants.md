@@ -20,6 +20,10 @@ const MAP_LINK = "https://maps.app.goo.gl/fFvqasd1TDsLUoQZ6";
 /// .... others
 ```
 
+:::tip
+This file contains only the info that rarely changes, but most settings, such as the **theme, terms of service, descriptions, delivery polices, etc.**, can be changed in the [Admin Panel](/docs/Guides/Store-Management/How-to-open-the-Admin-Panel).
+:::
+
 ---
 
-_Last updated on June 12, 2025 by Ayman._
+_Last updated on July 7, 2025 by Ayman._

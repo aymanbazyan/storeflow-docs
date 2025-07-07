@@ -149,6 +149,7 @@ Here is a comprehensive breakdown of the project's architecture:
 
 - **`src/`**: The main source code for the entire application.
   <!-- - `middleware-out.js`: A build artifact from Next.js middleware compilation. -->
+
   - **`app/`**: The core of the Next.js application, using the App Router.
     - `layout.js`, `page.js`, `error.js`, `loading.js`, `not-found.js`: Root-level special files that define the main layout, homepage, and global states.
     - **`about/`**: The "About Us" page.
@@ -175,6 +176,7 @@ Here is a comprehensive breakdown of the project's architecture:
     - **`tos/`**: The "Terms of Service" page.
   - **`actions/`**: Contains Next.js Server Actions, used for server-side form submissions and mutations.
     - `authActions.js`: Server actions related to authentication.
+    - `reviews.js`: Server actions related to reviews.
   - **`assets/`**: Static assets like images and fonts that are part of the build process.
   - **`components/`**: Global, reusable React components shared across the application.
     - `account-components/`: Components specific to the user account section.
@@ -190,7 +192,7 @@ Here is a comprehensive breakdown of the project's architecture:
     - `db.js`: Initializes and exports the Prisma client instance.
     - `email.js`: Service for sending emails.
     - `rate-limiter-db.js`: Logic for API rate limiting.
-    - `...`
+    - `...and more`
   - **`styles/`**: Global stylesheets.
     - `globals.css`: Main stylesheet for Tailwind CSS and other global styles.
 
@@ -198,4 +200,4 @@ Here is a comprehensive breakdown of the project's architecture:
 
 ---
 
-_Last updated on July 6, 2025 by Ayman._
+_Last updated on July 7, 2025 by Ayman._
