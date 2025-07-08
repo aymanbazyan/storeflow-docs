@@ -18,54 +18,7 @@
 
 The single source of truth for the database structure is the `prisma/schema.prisma` file. It defines all models, relations, and indexes.
 
-```mermaid
-erDiagram
-    Users {
-        string slug PK
-        string email UK
-        string displayName
-        boolean isAdmin
-        datetime created_at
-    }
-
-    Categories {
-        string slug PK
-        string name
-        boolean is_featured
-        datetime created_at
-    }
-
-    Products {
-        string slug PK
-        string name
-        float price
-        string category FK
-        string description
-        int quantity
-        float averageRating
-        datetime created_at
-    }
-
-    Sets {
-        string slug PK
-        string name
-        string description
-        float price
-        float averageRating
-        datetime created_at
-    }
-
-    Categories ||--o{ Products : categorizes
-    Products ||--o{ SetComponents : "part of"
-    Sets ||--o{ SetComponents : "composed of"
-
-    SetComponents {
-        string setSlug PK,FK
-        string productSlug PK,FK
-        int quantity
-    }
-
-```
+### Diagram 1: E-commerce & Order Processing
 
 ```mermaid
 erDiagram
@@ -77,18 +30,24 @@ erDiagram
 
     Orders {
         string slug PK
+        string name
         string email FK
-        string payment_method
-        decimal sub_total
+        string address
+        string phone
         string status
+        decimal sub_total
+        decimal shipping_fee
+        string payment_method
+        string discount_code FK
+        decimal discount_amount
         datetime created_at
     }
 
     OrderItems {
         string slug PK
         string order_slug FK
-        string product_slug FK
-        string set_slug FK
+        string product_slug FK "nullable"
+        string set_slug FK "nullable"
         string item_type
         int quantity
         decimal unit_price
@@ -99,24 +58,182 @@ erDiagram
         string discount_type
         decimal discount_value
         boolean is_active
+        datetime expires_at
     }
 
-    Users ||--o{ Orders : places
-    Orders ||--o{ OrderItems : contains
-    DiscountCodes ||--o{ Orders : "applied to"
+    %% Tables from other domains shown for context
+    Products {
+      string slug PK
+      string name
+    }
 
+    Sets {
+      string slug PK
+      string name
+    }
+
+    %% Relationships
+    Users ||--o{ Orders : "places"
+    Orders ||--o{ OrderItems : "contains"
+    DiscountCodes ||--o{ Orders : "applied to"
+    OrderItems }o--|| Products : "references"
+    OrderItems }o--|| Sets : "references"
+```
+
+---
+
+### Diagram 2: Product Catalog & Inventory
+
+```mermaid
+erDiagram
+    Categories {
+        string slug PK
+        string name
+        string img
+        boolean is_featured
+    }
+
+    Products {
+        string slug PK
+        string name
+        float price
+        string category FK
+        int quantity
+        int items_sold
+        boolean is_new
+        string[] images
+    }
+
+    Sets {
+        string slug PK
+        string name
+        float price
+        int items_sold
+        string made_by
+        string[] images
+    }
+
+    SetComponents {
+        string setSlug PK,FK
+        string productSlug PK,FK
+        int quantity
+    }
+
+    %% Relationships
+    Categories ||--o{ Products : "categorizes"
+    Products }o--o{ Products : "related to"
+    Sets }o--o{ Sets : "related to"
+
+    Products ||--o{ SetComponents : "part of"
+    Sets ||--o{ SetComponents : "composed of"
+```
+
+---
+
+### Diagram 3: User Interaction & Reviews
+
+```mermaid
+erDiagram
+    Users {
+        string slug PK
+        string email UK
+        string displayName
+    }
+
+    Reviews {
+        string slug PK
+        decimal rate
+        string comment
+        string userSlug FK
+        string productSlug FK "nullable"
+        string setSlug FK "nullable"
+        datetime created_at
+    }
+
+    %% Tables from other domains shown for context
+    Products {
+        string slug PK
+        string name
+        float averageRating
+        int reviewCount
+    }
+
+    Sets {
+        string slug PK
+        string name
+        float averageRating
+        int reviewCount
+    }
+
+    %% Relationships
+    Users ||--o{ Reviews : "writes"
+    Products ||--o{ Reviews : "has"
+    Sets ||--o{ Reviews : "has"
+
+    Users }o--o{ Products : "wishlists"
+    Users }o--o{ Sets : "wishlists"
+```
+
+---
+
+### Diagram 4: Site Content & System
+
+```mermaid
+erDiagram
+    Config {
+        string slug PK
+        string tos
+        string about_us
+        string mission
+        string[] delivery_policies
+        boolean checkoutEnableCod
+    }
+
+    Themes {
+        string slug PK
+        json themeStringObj
+        string headerTextColor
+        string img
+    }
+
+    Gallery {
+        string slug PK
+        string name
+        string img
+        datetime updated_at
+    }
+```
+
+```mermaid
+erDiagram
+    Team {
+        string slug PK
+        string name
+        string role
+        string img
+    }
+
+    Partners {
+        string slug PK
+        string img
+        datetime created_at
+    }
+
+    RequestLogs {
+        int slug PK
+        string identifier
+        datetime timestamp
+    }
 ```
 
 ---
 
 ## **Folder Structure**
 
-This project utilizes the Next.js App Router, which organizes the application primarily within the `src/app` directory. The structure is designed to separate concerns, making it scalable and maintainable.
+This project uses the **Next.js App Router**, which organizes the application files within the `src/app` directory, this section shows some of the project's files.
 
 <details>
 <summary><strong>Click to expand/collapse the detailed folder structure</strong></summary>
-
-Here is a comprehensive breakdown of the project's architecture:
 
 - **Root Directory (`/`)**
 

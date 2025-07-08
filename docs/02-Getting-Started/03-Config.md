@@ -12,7 +12,8 @@ You can create the **.env.local** here:
 ```javascript
 #// Genreal
 NEXT_PUBLIC_NODE_ENV='development' #// or production
-APP_BASE_URL="http://localhost:3000"
+NEXT_PUBLIC_APP_BASE_URL="http://localhost:3000" #// no '/' at the end
+
 
 #// Auth
 JWT_SECRET="your-very-strong-jwt-secret-key-here-at-least-32-characters"
@@ -50,8 +51,13 @@ Open your terminal and run these.
 ```
 npm run prisma:init
 npm run prisma:migrate:dev
-npm run prisma:generate
 npm run prisma:push
+```
+
+```
+npm run dev
+OR
+npm run prisma:generate
 ```
 
 you might also want to grant files mutating premission to your app (to mutate the items' images).
@@ -64,4 +70,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on June 23, 2025 by Ayman._
+_Last updated on July 8, 2025 by Ayman._
