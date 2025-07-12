@@ -32,6 +32,11 @@ EMAIL_PASS=fdoa kgsa bmrw asnt
 #// Checkout (the user can checkout 3 times in 1 hour)
 CHECKOUT_LIMIT=3
 CHECKOUT_LIMIT_RESET_TIME=3600000 #// 1 hour
+
+#// Rating
+RATING_LIMIT=5
+RATING_LIMIT_RESET_TIME=3600000
+
 ```
 
 :::danger
