@@ -226,6 +226,305 @@ erDiagram
     }
 ```
 
+### **More details**
+
+<details>
+<summary><strong>Click to expand/collapse the detailed folder structure</strong></summary>
+
+```
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  slug                     String     @id @db.VarChar(100)
+  created_at               DateTime   @default(now())
+  email                    String     @unique @db.VarChar(255)
+  passwordHash             String     @db.VarChar(255)
+  displayName              String     @db.VarChar(100)
+  isAdmin                  Boolean    @default(false)
+  passwordResetToken       String?    @unique @db.VarChar(100)
+  passwordResetExpires     DateTime?
+  emailVerified            Boolean?   @default(false)
+  emailVerificationToken   String?    @unique
+  emailVerificationExpires DateTime?
+  orders                   Orders[]
+  wishlist                 Products[]
+  wishlistSets             Sets[]     @relation("UserWishlistSets")
+  reviews                  Reviews[]
+
+  @@index([email])
+  @@index([isAdmin])
+  @@index([emailVerified])
+  @@index([emailVerified, created_at])
+}
+
+model RequestLogs {
+  slug         Int      @id @default(autoincrement())
+  identifier String
+  timestamp  DateTime @default(now())
+
+  @@index([identifier, timestamp])
+}
+
+model Categories {
+  slug        String     @id @db.VarChar(100)
+  name        String     @db.VarChar(100)
+  img         String?    @default("") @db.VarChar(255)
+  is_featured Boolean    @default(false)
+  created_at  DateTime   @default(now())
+  Products    Products[]
+
+  @@index([is_featured])
+  @@index([name])
+}
+
+model Config {
+  slug                     String   @id @default("general") @db.VarChar(50)
+  tos                      String?  @default("") @db.Text
+  about_us                 String?  @default("") @db.Text
+  mission                  String?  @default("") @db.Text
+  partners_description     String?  @default("") @db.Text
+  connect_description      String?  @default("") @db.Text
+  delivery_policies        String[] @default([])
+  checkoutEnableCod        Boolean  @default(true)
+  checkoutEnableCreditCard Boolean  @default(false)
+}
+
+model Products {
+  created_at         DateTime   @default(now())
+  slug               String     @id @db.VarChar(100)
+  name               String     @db.VarChar(100)
+  price              Float      @db.DoublePrecision
+  category           String     @db.VarChar(100)
+  description        String     @default("") @db.Text
+  discount           Int        @default(0) @db.SmallInt
+  quantity           Int        @default(0) @db.SmallInt
+  items_sold         Int        @default(0) @db.SmallInt
+  featured_promotion Boolean    @default(false)
+  top_selling        Boolean    @default(false)
+  is_new             Boolean    @default(false)
+  images             String[]   @default([])
+  averageRating      Float      @default(0) @db.DoublePrecision
+  reviewCount        Int        @default(0)
+
+  categoryRef        Categories @relation(fields: [category], references: [slug], onDelete: Cascade)
+  wishlistedBy       Users[]
+  orderItems         OrderItems[]
+  related_products   Products[] @relation("ProductRelations")
+  related_to         Products[] @relation("ProductRelations")
+  setComponents      SetComponents[]
+  reviews            Reviews[]
+
+  @@index([category])
+  @@index([featured_promotion])
+  @@index([top_selling])
+  @@index([is_new])
+  @@index([name])
+  @@index([price])
+  @@index([discount])
+  @@index([created_at])
+  @@index([quantity])
+  @@index([items_sold])
+  @@index([category, price])
+  @@index([category, name])
+  @@index([category, created_at])
+  @@index([quantity, name])
+  @@index([averageRating])
+}
+
+model Reviews {
+  slug         String   @id @default(cuid())
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  rate         Decimal  @default(0) @db.Decimal(2, 1)
+  comment      String?  @db.VarChar(255)
+
+  productSlug  String?  @db.VarChar(100)
+  setSlug      String?  @db.VarChar(100)
+
+  userSlug     String   @db.VarChar(100)
+
+  product      Products? @relation(fields:[productSlug], references:[slug], onDelete: Cascade)
+  set          Sets?     @relation(fields:[setSlug],     references:[slug], onDelete: Cascade)
+  user         Users    @relation(fields:[userSlug], references:[slug], onDelete: Cascade)
+
+  @@index([userSlug])
+  @@index([productSlug, created_at])
+  @@index([setSlug, created_at])
+}
+
+
+model Sets {
+  slug               String     @id @db.VarChar(100)
+  name               String     @db.VarChar(100)
+  images             String[]   @default([])
+  made_by            String     @db.VarChar(100)
+  description        String     @db.Text
+  tags               String[]   @default([])
+  created_at         DateTime   @default(now())
+  price              Float      @default(0) @db.DoublePrecision
+  discount           Float      @default(0) @db.DoublePrecision
+  items_sold         Int        @default(0) @db.SmallInt
+  featured_promotion Boolean    @default(false)
+  top_selling        Boolean    @default(false)
+  is_new             Boolean    @default(false)
+  averageRating      Float      @default(0) @db.DoublePrecision
+  reviewCount        Int        @default(0)
+
+
+  components         SetComponents[]
+  orderItems         OrderItems[]
+  related_products   Sets[]     @relation("SetRelations")
+  related_to         Sets[]     @relation("SetRelations")
+  wishlistedBy       Users[]    @relation("UserWishlistSets")
+  reviews            Reviews[]
+
+  @@index([made_by])
+  @@index([name])
+  @@index([created_at])
+  @@index([price])
+  @@index([discount])
+  @@index([items_sold])
+  @@index([featured_promotion])
+  @@index([top_selling])
+  @@index([is_new])
+}
+
+model SetComponents {
+  setSlug    String @db.VarChar(100)
+  productSlug String @db.VarChar(100)
+  quantity   Int    @db.SmallInt // The quantity of this product needed for one set
+
+  set     Sets     @relation(fields: [setSlug], references: [slug], onDelete: Cascade)
+  product Products @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
+
+  @@id([setSlug, productSlug])
+}
+
+model Team {
+  slug       String   @id @db.VarChar(100)
+  name       String   @db.VarChar(100)
+  role       String?  @db.VarChar(100)
+  img        String?  @db.VarChar(255)
+  created_at DateTime @default(now())
+}
+
+model Partners {
+  slug       String   @id @db.VarChar(100)
+  img        String   @db.VarChar(255)
+  created_at DateTime @default(now())
+}
+
+model Gallery {
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  slug       String   @id @db.VarChar(100)
+  name       String   @db.VarChar(100)
+  img        String   @db.VarChar(255)
+}
+
+model Themes {
+  slug           String   @id @default("general") @db.VarChar(50)
+  themeStringObj Json     @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
+  headerTextColor String?  @default("text-black") @db.VarChar(100)
+  img            String?  @default("") @db.VarChar(255)
+  created_at     DateTime @default(now())
+}
+
+model Orders {
+  slug           String   @id @db.VarChar(100)
+  created_at     DateTime @default(now())
+  name           String   @db.VarChar(100)
+  email          String   @db.VarChar(255)
+  address        String   @db.VarChar(255)
+  city           String   @db.VarChar(100)
+  region         String?  @db.VarChar(100)
+  postal_code    String?  @db.VarChar(20)
+  notes          String?  @db.VarChar(500)
+  payment_method String   @db.VarChar(50)
+  shipping_fee   Decimal  @db.Decimal(10, 2)
+  sub_total      Decimal  @db.Decimal(10, 2)
+  phone          String   @db.VarChar(20)
+  status         String   @db.VarChar(20)
+  admin_note     String?  @db.Text
+  items_qty      Int      @db.SmallInt
+
+  // Discount fields
+  discount_code   String?  @db.VarChar(50)
+  discount_amount Decimal  @default(0) @db.Decimal(10, 2) // Amount saved
+
+  idempotencyKey String? @unique @db.VarChar(100) // The key to prevent duplicate orders
+
+  user            Users          @relation(fields: [email], references: [email], onDelete: Cascade)
+  orderItems      OrderItems[]
+  discountCodeRef DiscountCodes? @relation("OrderDiscountCode", fields: [discount_code], references: [slug])
+
+  @@index([created_at])
+  @@index([email])
+  @@index([created_at, email])
+  @@index([status])
+  @@index([discount_code])
+}
+
+model OrderItems {
+  slug         String  @id @default(cuid())
+  order_slug   String  @db.VarChar(100)
+  product_slug String? @db.VarChar(100)
+  set_slug     String? @db.VarChar(100)
+  item_type    String  @db.VarChar(20) // "product" or "set"
+  quantity     Int     @db.SmallInt
+  unit_price   Decimal @db.Decimal(10, 2) // Price at time of order
+
+  order   Orders    @relation(fields: [order_slug], references: [slug], onDelete: Cascade)
+  product Products? @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
+  set     Sets?     @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+
+  // Ensure only one of product_slug or set_slug is set
+  @@unique([order_slug, product_slug, set_slug])
+  @@index([order_slug])
+  @@index([product_slug])
+  @@index([set_slug])
+  @@index([item_type])
+}
+
+model DiscountCodes {
+  slug           String    @id @db.VarChar(50) // The actual discount code users enter
+  created_at     DateTime  @default(now())
+  expires_at     DateTime?
+
+  // Discount configuration
+  discount_type  String    @db.VarChar(20) // "percentage" or "fixed_amount"
+  discount_value Decimal   @db.Decimal(10, 2) // Either percentage (0-100) or fixed amount
+
+  // Usage limits
+  max_uses          Int?    @db.SmallInt // Total times code can be used (0 = unlimited)
+  used_count        Int     @default(0) @db.SmallInt // How many times it's been used
+
+  // Minimum requirements
+  minimum_order_amount Decimal? @db.Decimal(10, 2) // Minimum cart value to apply
+
+  // Status and metadata
+  is_active Boolean @default(true)
+
+  // Relations
+  orders             Orders[]            @relation("OrderDiscountCode") // Track which orders used this code
+
+  @@index([slug])
+  @@index([is_active])
+  @@index([expires_at])
+  @@index([discount_type])
+}
+```
+
+</details>
+
 ---
 
 ## **Folder Structure**
@@ -317,4 +616,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on July 7, 2025 by Ayman._
+_Last updated on July 22, 2025 by Ayman._

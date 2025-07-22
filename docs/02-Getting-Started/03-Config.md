@@ -37,6 +37,10 @@ CHECKOUT_LIMIT_RESET_TIME=3600000 #// 1 hour
 RATING_LIMIT=5
 RATING_LIMIT_RESET_TIME=3600000
 
+#// Auth
+AUTH_LIMIT=7
+AUTH_LIMIT_RESET_TIME=3600000
+
 ```
 
 :::danger
@@ -75,4 +79,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on July 8, 2025 by Ayman._
+_Last updated on July 22, 2025 by Ayman._

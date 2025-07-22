@@ -23,13 +23,13 @@ graph TD;
     end
 
     subgraph "Fulfillment"
-        F --> |Delivery Confirmed| G(Status: Delivered);
+        F --> |Delivery Confirmed| G(Status: Delivered,<br/>Dashboard: updated);
         F --> |Admin Rejects| D;
     end
 
     subgraph "Post-Delivery & Resolution"
-        G --> |Customer asks for Return| H{Does the Admin accept the return?};
-        H --> |Yes| K(Status: Returned);
+        G --> |"Customer asks for return<br/>(from outside the website)"| H{Does the Admin accept the return?};
+        H --> |Yes| K(Status: Returned,<br/>Dashboard: updated);
         H --> |No| G;
 
         E --> Z(Items Returned to Stock);
@@ -54,11 +54,11 @@ graph TD;
 ```
 
 :::note
-Only the **financial report** will change if you delete a `Delivered` Order log, but the item's quantity & selling counter won't change; you must **reject** the order to change the items' numbers & sold items counter.
+Only the **financial report (Dashboard page)** will update if you delete a `Delivered` Order log, but the item's quantity & selling counter won't change; you must **reject** the order to return the items' numbers & sold items counter.
 
-And when you delete the order log, the user won't be able to see it from their side or **review** the product.
+And if you delete the order log, the user won't be able to see it from their side or **review** the product.
 :::
 
 ---
 
-_Last updated on July 7, 2025 by Ayman._
+_Last updated on July 22, 2025 by Ayman._
