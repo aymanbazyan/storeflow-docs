@@ -2,7 +2,7 @@
 
 ---
 
-After setting your admin account in [Admin account section](/docs/Getting-Started/Admin-account), can click on your account in the header, and you'll see the `Admin dashboard` button.
+After setting your admin account in [Admin account section](/docs/Setup-Store/Admin-account), can click on your account in the header, and you'll see the `Admin dashboard` button.
 
 :::warning
 Make sure to use a very strong password for the admin's account.

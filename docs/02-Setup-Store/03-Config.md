@@ -21,6 +21,8 @@ JWT_SECRET="your-very-strong-jwt-secret-key-here-at-least-32-characters"
 SESSION_DURATION=7d
 SHORT_LIVED_TOKEN_HOURS=1
 
+NEXT_PUBLIC_GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+
 #// Database, check the previous page
 DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"
 
@@ -47,7 +49,11 @@ AUTH_LIMIT_RESET_TIME=3600000
 Nobody should see this file.
 :::
 
-Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL` and `EMAIL_PASS`, especially when deploying it to production.
+Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, especially when deploying it to production.
+
+---
+
+To get the `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, you must go to [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials), create `OAuth 2.0 Client ID`, and copy the `Client ID`, then click on it and add the `NEXT_PUBLIC_APP_BASE_URL` to the **Authorised JavaScript origins**.
 
 ---
 
@@ -59,7 +65,7 @@ Open your terminal and run these.
 
 ```
 npm run prisma:init
-npm run prisma:migrate:dev
+npm run prisma:migrate:dev-reset
 npm run prisma:push
 ```
 
@@ -79,4 +85,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on July 22, 2025 by Ayman._
+_Last updated on August 2, 2025 by Ayman._

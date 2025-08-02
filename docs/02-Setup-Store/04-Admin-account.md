@@ -26,6 +26,17 @@ e.g: `myaccount123@gmail.com` the username is `myaccount123`
 Make sure to use a very strong password for the admin's account.
 :::
 
+:::tip
+For testing purposes, you can create a fake user with any email using
+
+```
+npm run manage-users -- --make-fake-user <username>
+```
+
+You will then see the account's info in the console.
+
+:::
+
 ---
 
-_Last updated on July 2, 2025 by Ayman._
+_Last updated on August 2, 2025 by Ayman._

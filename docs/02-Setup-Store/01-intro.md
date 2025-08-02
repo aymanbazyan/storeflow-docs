@@ -1,10 +1,10 @@
-# Tutorial Intro
+# Getting Started
 
 ---
 
 Let's discover **Storeflow in less than 5 minutes**.
 
-## Getting Started
+## Basic setup
 
 Get started by **opening any code editor**.
 

@@ -66,7 +66,7 @@ A clean and intuitive interface for customers to browse, shop, and purchase.
 
 - **Dynamic Shopping Cart:** A sidebar cart lets users easily view and manage their selected items.
 - **Seamless Checkout:** A streamlined, multi-step process for placing orders.
-- **Payment Options:** Includes Cash on Delivery, with planned support for **Credit Card** and **PayPal**.
+- **Payment Options:** Includes **Cash on Delivery**, with planned support for **Credit Card** (soon) and **PayPal** (soon).
 - **Printable Invoices:** Customers can generate and print PDF invoices for their orders.
 - **Automated Email Notifications:** Customers automatically receive emails for important order updates (e.g., confirmation, rejection, admin's notes).
 - **Reviews:** Customers will be able to leave reviews (Stars rate and a Comment) in products and sets that has been delivered.
@@ -77,7 +77,7 @@ A clean and intuitive interface for customers to browse, shop, and purchase.
 
 A dedicated area for registered customers to manage their activity.
 
-- **Secure Authentication:** Standard email/password login, with a reset password form.
+- **Secure Authentication:** Standard email/password login, with a **Reset password** form, and support for **Google Oauth Login**.
 - **Personal Dashboard:** A central "My Account" page to manage personal info, wishlists, and orders.
 - **Order History & Control:** View all past orders and their current status (e.g., pending, approved). Customers can also cancel a recently placed order.
 - **Wishlist:** Save favorite products for later purchase.
@@ -87,8 +87,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on July 6, 2025 by Ayman._
+_Last updated on August 2, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->
-<!-- , with upcoming support for **Google Social Login**. -->

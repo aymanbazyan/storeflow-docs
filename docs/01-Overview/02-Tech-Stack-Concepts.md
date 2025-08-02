@@ -10,7 +10,7 @@
 
 - API: Next.js API routes
 
-- [Deployment: Vercel / Asura Hosting (soon)](/docs/Getting-Started/Deployment)
+- [Deployment: Vercel / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
 
 ---
 
@@ -246,8 +246,9 @@ model Users {
   slug                     String     @id @db.VarChar(100)
   created_at               DateTime   @default(now())
   email                    String     @unique @db.VarChar(255)
-  passwordHash             String     @db.VarChar(255)
+  passwordHash             String?    @db.VarChar(255)
   displayName              String     @db.VarChar(100)
+  isGoogleAuth             Boolean    @default(false)
   isAdmin                  Boolean    @default(false)
   passwordResetToken       String?    @unique @db.VarChar(100)
   passwordResetExpires     DateTime?
@@ -580,6 +581,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
     - **`api/`**: Backend API endpoints (Route Handlers).
       - `auth/`: Handles user authentication (login, signout, session check).
       - `backup/`: API endpoint to trigger a server backup.
+      - `healthcheck/`: Slight API endpoint to check if the server is running (used in the mobile app).
       - `uploads/[...path]`: API endpoint to get uploaded files.
       - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks).
       - `tables/`: A generic, dynamic API for performing CRUD operations on database tables, likely used by the admin panel.
@@ -616,4 +618,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on July 22, 2025 by Ayman._
+_Last updated on August 2, 2025 by Ayman._
