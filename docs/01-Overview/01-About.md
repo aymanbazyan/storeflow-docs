@@ -28,6 +28,7 @@ Admins have full control over the store's products, sales, and appearance.
 #### **Product & Inventory**
 
 - **Product Management:** Easily create, edit, and delete products, categories, and product bundles (sets).
+- **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold.
 - **Rich Content:** Use a simple HTML editor for detailed descriptions and upload both images and videos for products.
 - **Export/Import database backup folder:** A function for backing up or restoring the entire site database.
@@ -87,7 +88,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on August 2, 2025 by Ayman._
+_Last updated on August 10, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->

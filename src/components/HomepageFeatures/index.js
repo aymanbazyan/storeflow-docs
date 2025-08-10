@@ -9,8 +9,8 @@ const FeatureList = [
     description: (
       <>
         Storeflow includes a feature-rich admin panel for effortless management.
-        Adjust products, categories, sales, promoted items, and even theme
-        colors from one central dashboard.
+        Adjust products, categories, sales, promotions, and even theme colors in
+        one central dashboard.
       </>
     ),
   },
@@ -30,9 +30,9 @@ const FeatureList = [
     Svg: require("@site/static/img/security.svg").default,
     description: (
       <>
-        Using a PostgreSQL database for reliability, Storeflow ensures your data
-        is safe. It has secure authentication and administrative privileges to
-        protect your store and operations.
+        Using a PostgreSQL database for reliability, bcryptjs for encryption,
+        Storeflow ensures your data is safe. It has secure authentication and
+        administrative privileges to protect your store and operations.
       </>
     ),
   },

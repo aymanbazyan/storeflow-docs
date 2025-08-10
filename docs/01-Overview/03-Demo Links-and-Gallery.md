@@ -12,6 +12,10 @@
 
 # Gallery
 
+**Note: Pictures are taken with full screen to prevent quality loss.**
+
+...
+
 ### Homepage Featured Offers
 
 ![Homepage Featured Offers](../../static/gallery/1.png)
@@ -91,6 +95,7 @@
 ### User Account Overview
 
 ![User Account Overview](../../static/gallery/13.png)
+It will also show an icon if the account was made via Google.
 
 ---
 
@@ -304,4 +309,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There's even more details to see in the website!
 
-_Last updated on August 2, 2025 by Ayman._
+_Last updated on August 10, 2025 by Ayman._
