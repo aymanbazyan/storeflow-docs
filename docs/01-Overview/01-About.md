@@ -31,7 +31,6 @@ Admins have full control over the store's products, sales, and appearance.
 - **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold.
 - **Rich Content:** Use a simple HTML editor for detailed descriptions and upload both images and videos for products.
-- **Export/Import database backup folder:** A function for backing up or restoring the entire site database.
 
 #### **Sales & Orders**
 
@@ -51,6 +50,12 @@ Admins have full control over the store's products, sales, and appearance.
 - **Shipping Rules:** Set custom shipping fees based on customer regions.
 - **Site Information:** Easily update general content like team members and partners.
 - **Site theme:** The admin can set the primary, secondary and the header banner from the Themes panel.
+
+#### **Security Management**
+
+- **Export/Import database backup folder:** A function for backing up or restoring the entire site database.
+- **Timeout Ips:** A dashboard to manage timed-out IP addresses to block spammers.
+- **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
 
 ---
 
@@ -88,7 +93,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on August 10, 2025 by Ayman._
+_Last updated on August 11, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->

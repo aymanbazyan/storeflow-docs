@@ -225,11 +225,22 @@ erDiagram
         String img
         DateTime updated_at
     }
+```
 
+```mermaid
+erDiagram
     RequestLogs {
         Int slug PK
         String identifier
         DateTime timestamp
+        String type
+        String description
+    }
+
+    TimedoutIps {
+        String slug PK
+        DateTime created_at
+        DateTime timedout_until
     }
 ```
 
@@ -274,11 +285,23 @@ model Users {
 }
 
 model RequestLogs {
-  slug         Int      @id @default(autoincrement())
-  identifier   String
-  timestamp    DateTime @default(now())
+  slug          Int      @id @default(autoincrement())
+  identifier    String
+  type          String   // "review", "checkout", "auth"
+  created_at    DateTime @default(now())
+  description   String   @default("")
 
-  @@index([identifier, timestamp])
+  @@index([identifier, type])
+  @@index([identifier, type, created_at])
+}
+
+model TimedoutIps {
+  slug           String   @id // The IP address
+  created_at     DateTime @default(now())
+  timedout_until DateTime // The timestamp when the timeout expires
+
+  @@index([slug])
+  @@index([timedout_until]) // Index to quickly find expired timeouts
 }
 
 model Categories {
@@ -385,7 +408,7 @@ model Sets {
   name               String          @db.VarChar(100)
   images             String[]        @default([])
   made_by            String          @db.VarChar(100)
-  description        String          @db.Text
+  description        String          @default("")
   tags               String[]        @default([])
   created_at         DateTime        @default(now())
   price              Float           @default(0) @db.DoublePrecision
@@ -486,6 +509,7 @@ model Orders {
   @@index([created_at, email])
   @@index([status])
   @@index([discount_code])
+  @@index([email, status])
 }
 
 model OrderItems {
@@ -586,7 +610,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
       - `backup/`: API endpoint to trigger a server backup.
       - `healthcheck/`: Slight API endpoint to check if the server is running (used in the mobile app).
       - `uploads/[...path]`: API endpoint to get uploaded files.
-      - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks).
+      <!-- - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks). -->
+      - `/timeouts`: Endpoint to timeout Ips.
       - `tables/`: A generic, dynamic API for performing CRUD operations on database tables, likely used by the admin panel.
       - `user/`: API routes for user-specific actions like managing wishlists and orders.
     - **`checkout/`**: The order checkout page and flow.
@@ -621,4 +646,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on August 10, 2025 by Ayman._
+_Last updated on August 11, 2025 by Ayman._
