@@ -36,7 +36,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 - **Financial Dashboard:** Track sales, profits, and key financial metrics.
 - **Order Management:** View, approve, or reject incoming orders. Admins can add a note explaining a rejection.
-- **Manual Order Entry:** Log offline or in-store purchases, which automatically updates inventory and sales data.
+- **Manual Order Entry:** Log offline or in-store purchases, which automatically updates inventory and sales data, and you can chose the customer's email to connect the purchase with his account, if he has an account on the website, allowing him to review the products or see the purchase details.
 
 #### **Marketing & Promotions**
 
@@ -93,7 +93,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on August 11, 2025 by Ayman._
+_Last updated on August 13, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->

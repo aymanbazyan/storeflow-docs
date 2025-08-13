@@ -4,7 +4,7 @@
 
 - Frontend + Backend: Next.js v15.2.3 (App Router)
 
-- Database: PostgreSQL v16.9 + Prisma v6.13.0
+- Database: PostgreSQL v16.9 + Prisma v6.14.0
 
 - Styling: Tailwind CSS v4
 
@@ -545,10 +545,8 @@ model DiscountCodes {
   orders               Orders[]  @relation("OrderDiscountCode")
 
   @@index([slug])
-  @@index([is_active])
-  @@index([expires_at])
-  @@index([discount_type])
 }
+
 ```
 
 </details>
@@ -610,7 +608,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
       - `backup/`: API endpoint to trigger a server backup.
       - `healthcheck/`: Slight API endpoint to check if the server is running (used in the mobile app).
       - `uploads/[...path]`: API endpoint to get uploaded files.
-      <!-- - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks). -->
+      - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks).
       - `/timeouts`: Endpoint to timeout Ips.
       - `tables/`: A generic, dynamic API for performing CRUD operations on database tables, likely used by the admin panel.
       - `user/`: API routes for user-specific actions like managing wishlists and orders.
@@ -646,4 +644,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on August 11, 2025 by Ayman._
+_Last updated on August 13, 2025 by Ayman._
