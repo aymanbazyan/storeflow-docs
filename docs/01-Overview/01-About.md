@@ -15,6 +15,12 @@ It uses PostgreSQL as the database, with secure authentication and administrativ
 
 ---
 
+Performance test results (Google's Lighthouse):
+
+![Performance test](../../static/img/performance-test.png)
+
+---
+
 ## **Storeflow E-commerce Platform: Core Features**
 
 Storeflow is a comprehensive e-commerce platform designed with a powerful admin dashboard for store management and a user-friendly storefront for an excellent customer experience.
@@ -36,7 +42,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 - **Financial Dashboard:** Track sales, profits, and key financial metrics.
 - **Order Management:** View, approve, or reject incoming orders. Admins can add a note explaining a rejection.
-- **Manual Order Entry:** Log offline or in-store purchases, which automatically updates inventory and sales data, and you can chose the customer's email to connect the purchase with his account, if he has an account on the website, allowing him to review the products or see the purchase details.
+- **Manual Order Entry:** Log offline purchases, which automatically updates inventory and sales data, and you can search and pick the customer's email to connect the purchase with his account (if he has an account on the website), allowing him to review the products or see the purchase details from his account.
 
 #### **Marketing & Promotions**
 

@@ -19,9 +19,9 @@ const FeatureList = [
     Svg: require("@site/static/img/modern-desktop-computer.svg").default,
     description: (
       <>
-        Built with Next.js, Storeflow offers a beautiful and simple interface.
-        It features an advanced search, filter, and sort menu to help customers
-        find exactly what they need.
+        Built with Next.js, Storeflow offers a beautiful, performant and simple
+        interface. It features an advanced search, filter, and sort menu to help
+        customers find exactly what they need.
       </>
     ),
   },
@@ -32,7 +32,8 @@ const FeatureList = [
       <>
         Using a PostgreSQL database for reliability, bcryptjs for encryption,
         Storeflow ensures your data is safe. It has secure authentication and
-        administrative privileges to protect your store and operations.
+        administrative privileges to protect your store and operations, and a
+        timeout panel for spammers' IPs.
       </>
     ),
   },
