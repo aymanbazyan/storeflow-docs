@@ -321,4 +321,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There are even more details to see on the website!
 
-_Last updated on August 13, 2025 by Ayman._
+_Last updated on August 17, 2025 by Ayman._
