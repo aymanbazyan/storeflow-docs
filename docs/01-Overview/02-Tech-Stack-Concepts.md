@@ -2,7 +2,7 @@
 
 ## Tech Stack
 
-- Frontend + Backend: Next.js v15.2.3 (App Router)
+- Frontend + Backend: Next.js v15.5.0 (App Router)
 
 - Database: PostgreSQL v16.9 + Prisma v6.14.0
 
@@ -282,6 +282,7 @@ model Users {
   @@index([isAdmin])
   @@index([emailVerified])
   @@index([emailVerified, created_at])
+  @@index([created_at])
 }
 
 model RequestLogs {
@@ -293,6 +294,7 @@ model RequestLogs {
 
   @@index([identifier, type])
   @@index([identifier, type, created_at])
+  @@index([created_at])
 }
 
 model TimedoutIps {
@@ -300,8 +302,8 @@ model TimedoutIps {
   created_at     DateTime @default(now())
   timedout_until DateTime // The timestamp when the timeout expires
 
-  @@index([slug])
-  @@index([timedout_until]) // Index to quickly find expired timeouts
+  @@index([timedout_until])
+  @@index([created_at])
 }
 
 model Categories {
@@ -313,6 +315,7 @@ model Categories {
   Products    Products[]
 
   @@index([is_featured])
+  @@index([created_at])
 }
 
 model Config {
@@ -340,7 +343,7 @@ model Products {
   images             String[]   @default([])
   averageRating      Float      @default(0) @db.DoublePrecision
   reviewCount        Int        @default(0)
-  description        String  @default("") @db.Text
+  description        String     @default("") @db.Text
 
   categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
   wishlistedBy       Users[]
@@ -399,8 +402,9 @@ model Reviews {
   user    Users     @relation(fields: [userSlug], references: [slug], onDelete: Cascade)
 
   @@index([userSlug])
-  @@index([productSlug, created_at])
-  @@index([setSlug, created_at])
+  @@index([created_at])
+  @@index([productSlug, updated_at, created_at])
+  @@index([setSlug, updated_at, created_at])
 }
 
 model Sets {
@@ -455,12 +459,16 @@ model Team {
   role       String?  @db.VarChar(100)
   img        String?  @db.VarChar(255)
   created_at DateTime @default(now())
+
+  @@index([created_at])
 }
 
 model Partners {
   slug       String   @id @db.VarChar(100)
   img        String   @db.VarChar(255)
   created_at DateTime @default(now())
+
+  @@index([created_at])
 }
 
 model Gallery {
@@ -469,6 +477,9 @@ model Gallery {
   slug       String   @id @db.VarChar(100)
   name       String   @db.VarChar(100)
   img        String   @db.VarChar(255)
+
+  @@index([created_at])
+  @@index([updated_at])
 }
 
 model Themes {
@@ -476,7 +487,6 @@ model Themes {
   themeStringObj  Json     @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
   headerTextColor String?  @default("text-black") @db.VarChar(100)
   img             String?  @default("") @db.VarChar(255)
-  created_at      DateTime @default(now())
 }
 
 model Orders {
@@ -545,6 +555,7 @@ model DiscountCodes {
   orders               Orders[]  @relation("OrderDiscountCode")
 
   @@index([slug])
+  @@index([created_at])
 }
 
 ```
@@ -558,7 +569,7 @@ model DiscountCodes {
 This project uses the **Next.js App Router**, which organizes the application files within the `src/app` directory, this section shows some of the project's files.
 
 <details>
-<summary><strong>Click to expand/collapse the detailed folder structure</strong></summary>
+<summary><strong>Click to expand/collapse some details of the folder structure</strong></summary>
 
 - **Root Directory (`/`)**
 
@@ -644,4 +655,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on August 13, 2025 by Ayman._
+_Last updated on August 23, 2025 by Ayman._

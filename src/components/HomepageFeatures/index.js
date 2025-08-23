@@ -8,9 +8,8 @@ const FeatureList = [
     Svg: require("@site/static/img/analytics.svg").default,
     description: (
       <>
-        Storeflow includes a feature-rich admin panel for effortless management.
-        Adjust products, categories, sales, promotions, and even theme colors in
-        one central dashboard.
+        Manage products, categories, sales, promotions, and theme colors and
+        more from a single, feature-rich admin panel.
       </>
     ),
   },
@@ -19,9 +18,9 @@ const FeatureList = [
     Svg: require("@site/static/img/modern-desktop-computer.svg").default,
     description: (
       <>
-        Built with Next.js, Storeflow offers a beautiful, performant and simple
-        interface. It features an advanced search, filter, and sort menu to help
-        customers find exactly what they need.
+        Built with Next.js, Storeflow has a fast, beautiful interface with
+        advanced search, filtering, and sorting to help customers find products
+        easily.
       </>
     ),
   },
@@ -30,10 +29,8 @@ const FeatureList = [
     Svg: require("@site/static/img/security.svg").default,
     description: (
       <>
-        Using a PostgreSQL database for reliability, bcryptjs for encryption,
-        Storeflow ensures your data is safe. It has secure authentication and
-        administrative privileges to protect your store and operations, and a
-        timeout panel for spammers' IPs.
+        Storeflow secures your data with HS256 encryption, a reliable PostgreSQL
+        database, secure authentication, and spammer IP blocking.
       </>
     ),
   },

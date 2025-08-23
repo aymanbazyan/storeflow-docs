@@ -7,7 +7,12 @@
 You can create the **.env.local** here:
 
 - Storeflow folder
+
   - .env.local
+
+:::danger
+Nobody should see this file.
+:::
 
 ```javascript
 #// Genreal
@@ -31,25 +36,42 @@ SERVICE=gmail
 EMAIL_MAIL=example@gmail.com
 EMAIL_PASS=fdoa kgsa bmrw asnt
 
-#// Checkout (the user can checkout 3 times in 1 hour)
+#// Limits
+
+#// Checkout (e.g the user can checkout 3 times in 1 hour)
 CHECKOUT_LIMIT=3
 CHECKOUT_LIMIT_RESET_TIME=3600000 #// 1 hour
 
 #// Rating
-RATING_LIMIT=5
+RATING_LIMIT=7
 RATING_LIMIT_RESET_TIME=3600000
 
 #// Auth
-AUTH_LIMIT=7
+AUTH_LIMIT=13
 AUTH_LIMIT_RESET_TIME=3600000
 
 ```
 
-:::danger
-Nobody should see this file.
+Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
+
+---
+
+:::warning
+Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.config.mjs** allowedOrigins like this: -
 :::
 
-Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, especially when deploying it to production.
+```
+  experimental: {
+    useCache: true,
+    serverActions: {
+      allowedOrigins: [
+        "localhost:3000",
+        "https://219z15jv-3000.euw.devtunnels.ms",
+        // etc...
+      ],
+    },
+  },
+```
 
 ---
 
@@ -85,4 +107,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on August 2, 2025 by Ayman._
+_Last updated on August 23, 2025 by Ayman._

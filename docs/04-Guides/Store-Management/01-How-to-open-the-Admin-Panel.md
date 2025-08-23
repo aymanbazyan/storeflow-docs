@@ -24,7 +24,8 @@ When you get into the admin panel, you'll have access to multiple panels:-
 - Users
 - DiscountCodes
 - Reviews
+- Logs (Spam Management)
 
 ---
 
-_Last updated on July 7, 2025 by Ayman._
+_Last updated on July 23, 2025 by Ayman._

@@ -24,17 +24,26 @@
 
 ![Homepage Featured Products](../../static/gallery/2.png)
 
+![Homepage Featured Products](../../static/gallery/2.1.png)
+
 ---
 
 ### Homepage Categories & Bestsellers
 
 ![Homepage Categories & Bestsellers](../../static/gallery/3.png)
 
+![Homepage Categories & Bestsellers](../../static/gallery/3.1.png)
+
+### Homepage Sets
+
+![Homepage Categories & Bestsellers](../../static/gallery/3.2.png)
+
 ---
 
-### Homepage Product Section
+### Homepage Promoted Categories Section
 
-![Homepage Product Section](../../static/gallery/4.png)
+![Homepage Promoted Categories Section](../../static/gallery/4.png)
+The Admin can chose any category to show here in its own list.
 
 ---
 
@@ -321,4 +330,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There are even more details to see on the website!
 
-_Last updated on August 17, 2025 by Ayman._
+_Last updated on August 23, 2025 by Ayman._
