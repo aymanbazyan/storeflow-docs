@@ -253,6 +253,7 @@ erDiagram
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/prisma"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -306,18 +307,6 @@ model TimedoutIps {
   @@index([created_at])
 }
 
-model Categories {
-  slug        String     @id @db.VarChar(100)
-  name        String     @db.VarChar(100)
-  img         String?    @default("") @db.VarChar(255)
-  is_featured Boolean    @default(false)
-  created_at  DateTime   @default(now())
-  Products    Products[]
-
-  @@index([is_featured])
-  @@index([created_at])
-}
-
 model Config {
   slug                     String   @id @default("general") @db.VarChar(50)
   tos                      String?  @default("") @db.Text
@@ -328,6 +317,18 @@ model Config {
   delivery_policies        String[] @default([])
   checkoutEnableCod        Boolean  @default(true)
   checkoutEnableCreditCard Boolean  @default(false)
+}
+
+model Categories {
+  slug        String     @id @db.VarChar(100)
+  name        String     @db.VarChar(100)
+  img         String?    @default("") @db.VarChar(255)
+  is_featured Boolean    @default(false)
+  created_at  DateTime   @default(now())
+  Products    Products[]
+
+  @@index([is_featured])
+  @@index([created_at])
 }
 
 // The parent product, holds shared data
@@ -344,6 +345,7 @@ model Products {
   averageRating      Float      @default(0) @db.DoublePrecision
   reviewCount        Int        @default(0)
   description        String     @default("") @db.Text
+  search_vector      Unsupported("tsvector")?
 
   categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
   wishlistedBy       Users[]
@@ -363,6 +365,7 @@ model Products {
   @@index([category, created_at])
   @@index([averageRating])
   @@index([category, items_sold])
+  @@index([category, averageRating])
 }
 
 model ProductVariant {
@@ -384,6 +387,7 @@ model ProductVariant {
   @@index([price])
   @@index([quantity])
   @@index([name])
+  @@index([discount])
 }
 
 model Reviews {
@@ -655,4 +659,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on August 23, 2025 by Ayman._
+_Last updated on August 24, 2025 by Ayman._

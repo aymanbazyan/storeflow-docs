@@ -25,8 +25,8 @@ JWT_SECRET="your-very-strong-jwt-secret-key-here-at-least-32-characters"
 #// Session duration. Use 's', 'm', 'h', or 'd'. Examples: "60s", "1m", "2h", "7d"
 SESSION_DURATION=7d
 SHORT_LIVED_TOKEN_HOURS=1
-
 NEXT_PUBLIC_GOOGLE_CLIENT_ID="your-google-client-id.apps.googleusercontent.com"
+SESSION_COOKIE="session"
 
 #// Database, check the previous page
 DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"
@@ -107,4 +107,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on August 23, 2025 by Ayman._
+_Last updated on August 24, 2025 by Ayman._

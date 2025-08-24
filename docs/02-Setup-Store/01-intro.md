@@ -23,7 +23,7 @@ Download the project folder using **git**.
 The package will automatically be added to your project after you run the command:
 
 ```bash
-git clone https://github.com/aymanbazyan/spring-hardware-nextjs
+git clone https://github.com/aymanbazyan/storeflow-template.git
 ```
 
 You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
