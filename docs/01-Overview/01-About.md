@@ -15,7 +15,7 @@ It uses PostgreSQL as the database, with secure authentication and administrativ
 
 ---
 
-Performance test results (Google's Lighthouse):
+Performance test results for the Homepage (by Google's Lighthouse):
 
 ![Performance test](../../static/img/performance-test.png)
 
@@ -33,9 +33,9 @@ Admins have full control over the store's products, sales, and appearance.
 
 #### **Product & Inventory**
 
-- **Product Management:** Easily create, edit, and delete products, categories, and product bundles (sets).
+- **Product Management:** Easily create, edit, and delete products, categories, and **product bundles (Sets)**.
 - **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
-- **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold.
+- **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
 - **Rich Content:** Use a simple HTML editor for detailed descriptions and upload both images and videos for products.
 
 #### **Sales & Orders**
@@ -43,6 +43,7 @@ Admins have full control over the store's products, sales, and appearance.
 - **Financial Dashboard:** Track sales, profits, and key financial metrics.
 - **Order Management:** View, approve, or reject incoming orders. Admins can add a note explaining a rejection.
 - **Manual Order Entry:** Log offline purchases, which automatically updates inventory and sales data, and you can search and pick the customer's email to connect the purchase with his account (if he has an account on the website), allowing him to review the products or see the purchase details from his account.
+- **Custom Transactions:** Make manual adjustments to revenue, such as for special circumstances, like a price reduction or a tip.
 
 #### **Marketing & Promotions**
 
@@ -99,7 +100,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on August 16, 2025 by Ayman._
+_Last updated on September 3, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->

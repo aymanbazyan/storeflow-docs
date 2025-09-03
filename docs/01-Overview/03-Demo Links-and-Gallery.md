@@ -201,7 +201,7 @@ It will also show an icon if the account was made via Google.
 ### Order Confirmation Email
 
 ![Order Confirmation Email](../../static/gallery/29.png)
-The images isn't appearing because it was hosted in in localhost:3000
+The images weren't appearing because the API was hosted at localhost:3000.
 
 ---
 
@@ -288,6 +288,7 @@ The images isn't appearing because it was hosted in in localhost:3000
 ### Admin: Cashier/POS Interface
 
 ![Admin: Cashier/POS Interface](../../static/gallery/43.png)
+You can also write any hidden info about the product in the forms (e.g. The location of the product in the store) and you'll see it here
 
 ---
 
@@ -330,4 +331,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There are even more details to see on the website!
 
-_Last updated on August 23, 2025 by Ayman._
+_Last updated on September 3, 2025 by Ayman._

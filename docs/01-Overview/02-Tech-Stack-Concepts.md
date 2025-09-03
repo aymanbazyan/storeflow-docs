@@ -4,7 +4,7 @@
 
 - Frontend + Backend: Next.js v15.5.0 (App Router)
 
-- Database: PostgreSQL v16.9 + Prisma v6.14.0
+- Database: PostgreSQL v16.9 + Prisma v6.15.0
 
 - Styling: Tailwind CSS v4
 
@@ -265,24 +265,24 @@ model Users {
   slug                     String     @id @db.VarChar(100)
   created_at               DateTime   @default(now())
   email                    String     @unique @db.VarChar(255)
-  passwordHash             String?    @db.VarChar(255)
-  displayName              String     @db.VarChar(100)
-  isGoogleAuth             Boolean    @default(false)
-  isAdmin                  Boolean    @default(false)
-  passwordResetToken       String?    @unique @db.VarChar(100)
-  passwordResetExpires     DateTime?
-  emailVerified            Boolean?   @default(false)
-  emailVerificationToken   String?    @unique
-  emailVerificationExpires DateTime?
+  password_hash             String?    @db.VarChar(255)
+  display_name              String     @db.VarChar(100)
+  is_google_auth             Boolean    @default(false)
+  is_admin                  Boolean    @default(false)
+  password_reset_token       String?    @unique @db.VarChar(100)
+  password_reset_expires     DateTime?
+  email_verified            Boolean?   @default(false)
+  email_verification_token   String?    @unique
+  email_verification_expires DateTime?
   orders                   Orders[]
   wishlist                 Products[]
   wishlistSets             Sets[]     @relation("UserWishlistSets")
   reviews                  Reviews[]
 
   @@index([email])
-  @@index([isAdmin])
-  @@index([emailVerified])
-  @@index([emailVerified, created_at])
+  @@index([is_admin])
+  @@index([email_verified])
+  @@index([email_verified, created_at])
   @@index([created_at])
 }
 
@@ -315,8 +315,8 @@ model Config {
   partners_description     String?  @default("") @db.Text
   connect_description      String?  @default("") @db.Text
   delivery_policies        String[] @default([])
-  checkoutEnableCod        Boolean  @default(true)
-  checkoutEnableCreditCard Boolean  @default(false)
+  checkout_enable_cod        Boolean  @default(true)
+  checkout_enable_credit_card Boolean  @default(false)
 }
 
 model Categories {
@@ -325,7 +325,8 @@ model Categories {
   img         String?    @default("") @db.VarChar(255)
   is_featured Boolean    @default(false)
   created_at  DateTime   @default(now())
-  Products    Products[]
+
+  product    Products[]
 
   @@index([is_featured])
   @@index([created_at])
@@ -333,24 +334,26 @@ model Categories {
 
 // The parent product, holds shared data
 model Products {
-  created_at         DateTime   @default(now())
-  slug               String     @id @db.VarChar(100)
-  name               String     @db.VarChar(100)
-  category           String     @db.VarChar(100)
-  items_sold         Int        @default(0) @db.SmallInt // Total sold across all variants
-  featured_promotion Boolean    @default(false)
-  top_selling        Boolean    @default(false)
-  is_new             Boolean    @default(false)
-  images             String[]   @default([])
-  averageRating      Float      @default(0) @db.DoublePrecision
-  reviewCount        Int        @default(0)
-  description        String     @default("") @db.Text
+  created_at          DateTime   @default(now())
+  slug                String     @id @db.VarChar(100)
+  name                String     @db.VarChar(100)
+  category            String     @db.VarChar(100)
+  items_sold          Int        @default(0) @db.SmallInt // Total sold across all variants
+  featured_promotion  Boolean    @default(false)
+  top_selling         Boolean    @default(false)
+  is_new              Boolean    @default(false)
+  images              String[]   @default([])
+  average_rating      Float      @default(0) @db.DoublePrecision
+  review_count        Int        @default(0)
+  description         String     @default("") @db.Text
+  secret_description  String?    @default("") @db.Text
+
   search_vector      Unsupported("tsvector")?
 
   categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
   wishlistedBy       Users[]
-  related_products   Products[]       @relation("ProductRelations")
-  related_to         Products[]       @relation("ProductRelations")
+  relatedProducts    Products[]       @relation("ProductRelations")
+  relatedTo          Products[]       @relation("ProductRelations")
   reviews            Reviews[]
   variants           ProductVariant[] // A product has many variants
 
@@ -363,14 +366,14 @@ model Products {
   @@index([items_sold])
   @@index([category, name])
   @@index([category, created_at])
-  @@index([averageRating])
+  @@index([average_rating])
   @@index([category, items_sold])
-  @@index([category, averageRating])
+  @@index([category, average_rating])
 }
 
 model ProductVariant {
   slug        String  @id @db.VarChar(150) // e.g., "headphones-white-large"
-  productSlug String  @db.VarChar(100)
+  product_slug String  @db.VarChar(100)
   name        String  @db.VarChar(100) // e.g., "White, Large"
   price       Float   @db.DoublePrecision
   discount    Int     @default(0) @db.SmallInt
@@ -379,11 +382,11 @@ model ProductVariant {
   description String?  @db.Text
   preferred_img_index Int?  @default(0) @db.SmallInt
 
-  product     Products     @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
+  product     Products     @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
   orderItems  OrderItems[]
   setComponents SetComponents[]
 
-  @@index([productSlug])
+  @@index([product_slug])
   @@index([price])
   @@index([quantity])
   @@index([name])
@@ -397,18 +400,18 @@ model Reviews {
   rate       Decimal  @default(0) @db.Decimal(2, 1)
   comment    String?  @db.VarChar(255)
 
-  productSlug String? @db.VarChar(100)
-  setSlug     String? @db.VarChar(100)
-  userSlug    String  @db.VarChar(100)
+  product_slug String? @db.VarChar(100)
+  set_slug     String? @db.VarChar(100)
+  user_slug    String  @db.VarChar(100)
 
-  product Products? @relation(fields: [productSlug], references: [slug], onDelete: Cascade)
-  set     Sets?     @relation(fields: [setSlug], references: [slug], onDelete: Cascade)
-  user    Users     @relation(fields: [userSlug], references: [slug], onDelete: Cascade)
+  product Products? @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
+  set     Sets?     @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+  user    Users     @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
 
-  @@index([userSlug])
+  @@index([user_slug])
   @@index([created_at])
-  @@index([productSlug, updated_at, created_at])
-  @@index([setSlug, updated_at, created_at])
+  @@index([product_slug, updated_at, created_at])
+  @@index([set_slug, updated_at, created_at])
 }
 
 model Sets {
@@ -425,13 +428,13 @@ model Sets {
   featured_promotion Boolean         @default(false)
   top_selling        Boolean         @default(false)
   is_new             Boolean         @default(false)
-  averageRating      Float           @default(0) @db.DoublePrecision
-  reviewCount        Int             @default(0)
+  average_rating      Float           @default(0) @db.DoublePrecision
+  review_count        Int             @default(0)
 
   components         SetComponents[]
   orderItems         OrderItems[]
-  related_products   Sets[]          @relation("SetRelations")
-  related_to         Sets[]          @relation("SetRelations")
+  relatedProducts   Sets[]          @relation("SetRelations")
+  relatedTo         Sets[]          @relation("SetRelations")
   wishlistedBy       Users[]         @relation("UserWishlistSets")
   reviews            Reviews[]
 
@@ -447,14 +450,14 @@ model Sets {
 }
 
 model SetComponents {
-  setSlug           String @db.VarChar(100)
-  productVariantSlug String @db.VarChar(150)
+  set_slug           String @db.VarChar(100)
+  product_variant_slug String @db.VarChar(150)
   quantity          Int    @db.SmallInt
 
-  set     Sets           @relation(fields: [setSlug], references: [slug], onDelete: Cascade)
-  variant ProductVariant @relation(fields: [productVariantSlug], references: [slug], onDelete: Cascade) // UPDATED: Relation to ProductVariant
+  set     Sets           @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+  variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade) // UPDATED: Relation to ProductVariant
 
-  @@id([setSlug, productVariantSlug])
+  @@id([set_slug, product_variant_slug])
 }
 
 model Team {
@@ -488,8 +491,8 @@ model Gallery {
 
 model Themes {
   slug            String   @id @default("general") @db.VarChar(50)
-  themeStringObj  Json     @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
-  headerTextColor String?  @default("text-black") @db.VarChar(100)
+  theme_string_obj  Json     @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
+  header_text_color String?  @default("text-black") @db.VarChar(100)
   img             String?  @default("") @db.VarChar(255)
 }
 
@@ -513,7 +516,8 @@ model Orders {
 
   discount_code   String?        @db.VarChar(50)
   discount_amount Decimal        @default(0) @db.Decimal(10, 2)
-  idempotencyKey  String?        @unique @db.VarChar(100)
+  idempotency_key  String?        @unique @db.VarChar(100)
+
   user            Users          @relation(fields: [email], references: [email], onDelete: Cascade)
   orderItems      OrderItems[]
   discountCodeRef DiscountCodes? @relation("OrderDiscountCode", fields: [discount_code], references: [slug])
@@ -659,4 +663,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on August 24, 2025 by Ayman._
+_Last updated on Septemper 3, 2025 by Ayman._
