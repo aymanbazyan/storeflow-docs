@@ -290,12 +290,19 @@ The images weren't appearing because the API was hosted at localhost:3000.
 ![Admin: Cashier/POS Interface](../../static/gallery/43.png)
 You can also write any hidden info about the product in the forms (e.g. The location of the product in the store) and you'll see it here
 
+![Admin: Cashier/POS Interface](../../static/gallery/43.1.png)
+
+![Admin: Cashier/POS Interface](../../static/gallery/43.2.png)
+
 ---
 
 ### Admin: Financial Dashboard
 
 ![Admin: Financial Dashboard](../../static/gallery/44.png)
-This chart has fake records for testing purposes, unrelated to other cards.
+
+<!-- This chart has fake records for testing purposes, unrelated to other cards. -->
+
+![Admin: Financial Dashboard](../../static/gallery/44.1.png)
 
 ---
 
@@ -331,4 +338,4 @@ This chart has fake records for testing purposes, unrelated to other cards.
 
 # There are even more details to see on the website!
 
-_Last updated on September 3, 2025 by Ayman._
+_Last updated on September 4, 2025 by Ayman._
