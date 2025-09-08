@@ -154,12 +154,15 @@ erDiagram
 
     Reviews {
         String slug PK
-        String userSlug FK
-        String productSlug FK
-        String setSlug FK
-        Decimal rate
-        String comment
+        String user_slug FK
+        String product_slug "FK, optional"
+        String set_slug "FK, optional"
+        String parent_review_slug "FK, optional"
         DateTime created_at
+        DateTime updated_at
+        Decimal rate
+        String comment "optional"
+        Boolean is_reply
     }
 
     Products {
@@ -176,9 +179,16 @@ erDiagram
         Int reviewCount
     }
 
+    %% --- Relationships ---
+
     Users ||--o{ Reviews : "writes"
-    Products }o--o{ Reviews : "has"
-    Sets }o--o{ Reviews : "has"
+    Products ||--o{ Reviews : "receives"
+    Sets ||--o{ Reviews : "receives"
+
+    %% Self-referencing relationship for replies
+    Reviews ||--o{ Reviews : "replies to"
+
+    %% Wishlist relationships
     Users }o--o{ Products : "wishlists"
     Users }o--o{ Sets : "wishlists"
 ```
@@ -241,6 +251,11 @@ erDiagram
         String slug PK
         DateTime created_at
         DateTime timedout_until
+    }
+
+     CustomTransactions {
+      String      slug  PK
+      Decimal     amount
     }
 ```
 
@@ -394,24 +409,35 @@ model ProductVariant {
 }
 
 model Reviews {
-  slug       String   @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  rate       Decimal  @default(0) @db.Decimal(2, 1)
-  comment    String?  @db.VarChar(255)
+  slug         String    @id @default(cuid())
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  rate         Decimal   @default(0) @db.Decimal(2, 1)
+  comment      String?   @db.VarChar(255)
+  product_slug String?   @db.VarChar(100)
+  set_slug     String?   @db.VarChar(100)
+  user_slug    String    @db.VarChar(100)
 
-  product_slug String? @db.VarChar(100)
-  set_slug     String? @db.VarChar(100)
-  user_slug    String  @db.VarChar(100)
+  // Reply functionality
+  parent_review_slug String? @db.VarChar(150)
+  is_reply           Boolean @default(false)
 
-  product Products? @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
-  set     Sets?     @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
-  user    Users     @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
+  // Relations
+  product      Products?  @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
+  set          Sets?      @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+  user         Users      @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
+
+  // Self-referential relation for replies
+  parent_review Reviews?   @relation("ReviewReplies", fields: [parent_review_slug], references: [slug], onDelete: Cascade)
+  replies       Reviews[]  @relation("ReviewReplies")
 
   @@index([user_slug])
   @@index([created_at])
   @@index([product_slug, updated_at, created_at])
   @@index([set_slug, updated_at, created_at])
+  @@index([parent_review_slug])
+  @@index([product_slug, is_reply])
+  @@index([set_slug, is_reply])
 }
 
 model Sets {
@@ -566,6 +592,11 @@ model DiscountCodes {
   @@index([created_at])
 }
 
+model CustomTransactions {
+  slug        String   @id @default("general")
+  amount      Decimal  @db.Decimal(10, 2)
+}
+
 ```
 
 </details>
@@ -639,7 +670,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
     - **`tos/`**: The "Terms of Service" page.
   - **`actions/`**: Contains Next.js Server Actions, used for server-side form submissions and mutations.
     - `authActions.js`: Server actions related to authentication.
-    - `reviews.js`: Server actions related to reviews.
+    - `reviewsActions.js`: Server actions related to reviews.
   - **`assets/`**: Static assets like images and fonts that are part of the build process.
   - **`components/`**: Global, reusable React components shared across the application.
     - `account-components/`: Components specific to the user account section.
@@ -663,4 +694,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on Septemper 3, 2025 by Ayman._
+_Last updated on Septemper 8, 2025 by Ayman._

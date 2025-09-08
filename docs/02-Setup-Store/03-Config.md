@@ -43,8 +43,17 @@ CHECKOUT_LIMIT=3
 CHECKOUT_LIMIT_RESET_TIME=3600000 #// 1 hour
 
 #// Rating
-RATING_LIMIT=7
-RATING_LIMIT_RESET_TIME=3600000
+#// Main review submission limits
+REVIEWS_RATING_LIMIT=5
+REVIEWS_RATING_LIMIT_RESET_TIME=3600000
+
+#// Reply submission limits
+REVIEWS_REPLY_LIMIT=20
+REVIEWS_REPLY_LIMIT_RESET_TIME=3600000
+
+#// Delete operation limits
+REVIEWS_DELETE_LIMIT=10
+REVIEWS_DELETE_LIMIT_RESET_TIME=3600000
 
 #// Auth
 AUTH_LIMIT=13
@@ -107,4 +116,4 @@ Replace `aymen` with the actual user (your operating system user).
 
 ---
 
-_Last updated on August 24, 2025 by Ayman._
+_Last updated on Septemper 8, 2025 by Ayman._
