@@ -262,7 +262,7 @@ erDiagram
 ### **More details**
 
 <details>
-<summary><strong>Click to expand/collapse the detailed folder structure</strong></summary>
+<summary><strong>Click to expand/collapse the detailed database structure</strong></summary>
 
 ```
 generator client {
@@ -363,6 +363,11 @@ model Products {
   description         String     @default("") @db.Text
   secret_description  String?    @default("") @db.Text
 
+  // DENORMALIZED
+  min_price           Float      @default(0) @db.DoublePrecision
+  max_price           Float      @default(0) @db.DoublePrecision
+  max_discount        Int        @default(0) @db.SmallInt
+
   search_vector      Unsupported("tsvector")?
 
   categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
@@ -379,11 +384,19 @@ model Products {
   @@index([name])
   @@index([created_at])
   @@index([items_sold])
-  @@index([category, name])
-  @@index([category, created_at])
   @@index([average_rating])
+  @@index([min_price])
+  @@index([max_price])
+  @@index([max_discount])
+
+  @@index([category, name])
+  @@index([category, top_selling])
+  @@index([category, created_at])
   @@index([category, items_sold])
   @@index([category, average_rating])
+  @@index([category, min_price])
+  @@index([category, max_price])
+  @@index([category, max_discount])
 }
 
 model ProductVariant {
@@ -406,6 +419,8 @@ model ProductVariant {
   @@index([quantity])
   @@index([name])
   @@index([discount])
+  @@index([product_slug, price])
+  @@index([product_slug, discount])
 }
 
 model Reviews {
@@ -694,4 +709,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on Septemper 8, 2025 by Ayman._
+_Last updated on September 10, 2025 by Ayman._

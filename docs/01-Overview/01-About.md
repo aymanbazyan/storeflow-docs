@@ -72,7 +72,7 @@ A clean and intuitive interface for customers to browse, shop, and purchase.
 
 #### **Browsing & Discovery**
 
-- **Powerful Search:** A prominent search bar helps customers quickly find any product.
+- **Powerful Search:** A prominent search bar helps customers quickly find any product or set.
 - **Advanced Filtering:** Sort and filter products by category, price, and other criteria.
 
 #### **Shopping & Checkout**
