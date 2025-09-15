@@ -15,12 +15,12 @@ You'll recieve an email to verify the account.
 After your account is created, open your terminal and run this:
 
 ```
-npm run manage-users -- --toggle-admin <username>
+npm run manage-users -- --toggle-admin <email>
 ```
 
-Replace the `<username>` with your email's username
+Replace the `<email>` with your account's email
 
-e.g: `myaccount123@gmail.com` the username is `myaccount123`
+e.g: `myaccount123@gmail.com`
 
 Then refresh!
 
@@ -32,7 +32,7 @@ Make sure to use a very strong password for the admin's account.
 For testing purposes, you can create a fake user with any email using
 
 ```
-npm run manage-users -- --make-fake-user <username>
+npm run manage-users -- --make-fake-user <email>
 ```
 
 You will then see the account's info in the console.
@@ -41,4 +41,4 @@ You will then see the account's info in the console.
 
 ---
 
-_Last updated on August 2, 2025 by Ayman._
+_Last updated on September 15, 2025 by Ayman._

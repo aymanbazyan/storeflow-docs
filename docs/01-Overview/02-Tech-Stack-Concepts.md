@@ -4,7 +4,7 @@
 
 - Frontend + Backend: Next.js v15.5.0 (App Router)
 
-- Database: PostgreSQL v16.9 + Prisma v6.15.0
+- Database: PostgreSQL v16.9 + Prisma v6.16.1
 
 - Styling: Tailwind CSS v4
 
@@ -277,7 +277,7 @@ datasource db {
 }
 
 model Users {
-  slug                     String     @id @db.VarChar(100)
+  slug                     String    @default(cuid()) @id @db.VarChar(100)
   created_at               DateTime   @default(now())
   email                    String     @unique @db.VarChar(255)
   password_hash             String?    @db.VarChar(255)
@@ -330,8 +330,9 @@ model Config {
   partners_description     String?  @default("") @db.Text
   connect_description      String?  @default("") @db.Text
   delivery_policies        String[] @default([])
-  checkout_enable_cod        Boolean  @default(true)
-  checkout_enable_credit_card Boolean  @default(false)
+  checkout_enable_cod      Boolean  @default(true)
+  // checkout_enable_credit_card Boolean  @default(false)
+  // checkout_enable_paypal      Boolean  @default(false)
 }
 
 model Categories {
@@ -709,4 +710,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on September 10, 2025 by Ayman._
+_Last updated on September 15, 2025 by Ayman._
