@@ -1,10 +1,10 @@
 # Tech Stack & Concepts
 
-## Tech Stack
+## **Tech Stack**
 
 - Frontend + Backend: Next.js v15.5.0 (App Router)
 
-- Database: PostgreSQL v16.9 + Prisma v6.16.1
+- Database: PostgreSQL v16.9 + Prisma v6.16.2
 
 - Styling: Tailwind CSS v4
 
@@ -259,7 +259,7 @@ erDiagram
     }
 ```
 
-### **More details**
+### More details
 
 <details>
 <summary><strong>Click to expand/collapse the detailed database structure</strong></summary>
@@ -497,9 +497,10 @@ model SetComponents {
   quantity          Int    @db.SmallInt
 
   set     Sets           @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
-  variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade) // UPDATED: Relation to ProductVariant
+  variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
 
   @@id([set_slug, product_variant_slug])
+  @@index([set_slug, quantity])
 }
 
 model Team {
@@ -582,7 +583,7 @@ model OrderItems {
   unit_price         Decimal @db.Decimal(10, 2)
 
   order   Orders          @relation(fields: [order_slug], references: [slug], onDelete: Cascade)
-  variant ProductVariant? @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade) // UPDATED: Relation to ProductVariant
+  variant ProductVariant? @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
   set     Sets?           @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
 
   @@unique([order_slug, product_variant_slug, set_slug])
@@ -624,90 +625,227 @@ model CustomTransactions {
 This project uses the **Next.js App Router**, which organizes the application files within the `src/app` directory, this section shows some of the project's files.
 
 <details>
-<summary><strong>Click to expand/collapse some details of the folder structure</strong></summary>
+<summary><strong>Click to expand/collapse details of the folder structure</strong></summary>
 
 - **Root Directory (`/`)**
 
-  - `.env.local`: **(Untracked)** Local environment variables. Contains secrets like database URLs and API keys.
-  - `.env.local.example`: An example file for environment variables. New developers should copy this to `.env.local`.
-  - `.eslintrc.json`: Configuration for ESLint, our code linter.
-  - `.gitignore`: Specifies files and folders to be ignored by Git (e.g., `node_modules`, `.env.local`).
-  - `jsconfig.json`: Configures path aliases (e.g., `@/components`) for easier imports.
-  - `next.config.mjs`: The main configuration file for Next.js.
-  - `package.json`: Lists project dependencies, metadata, and scripts (e.g., `npm run dev`).
-  - `postcss.config.mjs`: Configuration for PostCSS, used by Tailwind CSS.
-  - `README.md`: This documentation file.
-
-- **`backups/`**: Directory for storing database or application backups. _(Note: This should typically be in `.gitignore` to avoid committing large backup files to the repository)._
-
-- **`prisma/`**: Contains all database-related configurations for the Prisma ORM.
-
-  - `schema.prisma`: The primary schema file defining all database models and relations.
-  - `dev.db`: **(Untracked)** A local SQLite database file, likely used for development.
-
-- **`public/`**: Stores static assets that are publicly accessible from the root URL.
-- **`uploads/`**: Stores assets of the store's items.
-
-  - `icon.png`: Application icon, likely used as a favicon.
-
-- **`setup-files/`**: Contains utility scripts for project setup or maintenance.
-
-  - `manage-users.js`: A script to create fake accounts for testing and grant/revoke admin privileges from any account.
-  - `seed-fake-info.js`: A script to populate the database with dummy data for testing.
-
-- **`src/`**: The main source code for the entire application.
-  <!-- - `middleware-out.js`: A build artifact from Next.js middleware compilation. -->
-
-  - **`app/`**: The core of the Next.js application, using the App Router.
-    - `layout.js`, `page.js`, `error.js`, `loading.js`, `not-found.js`: Root-level special files that define the main layout, homepage, and global states.
-    - **`about/`**: The "About Us" page.
-    - **`account/`**: The user's private account section.
-      - `orders/`: Displays a user's order history and details for a specific order (`[slug]`).
-      - `wishlist/`: The user's product wishlist.
-    - **`admin/`**: The protected admin dashboard for managing the store.
-      - `components/`: React components used exclusively within the admin dashboard.
-        - `forms/`: A well-organized set of forms for creating/editing every data model (Products, Categories, etc.).
-      - `hooks/`: Custom React hooks specific to the admin panel.
-      - `utils/`: Helper functions for admin-related tasks.
-    - **`api/`**: Backend API endpoints (Route Handlers).
-      - `auth/`: Handles user authentication (login, signout, session check).
-      - `backup/`: API endpoint to trigger a server backup.
-      - `healthcheck/`: Slight API endpoint to check if the server is running (used in the mobile app).
-      - `uploads/[...path]`: API endpoint to get uploaded files.
-      - `cron/`: Endpoints designed to be called by scheduled jobs (e.g., cleanup tasks).
-      - `/timeouts`: Endpoint to timeout Ips.
-      - `tables/`: A generic, dynamic API for performing CRUD operations on database tables, likely used by the admin panel.
-      - `user/`: API routes for user-specific actions like managing wishlists and orders.
-    - **`checkout/`**: The order checkout page and flow.
-    - **`contact/`**: The "Contact Us" page.
-    - **`login/`**: The user login page.
-    - **`sets/`**: Pages for displaying product sets/bundles.
-    - **`store/`**: The main product browsing pages, including the main store page and individual product detail pages (`[slug]`).
-    - **`tos/`**: The "Terms of Service" page.
-  - **`actions/`**: Contains Next.js Server Actions, used for server-side form submissions and mutations.
-    - `authActions.js`: Server actions related to authentication.
-    - `reviewsActions.js`: Server actions related to reviews.
-  - **`assets/`**: Static assets like images and fonts that are part of the build process.
-  - **`components/`**: Global, reusable React components shared across the application.
-    - `account-components/`: Components specific to the user account section.
-    - `home-components/`: Components used only on the homepage.
-    - `others-components/`: Common, shared components like `Header`, `Footer`, `Spinner`, etc.
-    - `store-components/`: Components used in the product browsing and detail pages.
-  - **`context/`**: React Context providers for managing global state.
-    - `ConfirmModal.js`: A context for a global confirmation dialog.
-  - **`helpers/`**: General-purpose utility functions that are not tied to a specific framework feature.
-  - **`hooks/`**: Global, reusable React hooks.
-  - **`lib/`**: Core library code, services, and backend utilities.
-    - `auth.js`, `session.js`: Core authentication logic.
-    - `db.js`: Initializes and exports the Prisma client instance.
-    - `email.js`: Service for sending emails.
-    - `rate-limiter-db.js`: Logic for API rate limiting.
-    - `...and more`
-  - **`styles/`**: Global stylesheets.
-    - `globals.css`: Main stylesheet for Tailwind CSS and other global styles.
+```bash
+.
+├── backups
+│   └── general.tar.gz
+├── jsconfig.json
+├── next.config.mjs
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── prisma
+│   └── schema.prisma
+├── public
+│   └── icon.png
+├── README.md
+├── setup-files
+│   └── manage-users.js
+├── src
+│   ├── actions
+│   │   ├── authActions.js
+│   │   └── reviewActions.js
+│   ├── app
+│   │   ├── about
+│   │   │   └── page.js
+│   │   ├── account
+│   │   │   ├── layout.js
+│   │   │   ├── orders
+│   │   │   │   ├── page.js
+│   │   │   │   └── [slug]
+│   │   │   │   └── page.js
+│   │   │   ├── page.js
+│   │   │   └── wishlist
+│   │   │   └── page.js
+│   │   ├── admin
+│   │   │   ├── components
+│   │   │   │   ├── AdminHeader.js
+│   │   │   │   ├── AutoSlugifyButton.js
+│   │   │   │   ├── Backup.js
+│   │   │   │   ├── CustomTransactions.js
+│   │   │   │   ├── Dashboard.js
+│   │   │   │   ├── DiscountCalculator.js
+│   │   │   │   ├── forms
+│   │   │   │   │   ├── CashierForm.js
+│   │   │   │   │   ├── CategoryForm.js
+│   │   │   │   │   ├── CodesForm.js
+│   │   │   │   │   ├── GalleryForm.js
+│   │   │   │   │   ├── GeneralForm.js
+│   │   │   │   │   ├── PartnersForm.js
+│   │   │   │   │   ├── ProductForm.js
+│   │   │   │   │   ├── SetForm.js
+│   │   │   │   │   ├── TeamForm.js
+│   │   │   │   │   └── ThemesForm.js
+│   │   │   │   ├── HtmlEditor.js
+│   │   │   │   ├── ImageList.js
+│   │   │   │   ├── NavigationTabs.js
+│   │   │   │   ├── OrdersQuickStats.js
+│   │   │   │   ├── OrderView.js
+│   │   │   │   ├── ProductOptions.js
+│   │   │   │   ├── RelatedItemsSection.js
+│   │   │   │   ├── ReviewView.js
+│   │   │   │   ├── SearchProduct.js
+│   │   │   │   ├── SpamManagement.js
+│   │   │   │   └── TableDisplay.js
+│   │   │   ├── hooks
+│   │   │   │   ├── useEntityData.js
+│   │   │   │   └── useFormSubmit.js
+│   │   │   ├── layout.js
+│   │   │   ├── page.js
+│   │   │   └── utils
+│   │   │   ├── api-helpers.js
+│   │   │   ├── form-helpers.js
+│   │   │   └── image-helpers.js
+│   │   ├── api
+│   │   │   ├── auth
+│   │   │   │   ├── me
+│   │   │   │   │   └── route.js
+│   │   │   │   └── route.js
+│   │   │   ├── backup
+│   │   │   │   └── route.js
+│   │   │   ├── cleanup
+│   │   │   │   └── route.js
+│   │   │   ├── custom-transactions
+│   │   │   │   └── route.js
+│   │   │   ├── healthcheck
+│   │   │   │   └── route.js
+│   │   │   ├── pages-data
+│   │   │   │   └── [page]
+│   │   │   │   └── route.js
+│   │   │   ├── tables
+│   │   │   │   ├── route.js
+│   │   │   │   └── [table]
+│   │   │   │   └── [slug]
+│   │   │   │   └── route.js
+│   │   │   ├── uploads
+│   │   │   │   └── [...path]
+│   │   │   │   └── route.js
+│   │   │   └── user
+│   │   │   ├── orders
+│   │   │   │   ├── [order]
+│   │   │   │   │   └── route.js
+│   │   │   │   └── route.js
+│   │   │   └── wishlist
+│   │   │   ├── route.js
+│   │   │   └── [slug]
+│   │   │   └── route.js
+│   │   ├── checkout
+│   │   │   ├── layout.js
+│   │   │   └── page.js
+│   │   ├── contact
+│   │   │   └── page.js
+│   │   ├── error.js
+│   │   ├── layout.js
+│   │   ├── loading.js
+│   │   ├── login
+│   │   │   ├── layout.js
+│   │   │   └── page.js
+│   │   ├── not-found.js
+│   │   ├── page.js
+│   │   ├── sets
+│   │   │   ├── page.js
+│   │   │   └── [slug]
+│   │   │   └── page.js
+│   │   ├── store
+│   │   │   ├── page.js
+│   │   │   └── [slug]
+│   │   │   └── page.js
+│   │   └── tos
+│   │   └── page.js
+│   ├── assets
+│   │   └── header-bg.png
+│   ├── components
+│   │   ├── account-components
+│   │   │   ├── MenuLink.js
+│   │   │   ├── OrderActions.js
+│   │   │   ├── Orders.js
+│   │   │   ├── SignOutButton.js
+│   │   │   ├── WishlistActions.js
+│   │   │   └── Wishlist.js
+│   │   ├── home-components
+│   │   │   ├── HomeListItems.js
+│   │   │   ├── HomePageSlider.js
+│   │   │   ├── Partners.js
+│   │   │   ├── PromotedComponent.js
+│   │   │   ├── Promotions.js
+│   │   │   ├── ScrollControls.js
+│   │   │   └── ScrollDots.js
+│   │   ├── others-components
+│   │   │   ├── CartSidebar.js
+│   │   │   ├── ContactBox.js
+│   │   │   ├── CopyBtn.js
+│   │   │   ├── ExpandableGallery.js
+│   │   │   ├── FloatingCartButton.js
+│   │   │   ├── Footer.js
+│   │   │   ├── HeaderAccount.js
+│   │   │   ├── HeaderForm.js
+│   │   │   ├── Header.js
+│   │   │   ├── Invoice.js
+│   │   │   ├── Logo.js
+│   │   │   ├── MediaDisplay.js
+│   │   │   ├── MobileNav.js
+│   │   │   ├── MultiRangeSlider.js
+│   │   │   ├── NavLink.js
+│   │   │   ├── NavWrapper.js
+│   │   │   ├── OpenCartBtn.js
+│   │   │   ├── SetsPagnination.js
+│   │   │   ├── Spinner.js
+│   │   │   ├── Stars.js
+│   │   │   ├── SystemTimeChecker.js
+│   │   │   └── ThemeScript.js
+│   │   └── store-components
+│   │   ├── ExpandableWrapper.js
+│   │   ├── ImageSelect.js
+│   │   ├── NewTag.js
+│   │   ├── ProductCard.js
+│   │   ├── ProductCardVariantsStatus.js
+│   │   ├── ProductDescription.js
+│   │   ├── ProductForm.js
+│   │   ├── RelatedProducts.js
+│   │   ├── RelatedSets.js
+│   │   ├── ReviewsForm.js
+│   │   ├── ReviewsItem.js
+│   │   ├── ReviewsList.js
+│   │   ├── ReviewsReplyForm.js
+│   │   └── StoreFilterOptions.js
+│   ├── context
+│   │   ├── AuthContext.js
+│   │   └── ConfirmModal.js
+│   ├── helpers
+│   │   ├── config.js
+│   │   ├── functions.js
+│   │   ├── language-en.js
+│   │   ├── language.js
+│   │   └── server-functions.js
+│   ├── hooks
+│   │   ├── useIsMobile.js
+│   │   └── useOutsideClick.js
+│   ├── lib
+│   │   ├── auth.js
+│   │   ├── backup.js
+│   │   ├── data.js
+│   │   ├── db.js
+│   │   ├── email.js
+│   │   ├── get-ip.js
+│   │   ├── pages-data.js
+│   │   ├── rate-limiter-db.js
+│   │   ├── review.js
+│   │   ├── session.js
+│   │   └── wishlist.js
+│   └── styles
+│       ├── globals.css
+│       ├── react-paginate.css
+│       └── tos.css
+│  
+└── uploads
+```
 
 </details>
 
 ---
 
-_Last updated on September 15, 2025 by Ayman._
+_Last updated on September 17, 2025 by Ayman._
