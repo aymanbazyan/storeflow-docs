@@ -10,6 +10,8 @@
 
 - API: Next.js API routes
 
+- Mobile: React Native 0.81.4 + Expo 54.0.7
+
 - [Deployment: Vercel / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
 
 ---
@@ -631,217 +633,272 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ```bash
 .
-├── backups
-│   └── general.tar.gz
-├── jsconfig.json
-├── next.config.mjs
-├── package.json
-├── package-lock.json
-├── postcss.config.mjs
-├── prisma
-│   └── schema.prisma
-├── public
-│   └── icon.png
-├── README.md
-├── setup-files
-│   └── manage-users.js
-├── src
-│   ├── actions
-│   │   ├── authActions.js
-│   │   └── reviewActions.js
+├── mobile
 │   ├── app
-│   │   ├── about
-│   │   │   └── page.js
-│   │   ├── account
-│   │   │   ├── layout.js
-│   │   │   ├── orders
-│   │   │   │   ├── page.js
-│   │   │   │   └── [slug]
-│   │   │   │   └── page.js
-│   │   │   ├── page.js
-│   │   │   └── wishlist
-│   │   │   └── page.js
-│   │   ├── admin
-│   │   │   ├── components
-│   │   │   │   ├── AdminHeader.js
-│   │   │   │   ├── AutoSlugifyButton.js
-│   │   │   │   ├── Backup.js
-│   │   │   │   ├── CustomTransactions.js
-│   │   │   │   ├── Dashboard.js
-│   │   │   │   ├── DiscountCalculator.js
-│   │   │   │   ├── forms
-│   │   │   │   │   ├── CashierForm.js
-│   │   │   │   │   ├── CategoryForm.js
-│   │   │   │   │   ├── CodesForm.js
-│   │   │   │   │   ├── GalleryForm.js
-│   │   │   │   │   ├── GeneralForm.js
-│   │   │   │   │   ├── PartnersForm.js
-│   │   │   │   │   ├── ProductForm.js
-│   │   │   │   │   ├── SetForm.js
-│   │   │   │   │   ├── TeamForm.js
-│   │   │   │   │   └── ThemesForm.js
-│   │   │   │   ├── HtmlEditor.js
-│   │   │   │   ├── ImageList.js
-│   │   │   │   ├── NavigationTabs.js
-│   │   │   │   ├── OrdersQuickStats.js
-│   │   │   │   ├── OrderView.js
-│   │   │   │   ├── ProductOptions.js
-│   │   │   │   ├── RelatedItemsSection.js
-│   │   │   │   ├── ReviewView.js
-│   │   │   │   ├── SearchProduct.js
-│   │   │   │   ├── SpamManagement.js
-│   │   │   │   └── TableDisplay.js
-│   │   │   ├── hooks
-│   │   │   │   ├── useEntityData.js
-│   │   │   │   └── useFormSubmit.js
-│   │   │   ├── layout.js
-│   │   │   ├── page.js
-│   │   │   └── utils
-│   │   │   ├── api-helpers.js
-│   │   │   ├── form-helpers.js
-│   │   │   └── image-helpers.js
-│   │   ├── api
-│   │   │   ├── auth
-│   │   │   │   ├── me
-│   │   │   │   │   └── route.js
-│   │   │   │   └── route.js
-│   │   │   ├── backup
-│   │   │   │   └── route.js
-│   │   │   ├── cleanup
-│   │   │   │   └── route.js
-│   │   │   ├── custom-transactions
-│   │   │   │   └── route.js
-│   │   │   ├── healthcheck
-│   │   │   │   └── route.js
-│   │   │   ├── pages-data
-│   │   │   │   └── [page]
-│   │   │   │   └── route.js
-│   │   │   ├── tables
-│   │   │   │   ├── route.js
-│   │   │   │   └── [table]
-│   │   │   │   └── [slug]
-│   │   │   │   └── route.js
-│   │   │   ├── uploads
-│   │   │   │   └── [...path]
-│   │   │   │   └── route.js
-│   │   │   └── user
-│   │   │   ├── orders
-│   │   │   │   ├── [order]
-│   │   │   │   │   └── route.js
-│   │   │   │   └── route.js
-│   │   │   └── wishlist
-│   │   │   ├── route.js
-│   │   │   └── [slug]
-│   │   │   └── route.js
-│   │   ├── checkout
-│   │   │   ├── layout.js
-│   │   │   └── page.js
-│   │   ├── contact
-│   │   │   └── page.js
-│   │   ├── error.js
-│   │   ├── layout.js
-│   │   ├── loading.js
-│   │   ├── login
-│   │   │   ├── layout.js
-│   │   │   └── page.js
-│   │   ├── not-found.js
-│   │   ├── page.js
-│   │   ├── sets
-│   │   │   ├── page.js
-│   │   │   └── [slug]
-│   │   │   └── page.js
-│   │   ├── store
-│   │   │   ├── page.js
-│   │   │   └── [slug]
-│   │   │   └── page.js
-│   │   └── tos
-│   │   └── page.js
+│   │   ├── (drawer)
+│   │   │   ├── _layout.tsx
+│   │   │   └── (tabs)
+│   │   │       ├── account.tsx
+│   │   │       ├── index.tsx
+│   │   │       ├── _layout.tsx
+│   │   │       ├── sets.tsx
+│   │   │       ├── store.tsx
+│   │   │       └── tos.tsx
+│   │   ├── _layout.tsx
+│   │   └── +not-found.tsx
+│   ├── app-env.d.ts
+│   ├── app.json
 │   ├── assets
-│   │   └── header-bg.png
+│   │   ├── fonts
+│   │   │   └── SpaceMono-Regular.ttf
+│   │   └── images
+│   │       ├── adaptive-icon.png
+│   │       ├── anonymous.png
+│   │       ├── favicon.png
+│   │       ├── icon.png
+│   │       ├── image-placeholder.png
+│   │       └── splash-icon.png
+│   ├── babel.config.js
+│   ├── cesconfig.jsonc
 │   ├── components
-│   │   ├── account-components
-│   │   │   ├── MenuLink.js
-│   │   │   ├── OrderActions.js
-│   │   │   ├── Orders.js
-│   │   │   ├── SignOutButton.js
-│   │   │   ├── WishlistActions.js
-│   │   │   └── Wishlist.js
-│   │   ├── home-components
-│   │   │   ├── HomeListItems.js
-│   │   │   ├── HomePageSlider.js
-│   │   │   ├── Partners.js
-│   │   │   ├── PromotedComponent.js
-│   │   │   ├── Promotions.js
-│   │   │   ├── ScrollControls.js
-│   │   │   └── ScrollDots.js
-│   │   ├── others-components
-│   │   │   ├── CartSidebar.js
-│   │   │   ├── ContactBox.js
-│   │   │   ├── CopyBtn.js
-│   │   │   ├── ExpandableGallery.js
-│   │   │   ├── FloatingCartButton.js
-│   │   │   ├── Footer.js
-│   │   │   ├── HeaderAccount.js
-│   │   │   ├── HeaderForm.js
-│   │   │   ├── Header.js
-│   │   │   ├── Invoice.js
-│   │   │   ├── Logo.js
-│   │   │   ├── MediaDisplay.js
-│   │   │   ├── MobileNav.js
-│   │   │   ├── MultiRangeSlider.js
-│   │   │   ├── NavLink.js
-│   │   │   ├── NavWrapper.js
-│   │   │   ├── OpenCartBtn.js
-│   │   │   ├── SetsPagnination.js
-│   │   │   ├── Spinner.js
-│   │   │   ├── Stars.js
-│   │   │   ├── SystemTimeChecker.js
-│   │   │   └── ThemeScript.js
-│   │   └── store-components
-│   │   ├── ExpandableWrapper.js
-│   │   ├── ImageSelect.js
-│   │   ├── NewTag.js
-│   │   ├── ProductCard.js
-│   │   ├── ProductCardVariantsStatus.js
-│   │   ├── ProductDescription.js
-│   │   ├── ProductForm.js
-│   │   ├── RelatedProducts.js
-│   │   ├── RelatedSets.js
-│   │   ├── ReviewsForm.js
-│   │   ├── ReviewsItem.js
-│   │   ├── ReviewsList.js
-│   │   ├── ReviewsReplyForm.js
-│   │   └── StoreFilterOptions.js
-│   ├── context
-│   │   ├── AuthContext.js
-│   │   └── ConfirmModal.js
-│   ├── helpers
-│   │   ├── config.js
-│   │   ├── functions.js
-│   │   ├── language-en.js
-│   │   ├── language.js
-│   │   └── server-functions.js
+│   │   ├── ContactBox.tsx
+│   │   ├── Footer.tsx
+│   │   ├── ItemsSlider.tsx
+│   │   ├── Logo.tsx
+│   │   ├── MediaDisplay.tsx
+│   │   ├── NewTag.tsx
+│   │   ├── StarRating.tsx
+│   │   ├── Typography.tsx
+│   │   └── Underline.tsx
+│   ├── constants
+│   │   ├── config.ts
+│   │   ├── language.ts
+│   │   └── types
+│   │       ├── data.d.ts
+│   │       └── general.ts
+│   ├── eslint.config.js
+│   ├── global.css
 │   ├── hooks
-│   │   ├── useIsMobile.js
-│   │   └── useOutsideClick.js
-│   ├── lib
-│   │   ├── auth.js
-│   │   ├── backup.js
-│   │   ├── data.js
-│   │   ├── db.js
-│   │   ├── email.js
-│   │   ├── get-ip.js
-│   │   ├── pages-data.js
-│   │   ├── rate-limiter-db.js
-│   │   ├── review.js
-│   │   ├── session.js
-│   │   └── wishlist.js
-│   └── styles
-│       ├── globals.css
-│       ├── react-paginate.css
-│       └── tos.css
-│  
-└── uploads
+│   │   └── useApi.ts
+│   ├── metro.config.js
+│   ├── nativewind-env.d.ts
+│   ├── package.json
+│   ├── prettier.config.js
+│   ├── styles
+│   │   └── colors.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   └── utils
+│       ├── api.ts
+│       └── functions.ts
+│
+├── README.md
+│
+└── web
+    ├── jsconfig.json
+    ├── next.config.mjs
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── prisma
+    │   └── schema.prisma
+    ├── public
+    │   └── icon.png
+    ├── setup-files
+    │   └── manage-users.js
+    └── src
+        ├── actions
+        │   ├── authActions.js
+        │   └── reviewActions.js
+        ├── app
+        │   ├── about
+        │   │   └── page.js
+        │   ├── account
+        │   │   ├── layout.js
+        │   │   ├── orders
+        │   │   │   ├── page.js
+        │   │   │   └── [slug]
+        │   │   │       └── page.js
+        │   │   ├── page.js
+        │   │   └── wishlist
+        │   │       └── page.js
+        │   ├── admin
+        │   │   ├── components
+        │   │   │   ├── AdminHeader.js
+        │   │   │   ├── AutoSlugifyButton.js
+        │   │   │   ├── Backup.js
+        │   │   │   ├── CustomTransactions.js
+        │   │   │   ├── Dashboard.js
+        │   │   │   ├── DiscountCalculator.js
+        │   │   │   ├── forms
+        │   │   │   │   ├── CashierForm.js
+        │   │   │   │   ├── CategoryForm.js
+        │   │   │   │   ├── CodesForm.js
+        │   │   │   │   ├── GalleryForm.js
+        │   │   │   │   ├── GeneralForm.js
+        │   │   │   │   ├── PartnersForm.js
+        │   │   │   │   ├── ProductForm.js
+        │   │   │   │   ├── SetForm.js
+        │   │   │   │   ├── TeamForm.js
+        │   │   │   │   └── ThemesForm.js
+        │   │   │   ├── HtmlEditor.js
+        │   │   │   ├── ImageList.js
+        │   │   │   ├── NavigationTabs.js
+        │   │   │   ├── OrdersQuickStats.js
+        │   │   │   ├── OrderView.js
+        │   │   │   ├── ProductOptions.js
+        │   │   │   ├── RelatedItemsSection.js
+        │   │   │   ├── ReviewView.js
+        │   │   │   ├── SearchProduct.js
+        │   │   │   ├── SpamManagement.js
+        │   │   │   └── TableDisplay.js
+        │   │   ├── hooks
+        │   │   │   ├── useEntityData.js
+        │   │   │   └── useFormSubmit.js
+        │   │   ├── layout.js
+        │   │   ├── page.js
+        │   │   └── utils
+        │   │       ├── api-helpers.js
+        │   │       ├── form-helpers.js
+        │   │       └── image-helpers.js
+        │   ├── api
+        │   │   ├── auth
+        │   │   │   ├── me
+        │   │   │   │   └── route.js
+        │   │   │   └── route.js
+        │   │   ├── backup
+        │   │   │   └── route.js
+        │   │   ├── cleanup
+        │   │   │   └── route.js
+        │   │   ├── custom-transactions
+        │   │   │   └── route.js
+        │   │   ├── healthcheck
+        │   │   │   └── route.js
+        │   │   ├── pages-data
+        │   │   │   └── [page]
+        │   │   │       └── route.js
+        │   │   ├── tables
+        │   │   │   ├── route.js
+        │   │   │   └── [table]
+        │   │   │       └── [slug]
+        │   │   │           └── route.js
+        │   │   └── user
+        │   │       ├── orders
+        │   │       │   ├── [order]
+        │   │       │   │   └── route.js
+        │   │       │   └── route.js
+        │   │       └── wishlist
+        │   │           ├── route.js
+        │   │           └── [slug]
+        │   │               └── route.js
+        │   ├── checkout
+        │   │   ├── layout.js
+        │   │   └── page.js
+        │   ├── contact
+        │   │   └── page.js
+        │   ├── error.js
+        │   ├── layout.js
+        │   ├── loading.js
+        │   ├── login
+        │   │   ├── layout.js
+        │   │   └── page.js
+        │   ├── not-found.js
+        │   ├── page.js
+        │   ├── sets
+        │   │   ├── page.js
+        │   │   └── [slug]
+        │   │       └── page.js
+        │   ├── store
+        │   │   ├── page.js
+        │   │   └── [slug]
+        │   │       └── page.js
+        │   └── tos
+        │       └── page.js
+        ├── assets
+        │   └── header-bg.png
+        ├── components
+        │   ├── account-components
+        │   │   ├── MenuLink.js
+        │   │   ├── OrderActions.js
+        │   │   ├── Orders.js
+        │   │   ├── SignOutButton.js
+        │   │   ├── WishlistActions.js
+        │   │   └── Wishlist.js
+        │   ├── home-components
+        │   │   ├── HomeListItems.js
+        │   │   ├── HomePageSlider.js
+        │   │   ├── Partners.js
+        │   │   ├── PromotedComponent.js
+        │   │   ├── Promotions.js
+        │   │   ├── ScrollControls.js
+        │   │   └── ScrollDots.js
+        │   ├── others-components
+        │   │   ├── CartSidebar.js
+        │   │   ├── ContactBox.js
+        │   │   ├── CopyBtn.js
+        │   │   ├── ExpandableGallery.js
+        │   │   ├── FloatingCartButton.js
+        │   │   ├── Footer.js
+        │   │   ├── HeaderAccount.js
+        │   │   ├── HeaderForm.js
+        │   │   ├── Header.js
+        │   │   ├── Invoice.js
+        │   │   ├── Logo.js
+        │   │   ├── MediaDisplay.js
+        │   │   ├── MobileNav.js
+        │   │   ├── MultiRangeSlider.js
+        │   │   ├── NavLink.js
+        │   │   ├── NavWrapper.js
+        │   │   ├── OpenCartBtn.js
+        │   │   ├── SetsPagnination.js
+        │   │   ├── Spinner.js
+        │   │   ├── Stars.js
+        │   │   ├── SystemTimeChecker.js
+        │   │   └── ThemeScript.js
+        │   └── store-components
+        │       ├── ExpandableWrapper.js
+        │       ├── ImageSelect.js
+        │       ├── NewTag.js
+        │       ├── ProductCard.js
+        │       ├── ProductCardVariantsStatus.js
+        │       ├── ProductDescription.js
+        │       ├── ProductForm.js
+        │       ├── RelatedProducts.js
+        │       ├── RelatedSets.js
+        │       ├── ReviewsForm.js
+        │       ├── ReviewsItem.js
+        │       ├── ReviewsList.js
+        │       ├── ReviewsReplyForm.js
+        │       └── StoreFilterOptions.js
+        ├── context
+        │   ├── AuthContext.js
+        │   ├── ConfirmModal.js
+        │   └── WishlistContext.js
+        ├── helpers
+        │   ├── config.js
+        │   ├── functions.js
+        │   ├── language-en.js
+        │   ├── language.js
+        │   └── server-functions.js
+        ├── hooks
+        │   ├── useIsMobile.js
+        │   └── useOutsideClick.js
+        ├── lib
+        │   ├── auth.js
+        │   ├── backup.js
+        │   ├── data.js
+        │   ├── db.js
+        │   ├── email.js
+        │   ├── get-ip.js
+        │   ├── pages-data.js
+        │   ├── rate-limiter-db.js
+        │   ├── review.js
+        │   ├── session.js
+        │   └── wishlist.js
+        └── styles
+            ├── globals.css
+            ├── react-paginate.css
+            └── tos.css
+
 ```
 
 </details>
