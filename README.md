@@ -1,1 +1,1 @@
-[Link](https://store-flow-project-documentation.vercel.app/)
+[Link](https://storeflow-docs.vercel.app/)
