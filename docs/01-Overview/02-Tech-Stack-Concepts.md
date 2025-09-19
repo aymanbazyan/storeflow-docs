@@ -93,10 +93,18 @@ erDiagram
         Boolean is_featured
     }
 
+    Brands {
+        String slug PK
+        String name UK
+        String description
+        DateTime created_at
+    }
+
     Products {
         String slug PK
         String name
-        String category FK
+        String category_slug FK
+        String brand_slug FK
         Int items_sold
         Float averageRating
         String[] images
@@ -107,7 +115,7 @@ erDiagram
 
     ProductVariant {
         String slug PK
-        String productSlug FK
+        String product_slug FK
         String name
         Float price
         Int discount
@@ -127,12 +135,13 @@ erDiagram
     }
 
     SetComponents {
-        String setSlug PK, FK
-        String productVariantSlug PK, FK
+        String set_slug PK, FK
+        String product_variant_slug PK, FK
         Int quantity
     }
 
     Categories ||--o{ Products : "contains"
+    Brands ||--o{ Products : "has"
     Products ||--o{ ProductVariant : "has"
     Products }o--o{ Products : "relates to"
     Sets }o--o{ Sets : "relates to"
@@ -350,6 +359,18 @@ model Categories {
   @@index([created_at])
 }
 
+model Brand {
+  slug         String     @id @db.VarChar(100)
+  name         String     @unique @db.VarChar(100)
+  description  String?    @db.Text
+  created_at   DateTime   @default(now())
+
+  products     Products[]
+
+  @@index([name])
+  @@index([created_at])
+}
+
 // The parent product, holds shared data
 model Products {
   created_at          DateTime   @default(now())
@@ -365,13 +386,14 @@ model Products {
   review_count        Int        @default(0)
   description         String     @default("") @db.Text
   secret_description  String?    @default("") @db.Text
+  brand_slug          String?     @db.VarChar(100)
 
   // DENORMALIZED
   min_price           Float      @default(0) @db.DoublePrecision
   max_price           Float      @default(0) @db.DoublePrecision
   max_discount        Int        @default(0) @db.SmallInt
 
-  search_vector      Unsupported("tsvector")?
+  search_vector      Unsupported("tsvector")? // search by name/slug for now
 
   categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
   wishlistedBy       Users[]
@@ -379,8 +401,10 @@ model Products {
   relatedTo          Products[]       @relation("ProductRelations")
   reviews            Reviews[]
   variants           ProductVariant[] // A product has many variants
+  brand              Brand?      @relation(fields: [brand_slug], references: [slug], onDelete: Restrict)
 
   @@index([category])
+  @@index([brand_slug])
   @@index([featured_promotion])
   @@index([top_selling])
   @@index([is_new])
@@ -393,6 +417,7 @@ model Products {
   @@index([max_discount])
 
   @@index([category, name])
+  @@index([category, brand_slug])
   @@index([category, top_selling])
   @@index([category, created_at])
   @@index([category, items_sold])
@@ -905,4 +930,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on September 17, 2025 by Ayman._
+_Last updated on September 19, 2025 by Ayman._

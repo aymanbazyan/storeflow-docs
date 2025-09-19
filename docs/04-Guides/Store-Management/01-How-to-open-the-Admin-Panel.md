@@ -17,6 +17,7 @@ When you get into the admin panel, you'll have access to multiple panels:-
 - Products
 - Sets
 - Team
+- Brand
 - Gallery
 - Partners
 - Themes
@@ -28,4 +29,4 @@ When you get into the admin panel, you'll have access to multiple panels:-
 
 ---
 
-_Last updated on July 23, 2025 by Ayman._
+_Last updated on September 19, 2025 by Ayman._

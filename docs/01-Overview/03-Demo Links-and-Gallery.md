@@ -63,6 +63,10 @@ The Admin can chose any category to show here in its own list.
 
 ![Store Page Product Grid](../../static/gallery/7.png)
 
+### Store Page Filter by brand
+
+![Store Page Filter by brand](../../static/gallery/7.1.png)
+
 ---
 
 ### Product Detail Page
@@ -344,4 +348,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 # There are even more details to see on the website!
 
-_Last updated on September 8, 2025 by Ayman._
+_Last updated on September 19, 2025 by Ayman._

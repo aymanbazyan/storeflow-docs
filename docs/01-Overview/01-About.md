@@ -33,7 +33,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 #### **Product & Inventory**
 
-- **Product Management:** Easily create, edit, and delete products, categories, and **product bundles (Sets)**.
+- **Product Management:** Easily create, edit, and delete products, categories, brands, and **product bundles (Sets)**.
 - **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
 - **Rich Content:** Use a simple HTML editor for detailed descriptions and upload both images and videos for products.
@@ -73,7 +73,7 @@ A clean and intuitive interface for customers to browse, shop, and purchase.
 #### **Browsing & Discovery**
 
 - **Powerful Search:** A prominent search bar helps customers quickly find any product or set.
-- **Advanced Filtering:** Sort and filter products by category, price, and other criteria.
+- **Advanced Filtering:** Sort and filter products by category, price, brand, discount, and other criteria.
 
 #### **Shopping & Checkout**
 
@@ -99,7 +99,7 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on September 15, 2025 by Ayman._
+_Last updated on September 19, 2025 by Ayman._
 
 <!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
 <!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->
