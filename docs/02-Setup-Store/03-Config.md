@@ -109,10 +109,10 @@ npm run prisma:generate
 you might also want to grant files mutating premission to your app (to mutate the items' images).
 
 ```
-sudo chown -R aymen:aymen public/uploads
+sudo chown -R myuser:myuser public/uploads
 ```
 
-Replace `aymen` with the actual user (your operating system user).
+Replace `myuser` with the actual user (your operating system user).
 
 ---
 

@@ -24,43 +24,48 @@ The single source of truth for the database structure is the `prisma/schema.pris
 
 ```mermaid
 erDiagram
-    Users {
+    User {
         String slug PK
         String email UK
         String displayName
         String passwordHash
+        Boolean isAdmin
+        Boolean emailVerified
+        DateTime createdAt
     }
 
-    Orders {
+    Order {
         String slug PK
-        String email FK
+        String userEmail FK
         String status
-        Decimal sub_total
-        Decimal shipping_fee
-        String payment_method
-        String discount_code FK
-        Decimal discount_amount
-        Int items_qty
-        DateTime created_at
+        Decimal subTotal
+        Decimal shippingFee
+        String paymentMethod
+        String discountCodeSlug FK "optional"
+        Decimal discountAmount
+        Int itemsQty
+        DateTime createdAt
+        String idempotencyKey "optional, UK"
     }
 
-    OrderItems {
+    OrderItem {
         String slug PK
-        String order_slug FK
-        String product_variant_slug FK
-        String set_slug FK
-        String item_type
+        String orderSlug FK
+        String productVariantSlug FK "optional"
+        String setSlug FK "optional"
+        String itemType
         Int quantity
-        Decimal unit_price
+        Decimal unitPrice
     }
 
-    DiscountCodes {
+    DiscountCode {
         String slug PK
-        String discount_type
-        Decimal discount_value
-        Boolean is_active
-        Int used_count
-        DateTime expires_at
+        String discountType
+        Decimal discountValue
+        Boolean isActive
+        Int usedCount
+        DateTime expiresAt "optional"
+        DateTime createdAt
     }
 
     ProductVariant {
@@ -69,121 +74,127 @@ erDiagram
         Float price
     }
 
-    Sets {
+    Set {
         String slug PK
         String name
         Float price
     }
 
-    Users ||--o{ Orders : "places"
-    Orders ||--o{ OrderItems : "contains"
-    DiscountCodes }o--o{ Orders : "applies to"
-    ProductVariant }o--|| OrderItems : "can be"
-    Sets }o--|| OrderItems : "can be"
+    User ||--o{ Order : "places"
+    Order ||--o{ OrderItem : "contains"
+    DiscountCode }o--|| Order : "applies to"
+    ProductVariant }o--o{ OrderItem : "can be part of"
+    Set }o--o{ OrderItem : "can be part of"
 ```
 
 ### Diagram 2: Product Catalog & Inventory
 
 ```mermaid
 erDiagram
-    Categories {
+    Category {
         String slug PK
         String name
-        String img
-        Boolean is_featured
+        String img "optional"
+        Boolean isFeatured
+        DateTime createdAt
     }
 
-    Brands {
+    Brand {
         String slug PK
         String name UK
-        String description
-        DateTime created_at
+        String description "optional"
+        DateTime createdAt
     }
 
-    Products {
+    Product {
         String slug PK
         String name
-        String category_slug FK
-        String brand_slug FK
-        Int items_sold
+        String categorySlug FK
+        String brandSlug FK "optional"
+        Int itemsSold
         Float averageRating
+        Int reviewCount
         String[] images
-        Boolean featured_promotion
-        Boolean top_selling
-        Boolean is_new
+        Boolean featuredPromotion
+        Boolean topSelling
+        Boolean isNew
+        DateTime createdAt
     }
 
     ProductVariant {
         String slug PK
-        String product_slug FK
+        String productSlug FK
         String name
         Float price
         Int discount
         Int quantity
+        DateTime createdAt
     }
 
-    Sets {
+    Set {
         String slug PK
         String name
         Float price
-        Int items_sold
+        Int itemsSold
         Float averageRating
+        Int reviewCount
         String[] images
-        Boolean featured_promotion
-        Boolean top_selling
-        Boolean is_new
+        Boolean featuredPromotion
+        Boolean topSelling
+        Boolean isNew
+        DateTime createdAt
     }
 
-    SetComponents {
-        String set_slug PK, FK
-        String product_variant_slug PK, FK
+    SetComponent {
+        String setSlug PK, FK
+        String productVariantSlug PK, FK
         Int quantity
     }
 
-    Categories ||--o{ Products : "contains"
-    Brands ||--o{ Products : "has"
-    Products ||--o{ ProductVariant : "has"
-    Products }o--o{ Products : "relates to"
-    Sets }o--o{ Sets : "relates to"
-    Sets ||--o{ SetComponents : "is composed of"
-    ProductVariant ||--o{ SetComponents : "is a component of"
+    Category ||--o{ Product : "contains"
+    Brand ||--o{ Product : "has"
+    Product ||--o{ ProductVariant : "has"
+    Product }o--o{ Product : "relates to"
+    Set }o--o{ Set : "relates to"
+    Set ||--o{ SetComponent : "is composed of"
+    ProductVariant ||--o{ SetComponent : "is a component of"
 ```
 
 ### Diagram 3: User Interaction & Reviews
 
 ```mermaid
 erDiagram
-    Users {
+    User {
         String slug PK
         String email UK
         String displayName
         Boolean isAdmin
         Boolean emailVerified
-        String passwordResetToken
-        String emailVerificationToken
+        String passwordResetToken "optional, UK"
+        String emailVerificationToken "optional, UK"
     }
 
-    Reviews {
+    Review {
         String slug PK
-        String user_slug FK
-        String product_slug "FK, optional"
-        String set_slug "FK, optional"
-        String parent_review_slug "FK, optional"
-        DateTime created_at
-        DateTime updated_at
+        String userSlug FK
+        String productSlug "FK, optional"
+        String setSlug "FK, optional"
+        String parentReviewSlug "FK, optional"
+        DateTime createdAt
+        DateTime updatedAt
         Decimal rate
         String comment "optional"
-        Boolean is_reply
+        Boolean isReply
     }
 
-    Products {
+    Product {
         String slug PK
         String name
         Float averageRating
         Int reviewCount
     }
 
-    Sets {
+    Set {
         String slug PK
         String name
         Float averageRating
@@ -192,16 +203,16 @@ erDiagram
 
     %% --- Relationships ---
 
-    Users ||--o{ Reviews : "writes"
-    Products ||--o{ Reviews : "receives"
-    Sets ||--o{ Reviews : "receives"
+    User ||--o{ Review : "writes"
+    Product ||--o{ Review : "receives"
+    Set ||--o{ Review : "receives"
 
     %% Self-referencing relationship for replies
-    Reviews ||--o{ Reviews : "replies to"
+    Review ||--o{ Review : "replies to"
 
     %% Wishlist relationships
-    Users }o--o{ Products : "wishlists"
-    Users }o--o{ Sets : "wishlists"
+    User }o--o{ Product : "wishlists"
+    User }o--o{ Set : "wishlists"
 ```
 
 ### Diagram 4: Site Content & System
@@ -210,64 +221,69 @@ erDiagram
 erDiagram
     Config {
         String slug PK
-        String tos
-        String about_us
-        String mission
+        String tos "optional"
+        String aboutUs "optional"
+        String mission "optional"
         Boolean checkoutEnableCod
-        Boolean checkoutEnableCreditCard
     }
 
-    Themes {
+    Theme {
         String slug PK
         Json themeStringObj
-        String headerTextColor
-        String img
+        String headerTextColor "optional"
+        String img "optional"
     }
 
     Team {
         String slug PK
         String name
-        String role
-        String img
+        String role "optional"
+        String img "optional"
+        DateTime createdAt
     }
 ```
 
 ```mermaid
 erDiagram
-    Partners {
+
+    Partner {
         String slug PK
         String img
-        DateTime created_at
+        DateTime createdAt
     }
 
     Gallery {
         String slug PK
         String name
         String img
-        DateTime updated_at
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    RequestLog {
+        Int slug PK
+        String identifier
+        String type
+        String description
+        DateTime createdAt
     }
 ```
 
-```mermaid
+    ```mermaid
+
 erDiagram
-    RequestLogs {
-        Int slug PK
-        String identifier
-        DateTime timestamp
-        String type
-        String description
+
+    TimedoutIp {
+        String slug PK "IP Address"
+        DateTime createdAt
+        DateTime timedoutUntil
     }
 
-    TimedoutIps {
+     CustomTransaction {
         String slug PK
-        DateTime created_at
-        DateTime timedout_until
+        Decimal amount
     }
 
-     CustomTransactions {
-      String      slug  PK
-      Decimal     amount
-    }
 ```
 
 ### More details
@@ -276,372 +292,373 @@ erDiagram
 <summary><strong>Click to expand/collapse the detailed database structure</strong></summary>
 
 ```
+
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/prisma"
-  previewFeatures = ["fullTextSearchPostgres"]
+provider = "prisma-client-js"
+output = "./generated/prisma"
+previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+provider = "postgresql"
+url = env("DATABASE_URL")
 }
 
-model Users {
-  slug                     String    @default(cuid()) @id @db.VarChar(100)
-  created_at               DateTime   @default(now())
-  email                    String     @unique @db.VarChar(255)
-  password_hash             String?    @db.VarChar(255)
-  display_name              String     @db.VarChar(100)
-  is_google_auth             Boolean    @default(false)
-  is_admin                  Boolean    @default(false)
-  password_reset_token       String?    @unique @db.VarChar(100)
-  password_reset_expires     DateTime?
-  email_verified            Boolean?   @default(false)
-  email_verification_token   String?    @unique
-  email_verification_expires DateTime?
-  orders                   Orders[]
-  wishlist                 Products[]
-  wishlistSets             Sets[]     @relation("UserWishlistSets")
-  reviews                  Reviews[]
+model User {
+slug String @default(cuid()) @id @db.VarChar(100)
+created_at DateTime @default(now())
+email String @unique @db.VarChar(255)
+password_hash String? @db.VarChar(255)
+display_name String @db.VarChar(100)
+is_google_auth Boolean @default(false)
+is_admin Boolean @default(false)
+password_reset_token String? @unique @db.VarChar(100)
+password_reset_expires DateTime?
+email_verified Boolean? @default(false)
+email_verification_token String? @unique
+email_verification_expires DateTime?
+orders Order[]
+wishlist Product[]
+wishlistSets Set[] @relation("UserWishlistSets")
+reviews Review[]
 
-  @@index([email])
-  @@index([is_admin])
-  @@index([email_verified])
-  @@index([email_verified, created_at])
-  @@index([created_at])
+@@index([email])
+@@index([is_admin])
+@@index([email_verified])
+@@index([email_verified, created_at])
+@@index([created_at])
 }
 
-model RequestLogs {
-  slug          Int      @id @default(autoincrement())
-  identifier    String
-  type          String   // "review", "checkout", "auth"
-  created_at    DateTime @default(now())
-  description   String   @default("")
+model RequestLog {
+slug Int @id @default(autoincrement())
+identifier String
+type String // "review", "checkout", "auth"
+created_at DateTime @default(now())
+description String @default("")
 
-  @@index([identifier, type])
-  @@index([identifier, type, created_at])
-  @@index([created_at])
+@@index([identifier, type])
+@@index([identifier, type, created_at])
+@@index([created_at])
 }
 
-model TimedoutIps {
-  slug           String   @id // The IP address
-  created_at     DateTime @default(now())
-  timedout_until DateTime // The timestamp when the timeout expires
+model TimedoutIp {
+slug String @id // The IP address
+created_at DateTime @default(now())
+timedout_until DateTime // The timestamp when the timeout expires
 
-  @@index([timedout_until])
-  @@index([created_at])
+@@index([timedout_until])
+@@index([created_at])
 }
 
 model Config {
-  slug                     String   @id @default("general") @db.VarChar(50)
-  tos                      String?  @default("") @db.Text
-  about_us                 String?  @default("") @db.Text
-  mission                  String?  @default("") @db.Text
-  partners_description     String?  @default("") @db.Text
-  connect_description      String?  @default("") @db.Text
-  delivery_policies        String[] @default([])
-  checkout_enable_cod      Boolean  @default(true)
-  // checkout_enable_credit_card Boolean  @default(false)
-  // checkout_enable_paypal      Boolean  @default(false)
+slug String @id @default("general") @db.VarChar(50)
+tos String? @default("") @db.Text
+about_us String? @default("") @db.Text
+mission String? @default("") @db.Text
+partners_description String? @default("") @db.Text
+connect_description String? @default("") @db.Text
+delivery_policies String[] @default([])
+checkout_enable_cod Boolean @default(true)
+// checkout_enable_credit_card Boolean @default(false)
+// checkout_enable_paypal Boolean @default(false)
 }
 
-model Categories {
-  slug        String     @id @db.VarChar(100)
-  name        String     @db.VarChar(100)
-  img         String?    @default("") @db.VarChar(255)
-  is_featured Boolean    @default(false)
-  created_at  DateTime   @default(now())
+model Category {
+slug String @id @db.VarChar(100)
+name String @db.VarChar(100)
+img String? @default("") @db.VarChar(255)
+is_featured Boolean @default(false)
+created_at DateTime @default(now())
 
-  product    Products[]
+product Product[]
 
-  @@index([is_featured])
-  @@index([created_at])
+@@index([is_featured])
+@@index([created_at])
 }
 
 model Brand {
-  slug         String     @id @db.VarChar(100)
-  name         String     @unique @db.VarChar(100)
-  description  String?    @db.Text
-  created_at   DateTime   @default(now())
+slug String @id @db.VarChar(100)
+name String @unique @db.VarChar(100)
+description String? @db.Text
+created_at DateTime @default(now())
 
-  products     Products[]
+products Product[]
 
-  @@index([name])
-  @@index([created_at])
+@@index([name])
+@@index([created_at])
 }
 
 // The parent product, holds shared data
-model Products {
-  created_at          DateTime   @default(now())
-  slug                String     @id @db.VarChar(100)
-  name                String     @db.VarChar(100)
-  category            String     @db.VarChar(100)
-  items_sold          Int        @default(0) @db.SmallInt // Total sold across all variants
-  featured_promotion  Boolean    @default(false)
-  top_selling         Boolean    @default(false)
-  is_new              Boolean    @default(false)
-  images              String[]   @default([])
-  average_rating      Float      @default(0) @db.DoublePrecision
-  review_count        Int        @default(0)
-  description         String     @default("") @db.Text
-  secret_description  String?    @default("") @db.Text
-  brand_slug          String?     @db.VarChar(100)
+model Product {
+created_at DateTime @default(now())
+slug String @id @db.VarChar(100)
+name String @db.VarChar(100)
+category String @db.VarChar(100)
+items_sold Int @default(0) @db.SmallInt // Total sold across all variants
+featured_promotion Boolean @default(false)
+top_selling Boolean @default(false)
+is_new Boolean @default(false)
+images String[] @default([])
+average_rating Float @default(0) @db.DoublePrecision
+review_count Int @default(0)
+description String @default("") @db.Text
+secret_description String? @default("") @db.Text
+brand_slug String? @db.VarChar(100)
 
-  // DENORMALIZED
-  min_price           Float      @default(0) @db.DoublePrecision
-  max_price           Float      @default(0) @db.DoublePrecision
-  max_discount        Int        @default(0) @db.SmallInt
+// DENORMALIZED
+min_price Float @default(0) @db.DoublePrecision
+max_price Float @default(0) @db.DoublePrecision
+max_discount Int @default(0) @db.SmallInt
 
-  search_vector      Unsupported("tsvector")? // search by name/slug for now
+search_vector Unsupported("tsvector")? // search by name/slug for now
 
-  categoryRef        Categories       @relation(fields: [category], references: [slug], onDelete: Cascade)
-  wishlistedBy       Users[]
-  relatedProducts    Products[]       @relation("ProductRelations")
-  relatedTo          Products[]       @relation("ProductRelations")
-  reviews            Reviews[]
-  variants           ProductVariant[] // A product has many variants
-  brand              Brand?      @relation(fields: [brand_slug], references: [slug], onDelete: Restrict)
+categoryRef Category @relation(fields: [category], references: [slug], onDelete: Cascade)
+wishlistedBy User[]
+relatedProducts Product[] @relation("ProductRelations")
+relatedTo Product[] @relation("ProductRelations")
+reviews Review[]
+variants ProductVariant[] // A product has many variants
+brand Brand? @relation(fields: [brand_slug], references: [slug], onDelete: Restrict)
 
-  @@index([category])
-  @@index([brand_slug])
-  @@index([featured_promotion])
-  @@index([top_selling])
-  @@index([is_new])
-  @@index([name])
-  @@index([created_at])
-  @@index([items_sold])
-  @@index([average_rating])
-  @@index([min_price])
-  @@index([max_price])
-  @@index([max_discount])
+@@index([category])
+@@index([brand_slug])
+@@index([featured_promotion])
+@@index([top_selling])
+@@index([is_new])
+@@index([name])
+@@index([created_at])
+@@index([items_sold])
+@@index([average_rating])
+@@index([min_price])
+@@index([max_price])
+@@index([max_discount])
 
-  @@index([category, name])
-  @@index([category, brand_slug])
-  @@index([category, top_selling])
-  @@index([category, created_at])
-  @@index([category, items_sold])
-  @@index([category, average_rating])
-  @@index([category, min_price])
-  @@index([category, max_price])
-  @@index([category, max_discount])
+@@index([category, name])
+@@index([category, brand_slug])
+@@index([category, top_selling])
+@@index([category, created_at])
+@@index([category, items_sold])
+@@index([category, average_rating])
+@@index([category, min_price])
+@@index([category, max_price])
+@@index([category, max_discount])
 }
 
 model ProductVariant {
-  slug        String  @id @db.VarChar(150) // e.g., "headphones-white-large"
-  product_slug String  @db.VarChar(100)
-  name        String  @db.VarChar(100) // e.g., "White, Large"
-  price       Float   @db.DoublePrecision
-  discount    Int     @default(0) @db.SmallInt
-  quantity    Int     @default(0) @db.SmallInt
-  created_at  DateTime @default(now())
-  description String?  @db.Text
-  preferred_img_index Int?  @default(0) @db.SmallInt
+slug String @id @db.VarChar(150) // e.g., "headphones-white-large"
+product_slug String @db.VarChar(100)
+name String @db.VarChar(100) // e.g., "White, Large"
+price Float @db.DoublePrecision
+discount Int @default(0) @db.SmallInt
+quantity Int @default(0) @db.SmallInt
+created_at DateTime @default(now())
+description String? @db.Text
+preferred_img_index Int? @default(0) @db.SmallInt
 
-  product     Products     @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
-  orderItems  OrderItems[]
-  setComponents SetComponents[]
+product Product @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
+orderItems OrderItem[]
+setComponents SetComponent[]
 
-  @@index([product_slug])
-  @@index([price])
-  @@index([quantity])
-  @@index([name])
-  @@index([discount])
-  @@index([product_slug, price])
-  @@index([product_slug, discount])
+@@index([product_slug])
+@@index([price])
+@@index([quantity])
+@@index([name])
+@@index([discount])
+@@index([product_slug, price])
+@@index([product_slug, discount])
 }
 
-model Reviews {
-  slug         String    @id @default(cuid())
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  rate         Decimal   @default(0) @db.Decimal(2, 1)
-  comment      String?   @db.VarChar(255)
-  product_slug String?   @db.VarChar(100)
-  set_slug     String?   @db.VarChar(100)
-  user_slug    String    @db.VarChar(100)
+model Review {
+slug String @id @default(cuid())
+created_at DateTime @default(now())
+updated_at DateTime @updatedAt
+rate Decimal @default(0) @db.Decimal(2, 1)
+comment String? @db.VarChar(255)
+product_slug String? @db.VarChar(100)
+set_slug String? @db.VarChar(100)
+user_slug String @db.VarChar(100)
 
-  // Reply functionality
-  parent_review_slug String? @db.VarChar(150)
-  is_reply           Boolean @default(false)
+// Reply functionality
+parent_review_slug String? @db.VarChar(150)
+is_reply Boolean @default(false)
 
-  // Relations
-  product      Products?  @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
-  set          Sets?      @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
-  user         Users      @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
+// Relations
+product Product? @relation(fields: [product_slug], references: [slug], onDelete: Cascade)
+set Set? @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+user User @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
 
-  // Self-referential relation for replies
-  parent_review Reviews?   @relation("ReviewReplies", fields: [parent_review_slug], references: [slug], onDelete: Cascade)
-  replies       Reviews[]  @relation("ReviewReplies")
+// Self-referential relation for replies
+parent_review Review? @relation("ReviewReplies", fields: [parent_review_slug], references: [slug], onDelete: Cascade)
+replies Review[] @relation("ReviewReplies")
 
-  @@index([user_slug])
-  @@index([created_at])
-  @@index([product_slug, updated_at, created_at])
-  @@index([set_slug, updated_at, created_at])
-  @@index([parent_review_slug])
-  @@index([product_slug, is_reply])
-  @@index([set_slug, is_reply])
+@@index([user_slug])
+@@index([created_at])
+@@index([product_slug, updated_at, created_at])
+@@index([set_slug, updated_at, created_at])
+@@index([parent_review_slug])
+@@index([product_slug, is_reply])
+@@index([set_slug, is_reply])
 }
 
-model Sets {
-  slug               String          @id @db.VarChar(100)
-  name               String          @db.VarChar(100)
-  images             String[]        @default([])
-  made_by            String          @db.VarChar(100)
-  description        String          @default("")
-  tags               String[]        @default([])
-  created_at         DateTime        @default(now())
-  price              Float           @default(0) @db.DoublePrecision
-  discount           Float           @default(0) @db.DoublePrecision
-  items_sold         Int             @default(0) @db.SmallInt
-  featured_promotion Boolean         @default(false)
-  top_selling        Boolean         @default(false)
-  is_new             Boolean         @default(false)
-  average_rating      Float           @default(0) @db.DoublePrecision
-  review_count        Int             @default(0)
+model Set {
+slug String @id @db.VarChar(100)
+name String @db.VarChar(100)
+images String[] @default([])
+made_by String @db.VarChar(100)
+description String @default("")
+tags String[] @default([])
+created_at DateTime @default(now())
+price Float @default(0) @db.DoublePrecision
+discount Float @default(0) @db.DoublePrecision
+items_sold Int @default(0) @db.SmallInt
+featured_promotion Boolean @default(false)
+top_selling Boolean @default(false)
+is_new Boolean @default(false)
+average_rating Float @default(0) @db.DoublePrecision
+review_count Int @default(0)
 
-  components         SetComponents[]
-  orderItems         OrderItems[]
-  relatedProducts   Sets[]          @relation("SetRelations")
-  relatedTo         Sets[]          @relation("SetRelations")
-  wishlistedBy       Users[]         @relation("UserWishlistSets")
-  reviews            Reviews[]
+components SetComponent[]
+orderItems OrderItem[]
+relatedProducts Set[] @relation("SetRelations")
+relatedTo Set[] @relation("SetRelations")
+wishlistedBy User[] @relation("UserWishlistSets")
+reviews Review[]
 
-  @@index([made_by])
-  @@index([name])
-  @@index([created_at])
-  @@index([price])
-  @@index([discount])
-  @@index([items_sold])
-  @@index([featured_promotion])
-  @@index([top_selling])
-  @@index([is_new])
+@@index([made_by])
+@@index([name])
+@@index([created_at])
+@@index([price])
+@@index([discount])
+@@index([items_sold])
+@@index([featured_promotion])
+@@index([top_selling])
+@@index([is_new])
 }
 
-model SetComponents {
-  set_slug           String @db.VarChar(100)
-  product_variant_slug String @db.VarChar(150)
-  quantity          Int    @db.SmallInt
+model SetComponent {
+set_slug String @db.VarChar(100)
+product_variant_slug String @db.VarChar(150)
+quantity Int @db.SmallInt
 
-  set     Sets           @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
-  variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
+set Set @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
 
-  @@id([set_slug, product_variant_slug])
-  @@index([set_slug, quantity])
+@@id([set_slug, product_variant_slug])
+@@index([set_slug, quantity])
 }
 
 model Team {
-  slug       String   @id @db.VarChar(100)
-  name       String   @db.VarChar(100)
-  role       String?  @db.VarChar(100)
-  img        String?  @db.VarChar(255)
-  created_at DateTime @default(now())
+slug String @id @db.VarChar(100)
+name String @db.VarChar(100)
+role String? @db.VarChar(100)
+img String? @db.VarChar(255)
+created_at DateTime @default(now())
 
-  @@index([created_at])
+@@index([created_at])
 }
 
-model Partners {
-  slug       String   @id @db.VarChar(100)
-  img        String   @db.VarChar(255)
-  created_at DateTime @default(now())
+model Partner {
+slug String @id @db.VarChar(100)
+img String @db.VarChar(255)
+created_at DateTime @default(now())
 
-  @@index([created_at])
+@@index([created_at])
 }
 
 model Gallery {
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  slug       String   @id @db.VarChar(100)
-  name       String   @db.VarChar(100)
-  img        String   @db.VarChar(255)
+created_at DateTime @default(now())
+updated_at DateTime @updatedAt
+slug String @id @db.VarChar(100)
+name String @db.VarChar(100)
+img String @db.VarChar(255)
 
-  @@index([created_at])
-  @@index([updated_at])
+@@index([created_at])
+@@index([updated_at])
 }
 
-model Themes {
-  slug            String   @id @default("general") @db.VarChar(50)
-  theme_string_obj  Json     @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
-  header_text_color String?  @default("text-black") @db.VarChar(100)
-  img             String?  @default("") @db.VarChar(255)
+model Theme {
+slug String @id @default("general") @db.VarChar(50)
+theme_string_obj Json @default("{\"primary\":\"blue\",\"secondary\":\"violet\"}")
+header_text_color String? @default("text-black") @db.VarChar(100)
+img String? @default("") @db.VarChar(255)
 }
 
-model Orders {
-  slug           String   @id @db.VarChar(100)
-  created_at     DateTime @default(now())
-  name           String   @db.VarChar(100)
-  email          String   @db.VarChar(255)
-  address        String   @db.VarChar(255)
-  city           String   @db.VarChar(100)
-  region         String?  @db.VarChar(100)
-  postal_code    String?  @db.VarChar(20)
-  notes          String?  @db.VarChar(500)
-  payment_method String   @db.VarChar(50)
-  shipping_fee   Decimal  @db.Decimal(10, 2)
-  sub_total      Decimal  @db.Decimal(10, 2)
-  phone          String   @db.VarChar(20)
-  status         String   @db.VarChar(20)
-  admin_note     String?  @db.Text
-  items_qty      Int      @db.SmallInt
+model Order {
+slug String @id @db.VarChar(100)
+created_at DateTime @default(now())
+name String @db.VarChar(100)
+email String @db.VarChar(255)
+address String @db.VarChar(255)
+city String @db.VarChar(100)
+region String? @db.VarChar(100)
+postal_code String? @db.VarChar(20)
+notes String? @db.VarChar(500)
+payment_method String @db.VarChar(50)
+shipping_fee Decimal @db.Decimal(10, 2)
+sub_total Decimal @db.Decimal(10, 2)
+phone String @db.VarChar(20)
+status String @db.VarChar(20)
+admin_note String? @db.Text
+items_qty Int @db.SmallInt
 
-  discount_code   String?        @db.VarChar(50)
-  discount_amount Decimal        @default(0) @db.Decimal(10, 2)
-  idempotency_key  String?        @unique @db.VarChar(100)
+discount_code String? @db.VarChar(50)
+discount_amount Decimal @default(0) @db.Decimal(10, 2)
+idempotency_key String? @unique @db.VarChar(100)
 
-  user            Users          @relation(fields: [email], references: [email], onDelete: Cascade)
-  orderItems      OrderItems[]
-  discountCodeRef DiscountCodes? @relation("OrderDiscountCode", fields: [discount_code], references: [slug])
+user User @relation(fields: [email], references: [email], onDelete: Cascade)
+orderItems OrderItem[]
+discountCodeRef DiscountCode? @relation("OrderDiscountCode", fields: [discount_code], references: [slug])
 
-  @@index([created_at])
-  @@index([email])
-  @@index([created_at, email])
-  @@index([status])
-  @@index([discount_code])
-  @@index([email, status])
+@@index([created_at])
+@@index([email])
+@@index([created_at, email])
+@@index([status])
+@@index([discount_code])
+@@index([email, status])
 }
 
-model OrderItems {
-  slug               String  @id @default(cuid())
-  order_slug         String  @db.VarChar(100)
-  product_variant_slug String? @db.VarChar(150)
-  set_slug           String? @db.VarChar(100)
-  item_type          String  @db.VarChar(20)
-  quantity           Int     @db.SmallInt
-  unit_price         Decimal @db.Decimal(10, 2)
+model OrderItem {
+slug String @id @default(cuid())
+order_slug String @db.VarChar(100)
+product_variant_slug String? @db.VarChar(150)
+set_slug String? @db.VarChar(100)
+item_type String @db.VarChar(20)
+quantity Int @db.SmallInt
+unit_price Decimal @db.Decimal(10, 2)
 
-  order   Orders          @relation(fields: [order_slug], references: [slug], onDelete: Cascade)
-  variant ProductVariant? @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
-  set     Sets?           @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
+order Order @relation(fields: [order_slug], references: [slug], onDelete: Cascade)
+variant ProductVariant? @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
+set Set? @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
 
-  @@unique([order_slug, product_variant_slug, set_slug])
-  @@index([order_slug])
-  @@index([product_variant_slug])
-  @@index([set_slug])
-  @@index([item_type])
+@@unique([order_slug, product_variant_slug, set_slug])
+@@index([order_slug])
+@@index([product_variant_slug])
+@@index([set_slug])
+@@index([item_type])
 }
 
-model DiscountCodes {
-  slug                 String    @id @db.VarChar(50)
-  created_at           DateTime  @default(now())
-  expires_at           DateTime?
-  discount_type        String    @db.VarChar(20)
-  discount_value       Decimal   @db.Decimal(10, 2)
-  max_uses             Int?      @db.SmallInt
-  used_count           Int       @default(0) @db.SmallInt
-  minimum_order_amount Decimal?  @db.Decimal(10, 2)
-  is_active            Boolean   @default(true)
-  orders               Orders[]  @relation("OrderDiscountCode")
+model DiscountCode {
+slug String @id @db.VarChar(50)
+created_at DateTime @default(now())
+expires_at DateTime?
+discount_type String @db.VarChar(20)
+discount_value Decimal @db.Decimal(10, 2)
+max_uses Int? @db.SmallInt
+used_count Int @default(0) @db.SmallInt
+minimum_order_amount Decimal? @db.Decimal(10, 2)
+is_active Boolean @default(true)
+orders Order[] @relation("OrderDiscountCode")
 
-  @@index([slug])
-  @@index([created_at])
+@@index([slug])
+@@index([created_at])
 }
 
-model CustomTransactions {
-  slug        String   @id @default("general")
-  amount      Decimal  @db.Decimal(10, 2)
+model CustomTransaction {
+slug String @id @default("general")
+amount Decimal @db.Decimal(10, 2)
 }
 
-```
+````
 
 </details>
 
@@ -751,10 +768,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── AdminHeader.js
         │   │   │   ├── AutoSlugifyButton.js
         │   │   │   ├── Backup.js
-        │   │   │   ├── CustomTransactions.js
+        │   │   │   ├── CustomTransaction.js
         │   │   │   ├── Dashboard.js
         │   │   │   ├── DiscountCalculator.js
         │   │   │   ├── forms
+        │   │   │   │   ├── BrandForm.js
         │   │   │   │   ├── CashierForm.js
         │   │   │   │   ├── CategoryForm.js
         │   │   │   │   ├── CodesForm.js
@@ -777,6 +795,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── SpamManagement.js
         │   │   │   └── TableDisplay.js
         │   │   ├── hooks
+        │   │   │   ├── useDebouncedSearch.js
         │   │   │   ├── useEntityData.js
         │   │   │   └── useFormSubmit.js
         │   │   ├── layout.js
@@ -901,7 +920,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         ├── helpers
         │   ├── config.js
         │   ├── functions.js
-        │   ├── language-en.js
+        │   ├── language-ar.js
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -923,11 +942,10 @@ This project uses the **Next.js App Router**, which organizes the application fi
             ├── globals.css
             ├── react-paginate.css
             └── tos.css
-
-```
+````
 
 </details>
 
 ---
 
-_Last updated on September 19, 2025 by Ayman._
+_Last updated on September 20, 2025 by Ayman._

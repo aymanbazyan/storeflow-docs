@@ -80,11 +80,11 @@ The application's search feature relies on advanced PostgreSQL functions that **
 Run this inside the psql terminal:
 
 ```sql
--- ========= STEP 1: DEFINE THE UPDATE FUNCTION =========
+-- STEP 1: DEFINE THE UPDATE FUNCTION
 -- This function will be called by the trigger automatically.
 -- We use 'setweight' to give matches in 'name' a higher priority ('A')
 -- than matches in 'slug' ('B'). This can be used later to rank search results.
-CREATE OR REPLACE FUNCTION update_products_search_vector()
+CREATE OR REPLACE FUNCTION update_product_search_vector()
 RETURNS TRIGGER AS $$
 BEGIN
   NEW.search_vector :=
@@ -95,21 +95,21 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- ========= STEP 2: CREATE THE TRIGGER =========
+-- STEP 2: CREATE THE TRIGGER
 -- This trigger ensures the function runs automatically whenever a product is created or updated.
 -- We drop the old one first to avoid errors.
-DROP TRIGGER IF EXISTS tsvector_update ON "Products";
+DROP TRIGGER IF EXISTS tsvector_update ON "Product";
 
 CREATE TRIGGER tsvector_update
-BEFORE INSERT OR UPDATE ON "Products"
+BEFORE INSERT OR UPDATE ON "Product"
 FOR EACH ROW
-EXECUTE FUNCTION update_products_search_vector();
+EXECUTE FUNCTION update_product_search_vector();
 
 
--- ========= STEP 3: BACKFILL EXISTING DATA (ONE-TIME) =========
+-- STEP 3: BACKFILL EXISTING DATA (ONE-TIME)
 -- This updates all existing products in your table to have a search_vector.
 -- It's crucial for making old products searchable.
-UPDATE "Products"
+UPDATE "Product"
 SET search_vector = (
   setweight(to_tsvector('simple', coalesce(name, '')), 'A') ||
   setweight(to_tsvector('simple', coalesce(slug, '')), 'B')
@@ -117,12 +117,12 @@ SET search_vector = (
 WHERE search_vector IS NULL; -- Only update rows that haven't been processed
 
 
--- ========= STEP 4: CREATE THE PERFORMANCE INDEX =========
+-- STEP 4: CREATE THE PERFORMANCE INDEX
 -- This GIN index is what makes the full-text search fast.
 -- Without it, searches will be very slow on a large table.
-CREATE INDEX IF NOT EXISTS "Products_search_vector_idx" ON "Products" USING GIN(search_vector);
+CREATE INDEX IF NOT EXISTS "Product_search_vector_idx" ON "Product" USING GIN(search_vector);
 ```
 
 ---
 
-_Last updated on September 15, 2025 by Ayman._
+_Last updated on September 20, 2025 by Ayman._

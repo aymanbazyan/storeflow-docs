@@ -32,7 +32,7 @@ You can type this command into Command Prompt, Powershell, Terminal, or any othe
 This command also installs all necessary dependencies you need to run Storeflow.
 
 ```bash
-npm init
+cd ./web
 npm i
 ```
 

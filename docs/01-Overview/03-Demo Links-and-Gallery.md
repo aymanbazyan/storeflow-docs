@@ -14,6 +14,8 @@
 
 **Note: Pictures are taken with full screen to avoid quality loss.**
 
+## Desktop Web
+
 ...
 
 ### Homepage Featured Offers
@@ -347,5 +349,11 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 ---
 
 # There are even more details to see on the website!
+
+---
+
+## Mobile
+
+(soon)
 
 _Last updated on September 19, 2025 by Ayman._
