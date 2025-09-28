@@ -783,6 +783,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   │   ├── SetForm.js
         │   │   │   │   ├── TeamForm.js
         │   │   │   │   └── ThemesForm.js
+        │   │   │   ├── Help.js
         │   │   │   ├── HtmlEditor.js
         │   │   │   ├── ImageList.js
         │   │   │   ├── NavigationTabs.js
@@ -948,4 +949,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on September 20, 2025 by Ayman._
+_Last updated on September 28, 2025 by Ayman._

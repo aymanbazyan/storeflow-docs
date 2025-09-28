@@ -165,6 +165,7 @@ It will also show an icon if the account was made via Google.
 ### Contact Us Page
 
 ![Contact Us Page](../../static/gallery/21.png)
+![Contact Us Page](../../static/gallery/21.1.png)
 
 ---
 
@@ -342,9 +343,15 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
-### Timed-out IP screen
+### Timed-out IP screen (removed)
 
 ![Timed out screen](../../static/gallery/49.png)
+
+---
+
+### Admin: Help screen
+
+![Help screen](../../static/gallery/50.png)
 
 ---
 
@@ -356,4 +363,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on September 19, 2025 by Ayman._
+_Last updated on September 28, 2025 by Ayman._
