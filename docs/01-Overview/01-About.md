@@ -53,7 +53,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 #### **Store Customization**
 
-- **Homepage Content:** Control featured categories, the main banner, and a gallery for store photos.
+- **Homepage Content:** Control featured categories, the main banner, an interactive map on the website and a gallery for store photos.
 - **Shipping Rules:** Set custom shipping fees based on customer regions.
 - **Site Information:** Easily update general content like team members and partners.
 - **Site theme:** The admin can set the primary, secondary and the header banner from the Themes panel.
@@ -68,7 +68,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 ### **2. Customer Storefront (Shopping Experience)**
 
-A clean and intuitive interface for customers to browse, shop, and purchase.
+A clean and intuitive interface for customers to browse and purchase.
 
 #### **Browsing & Discovery**
 

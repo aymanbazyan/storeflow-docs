@@ -165,6 +165,7 @@ It will also show an icon if the account was made via Google.
 ### Contact Us Page
 
 ![Contact Us Page](../../static/gallery/21.png)
+You can also add a markup/pin anywhere on the map using OpenStreetMap
 ![Contact Us Page](../../static/gallery/21.1.png)
 
 ---
@@ -355,7 +356,7 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
-# There are even more details to see on the website!
+# There are some more details to notice on the website!
 
 ---
 
