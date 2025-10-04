@@ -33,7 +33,6 @@ This command also installs all necessary dependencies you need to run Storeflow.
 
 ```bash
 cd ./web
-npm i
 ```
 
 _Last updated on June 12, 2025 by Ayman._

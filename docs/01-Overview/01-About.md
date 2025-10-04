@@ -13,6 +13,8 @@ I implemented a feature-rich admin panel where most things in the store are adju
 
 It uses PostgreSQL as the database, with secure authentication and administrative privileges.
 
+**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Node.js, or manage dependencies - just run `docker-compose up` and you're ready to go.
+
 ---
 
 ![Performance test](../../static/img/performance-test.png)

@@ -12,7 +12,7 @@
 
 - Mobile: React Native 0.81.4 + Expo 54.0.7
 
-- [Deployment: Vercel / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
+- [Deployment: Docker / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
 
 ---
 
@@ -683,6 +683,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
 │   │   │       ├── account.tsx
 │   │   │       ├── index.tsx
 │   │   │       ├── _layout.tsx
+│   │   │       ├── login.tsx
 │   │   │       ├── sets.tsx
 │   │   │       ├── store.tsx
 │   │   │       └── tos.tsx
@@ -703,12 +704,16 @@ This project uses the **Next.js App Router**, which organizes the application fi
 │   ├── babel.config.js
 │   ├── cesconfig.jsonc
 │   ├── components
+│   │   ├── BrandFilterDropdown.tsx
 │   │   ├── ContactBox.tsx
 │   │   ├── Footer.tsx
 │   │   ├── ItemsSlider.tsx
 │   │   ├── Logo.tsx
 │   │   ├── MediaDisplay.tsx
+│   │   ├── MultiRangeSlider.tsx
 │   │   ├── NewTag.tsx
+│   │   ├── Pagination.tsx
+│   │   ├── SearchForm.tsx
 │   │   ├── StarRating.tsx
 │   │   ├── Typography.tsx
 │   │   └── Underline.tsx
@@ -718,10 +723,13 @@ This project uses the **Next.js App Router**, which organizes the application fi
 │   │   └── types
 │   │       ├── data.d.ts
 │   │       └── general.ts
+│   ├── context
+│   │   └── AppDataContext.tsx
 │   ├── eslint.config.js
 │   ├── global.css
 │   ├── hooks
-│   │   └── useApi.ts
+│   │   ├── useApi.ts
+│   │   └── useDebounce.ts
 │   ├── metro.config.js
 │   ├── nativewind-env.d.ts
 │   ├── package.json
@@ -733,10 +741,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
 │   └── utils
 │       ├── api.ts
 │       └── functions.ts
-│
-├── README.md
-│
 └── web
+    ├── docker-compose.dev.yml
+    ├── docker-compose.yml
+    ├── docker-entrypoint.sh
+    ├── Dockerfile
     ├── jsconfig.json
     ├── next.config.mjs
     ├── package.json
@@ -744,6 +753,18 @@ This project uses the **Next.js App Router**, which organizes the application fi
     ├── prisma
     │   └── schema.prisma
     ├── public
+    │   ├── help-page
+    │   │   ├── help-auto-slug.png
+    │   │   ├── help-copy-html-1.png
+    │   │   ├── help-copy-html-2.png
+    │   │   ├── help-copy-html-3.png
+    │   │   ├── help-html-example.png
+    │   │   ├── help-open-html-editor-1.png
+    │   │   ├── help-open-html-editor-2.png
+    │   │   ├── help-order-life-cycle-1.png
+    │   │   ├── help-order-life-cycle-2.png
+    │   │   └── help-slug-in-url.png
+    │   ├── icon-1.png
     │   └── icon.png
     ├── setup-files
     │   └── manage-users.js
@@ -791,6 +812,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── OrderView.js
         │   │   │   ├── ProductOptions.js
         │   │   │   ├── RelatedItemsSection.js
+        │   │   │   ├── ResetForm.js
         │   │   │   ├── ReviewView.js
         │   │   │   ├── SearchProduct.js
         │   │   │   ├── SpamManagement.js
@@ -900,6 +922,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── SystemTimeChecker.js
         │   │   └── ThemeScript.js
         │   └── store-components
+        │       ├── BrandDescription.js
         │       ├── ExpandableWrapper.js
         │       ├── ImageSelect.js
         │       ├── NewTag.js
@@ -919,9 +942,10 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── ConfirmModal.js
         │   └── WishlistContext.js
         ├── helpers
+        │   ├── client-functions.js
         │   ├── config.js
         │   ├── functions.js
-        │   ├── language-ar.js
+        │   ├── language-en.js
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -939,14 +963,14 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── review.js
         │   ├── session.js
         │   └── wishlist.js
+        ├── middleware-out.js
         └── styles
             ├── globals.css
-            ├── react-paginate.css
-            └── tos.css
+            └── react-paginate.css
 ````
 
 </details>
 
 ---
 
-_Last updated on September 28, 2025 by Ayman._
+_Last updated on October 4, 2025 by Ayman._
