@@ -14,7 +14,7 @@ You can create the **.env** here:
 Nobody should see this file.
 :::
 
-```javascript
+```python
 # PUBLIC - Branding & Contact
 NEXT_PUBLIC_BRAND_NAME="Store Flow"
 NEXT_PUBLIC_PHONE_NUMBER="+970 111 111 111"
@@ -92,6 +92,8 @@ REVIEWS_DELETE_LIMIT=10
 REVIEWS_DELETE_LIMIT_RESET_TIME=3600000
 AUTH_LIMIT=13
 AUTH_LIMIT_RESET_TIME=3600000
+FEEDBACK_LIMIT=3
+FEEDBACK_LIMIT_RESET_TIME=3600000
 ```
 
 Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
@@ -149,4 +151,4 @@ Replace `myuser` with the actual user (your operating system user).
 
 ---
 
-_Last updated on October 4, 2025 by Ayman._
+_Last updated on October 6, 2025 by Ayman._

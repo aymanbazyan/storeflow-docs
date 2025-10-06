@@ -4,7 +4,7 @@
 
 - Frontend + Backend: Next.js v15.5.0 (App Router)
 
-- Database: PostgreSQL v16.9 + Prisma v6.16.2
+- Database: PostgreSQL v16.9 + Prisma v6.16.3
 
 - Styling: Tailwind CSS v4
 
@@ -283,6 +283,14 @@ erDiagram
         String slug PK
         Decimal amount
     }
+
+Feedback {
+String slug PK
+DateTime createdAt
+FeedbackType type
+String message
+Boolean isClosed
+}
 
 ```
 
@@ -622,7 +630,7 @@ slug String @id @default(cuid())
 order_slug String @db.VarChar(100)
 product_variant_slug String? @db.VarChar(150)
 set_slug String? @db.VarChar(100)
-item_type String @db.VarChar(20)
+item_type ItemType
 quantity Int @db.SmallInt
 unit_price Decimal @db.Decimal(10, 2)
 
@@ -656,6 +664,29 @@ orders Order[] @relation("OrderDiscountCode")
 model CustomTransaction {
 slug String @id @default("general")
 amount Decimal @db.Decimal(10, 2)
+}
+
+model Feedback {
+created_at DateTime @default(now())
+slug String @id @default(cuid())
+type FeedbackType
+message String @db.Text
+is_closed Boolean @default(false)
+
+@@index([created_at])
+@@index([is_closed])
+}
+
+enum ItemType {
+PRODUCT
+SET
+}
+
+enum FeedbackType {
+BUG
+FEATURE
+IMPROVEMENT
+GENERAL
 }
 
 ````
@@ -792,6 +823,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── CustomTransaction.js
         │   │   │   ├── Dashboard.js
         │   │   │   ├── DiscountCalculator.js
+        │   │   │   ├── Feedback.js
         │   │   │   ├── forms
         │   │   │   │   ├── BrandForm.js
         │   │   │   │   ├── CashierForm.js
@@ -838,6 +870,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   └── route.js
         │   │   ├── custom-transactions
         │   │   │   └── route.js
+        │   │   ├── feedback
+        │   │   │   └── route.js
         │   │   ├── healthcheck
         │   │   │   └── route.js
         │   │   ├── pages-data
@@ -863,6 +897,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── contact
         │   │   └── page.js
         │   ├── error.js
+        │   ├── feedback
+        │   │   └── page.js
         │   ├── layout.js
         │   ├── loading.js
         │   ├── login
@@ -945,7 +981,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── client-functions.js
         │   ├── config.js
         │   ├── functions.js
-        │   ├── language-en.js
+        │   ├── language-ar.js
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -973,4 +1009,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on October 4, 2025 by Ayman._
+_Last updated on October 6, 2025 by Ayman._

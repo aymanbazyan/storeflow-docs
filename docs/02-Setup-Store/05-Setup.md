@@ -2,14 +2,6 @@
 
 This guide details the steps required to set up and run the application using Docker. Docker handles all dependencies including PostgreSQL, Node.js, and the application itself.
 
-## Prerequisites
-
-- **Docker** and **Docker Compose** installed on your machine
-  - [Install Docker](https://docs.docker.com/get-docker/)
-  - [Install Docker Compose](https://docs.docker.com/compose/install/)
-
-That's it! No need to install PostgreSQL, Node.js, or npm separately.
-
 ## Setup Instructions
 
 <!-- ### 1. Configure Environment Variables -->
@@ -47,6 +39,11 @@ docker-compose logs -f
 ```bash
 # Stop services
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+```
+
+```bash
+# Host Prisma studio
+docker-compose exec app npm run prisma:studio
 ```
 
 #### Production Mode
@@ -190,4 +187,4 @@ If you need to run the application without Docker, see [LEGACY_SETUP.md](./LEGAC
 
 ---
 
-_Last updated on October 4, 2025 by Ayman._
+_Last updated on October 6, 2025 by Ayman._

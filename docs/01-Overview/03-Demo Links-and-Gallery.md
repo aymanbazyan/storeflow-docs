@@ -356,6 +356,19 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
+### Feedback Form
+
+![Feedback Form](../../static/gallery/51.png)
+![Feedback Form 2](../../static/gallery/52.png)
+
+---
+
+### Admin: Feedback panel
+
+![Feedback panel](../../static/gallery/53.png)
+
+---
+
 # There are some more details to notice on the website!
 
 ---
@@ -364,4 +377,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on September 30, 2025 by Ayman._
+_Last updated on October 6, 2025 by Ayman._

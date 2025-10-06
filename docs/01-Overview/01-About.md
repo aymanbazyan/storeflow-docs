@@ -65,6 +65,7 @@ Admins have full control over the store's products, sales, and appearance.
 - **Export/Import database backup folder:** A function for backing up or restoring the entire site database.
 - **Timeout Ips:** A dashboard to manage timed-out IP addresses to block spammers.
 - **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
+- **Feedback Management:** A central dashboard to view and manage all customer feedback submitted through the storefront.
 
 ---
 
@@ -84,6 +85,7 @@ A clean and intuitive interface for customers to browse and purchase.
 - **Payment Options:** Cash on Delivery is currently the only option.
 - **Automated Email Notifications:** Customers automatically receive emails for important order updates (e.g., confirmation, rejection, admin's notes).
 - **Reviews:** Customers will be able to leave reviews (Stars rate and a Comment) in products and sets that has been delivered, and other buyers can **Reply** to comments.
+- **Feedback System:** A simple form allows customers to leave general feedback about their shopping experience, helping the store to improve.
 
 ---
 
@@ -101,8 +103,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on September 30, 2025 by Ayman._
-
-<!-- - **Real-time Notifications:** See new orders appear instantly without needing to refresh the page. -->
-<!-- - **Improved Loading:** Skeleton screens provide a faster, smoother browsing experience. -->
-<!-- with planned support for **Credit Card** (soon) and **PayPal** (soon) -->
+_Last updated on October 6, 2025 by Ayman._
