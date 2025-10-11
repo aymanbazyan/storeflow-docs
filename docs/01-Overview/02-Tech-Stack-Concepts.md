@@ -2,17 +2,22 @@
 
 ## **Tech Stack**
 
-- Frontend + Backend: Next.js v15.5.0 (App Router)
+- **Frontend + Backend**: Next.js v15.5.0 (App Router)
+- **Database**: PostgreSQL v16.9 + Prisma v6.17.1
+- **Styling**: Tailwind CSS v4
+- **API**: Next.js API routes
+- **Mobile**: React Native 0.81.4 + Expo 54.0.7
+- **Deployment**: [Docker / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
 
-- Database: PostgreSQL v16.9 + Prisma v6.16.3
+---
 
-- Styling: Tailwind CSS v4
+## **Core Architecture**
 
-- API: Next.js API routes
-
-- Mobile: React Native 0.81.4 + Expo 54.0.7
-
-- [Deployment: Docker / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
+- **Authentication:** JWT-based sessions with HTTPS-only cookies
+- **File Storage:** Local filesystem with Docker volume mounting
+- **Email Service:** Nodemailer with Gmail SMTP (changeable via .env)
+- **Rate Limiting:** Database-backed rate limiter for security
+- **Real-time Updates:** Server-Sent Events for live order updates
 
 ---
 
@@ -795,7 +800,6 @@ This project uses the **Next.js App Router**, which organizes the application fi
     │   │   ├── help-order-life-cycle-1.png
     │   │   ├── help-order-life-cycle-2.png
     │   │   └── help-slug-in-url.png
-    │   ├── icon-1.png
     │   └── icon.png
     ├── setup-files
     │   └── manage-users.js
@@ -873,6 +877,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── feedback
         │   │   │   └── route.js
         │   │   ├── healthcheck
+        │   │   │   └── route.js
+        │   │   ├── live
         │   │   │   └── route.js
         │   │   ├── pages-data
         │   │   │   └── [page]
@@ -981,7 +987,6 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── client-functions.js
         │   ├── config.js
         │   ├── functions.js
-        │   ├── language-ar.js
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -993,6 +998,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── data.js
         │   ├── db.js
         │   ├── email.js
+        │   ├── event-emitter.js
         │   ├── get-ip.js
         │   ├── pages-data.js
         │   ├── rate-limiter-db.js
@@ -1009,4 +1015,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on October 6, 2025 by Ayman._
+_Last updated on October 11, 2025 by Ayman._

@@ -369,6 +369,12 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
+### Admin: Live Update
+
+![Live Update](../../static/gallery/54.png)
+
+---
+
 # There are some more details to notice on the website!
 
 ---
@@ -377,4 +383,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on October 6, 2025 by Ayman._
+_Last updated on October 11, 2025 by Ayman._

@@ -14,6 +14,8 @@ You can create the **.env** here:
 Nobody should see this file.
 :::
 
+Copy this to the .env file:
+
 ```python
 # PUBLIC - Branding & Contact
 NEXT_PUBLIC_BRAND_NAME="Store Flow"
@@ -104,13 +106,13 @@ Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_APP_BASE_URL`, 
 Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.config.mjs** allowedOrigins like this: -
 :::
 
-```
+```py
   experimental: {
     useCache: true,
     serverActions: {
       allowedOrigins: [
         "localhost:3000",
-        "https://219z15jv-3000.euw.devtunnels.ms",
+        "https://xxxxxx-3000.euw.devtunnels.ms",
         // etc...
       ],
     },

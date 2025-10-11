@@ -1,4 +1,4 @@
-# Language and strings
+# Localization
 
 ---
 

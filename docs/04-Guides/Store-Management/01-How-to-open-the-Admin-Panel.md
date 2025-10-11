@@ -11,7 +11,7 @@ Make sure to use a very strong password for the admin's account.
 When you get into the admin panel, you'll have access to multiple panels:-
 
 - Dashboard
-- Orders
+- Orders (Live Table)
   - Cashier
 - Categories
 - Products
