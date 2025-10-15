@@ -11,9 +11,7 @@ Storeflow is a Next.js e-store that is easily editable and can be used for diffe
 
 I implemented a feature-rich admin panel where most things in the store are adjustable (e.g., categories, products, theme colors, etc.).
 
-It uses PostgreSQL as the database, with secure authentication and administrative privileges.
-
-**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Node.js, or manage dependencies - just run `docker-compose up` and you're ready to go.
+<!-- It uses PostgreSQL as the database, with secure authentication and administrative privileges. -->
 
 ---
 
@@ -51,7 +49,7 @@ Admins have full control over the store's products, sales, and appearance.
 
 - **Sales**: Set up discounts on products and sets, with a simple discount calculator.
 - **Discount Codes:** Create and manage custom discount codes for customers.
-- **Promotions:** Run sitewide sales and feature promotional and new items on the storefront.
+- **Promotions:** Run sitewide sales, **Custom Advertisements**, feature promotional and new items on the storefront.
 
 #### **Store Customization**
 
@@ -103,4 +101,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on October 11, 2025 by Ayman._
+_Last updated on October 15, 2025 by Ayman._

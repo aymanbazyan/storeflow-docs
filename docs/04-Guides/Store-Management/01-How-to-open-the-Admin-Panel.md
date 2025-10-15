@@ -15,6 +15,7 @@ When you get into the admin panel, you'll have access to multiple panels:-
   - Cashier
 - Categories
 - Products
+- Ads
 - Sets
 - Team
 - Brand
@@ -31,4 +32,4 @@ When you get into the admin panel, you'll have access to multiple panels:-
 
 ---
 
-_Last updated on October 6, 2025 by Ayman._
+_Last updated on October 15, 2025 by Ayman._

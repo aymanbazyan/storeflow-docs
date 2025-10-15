@@ -9,11 +9,13 @@
 - **Mobile**: React Native 0.81.4 + Expo 54.0.7
 - **Deployment**: [Docker / Asura Hosting (soon)](/docs/Setup-Store/Deployment)
 
+**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Node.js, or manage dependencies - just run `docker-compose up` and you're ready to go.
+
 ---
 
 ## **Core Architecture**
 
-- **Authentication:** JWT-based sessions with HTTPS-only cookies
+- **Authentication:** JWT-based sessions using HTTPS-only cookies and HS256 encryption
 - **File Storage:** Local filesystem with Docker volume mounting
 - **Email Service:** Nodemailer with Gmail SMTP (changeable via .env)
 - **Rate Limiting:** Database-backed rate limiter for security
@@ -24,6 +26,8 @@
 ## **Database Schemas (Prisma)**
 
 The single source of truth for the database structure is the `prisma/schema.prisma` file. It defines all models, relations, and indexes.
+
+**Note: These visual diagrams are not complete/accurate, more details below.**
 
 ### Diagram 1: E-commerce & Order Processing
 
@@ -297,7 +301,23 @@ String message
 Boolean isClosed
 }
 
-```
+````
+
+    ```mermaid
+
+erDiagram
+
+    Ad {
+String slug PK
+        DateTime createdAt
+        String name
+        String img
+        String link
+        String description
+    }
+
+
+````
 
 ### More details
 
@@ -614,7 +634,7 @@ status String @db.VarChar(20)
 admin_note String? @db.Text
 items_qty Int @db.SmallInt
 
-discount_code String? @db.VarChar(50)
+discount_code String? @db.VarChar(70)
 discount_amount Decimal @default(0) @db.Decimal(10, 2)
 idempotency_key String? @unique @db.VarChar(100)
 
@@ -651,7 +671,7 @@ set Set? @relation(fields: [set_slug], references: [slug], onDelete: Cascade)
 }
 
 model DiscountCode {
-slug String @id @db.VarChar(50)
+slug String @id @db.VarChar(70)
 created_at DateTime @default(now())
 expires_at DateTime?
 discount_type String @db.VarChar(20)
@@ -682,6 +702,17 @@ is_closed Boolean @default(false)
 @@index([is_closed])
 }
 
+model Ad {
+created_at DateTime @default(now())
+slug String @id
+name String? @default("")
+link String? @default("")
+img String? @default("") @db.VarChar(255)
+description String? @default("") @db.Text
+
+@@index([created_at])
+}
+
 enum ItemType {
 PRODUCT
 SET
@@ -694,7 +725,7 @@ IMPROVEMENT
 GENERAL
 }
 
-````
+```
 
 </details>
 
@@ -829,6 +860,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── DiscountCalculator.js
         │   │   │   ├── Feedback.js
         │   │   │   ├── forms
+        │   │   │   │   ├── AdForm.js
         │   │   │   │   ├── BrandForm.js
         │   │   │   │   ├── CashierForm.js
         │   │   │   │   ├── CategoryForm.js
@@ -987,6 +1019,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── client-functions.js
         │   ├── config.js
         │   ├── functions.js
+        │   ├── language-ar.js (unused)
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -1009,10 +1042,10 @@ This project uses the **Next.js App Router**, which organizes the application fi
         └── styles
             ├── globals.css
             └── react-paginate.css
-````
+```
 
 </details>
 
 ---
 
-_Last updated on October 11, 2025 by Ayman._
+_Last updated on October 15, 2025 by Ayman._

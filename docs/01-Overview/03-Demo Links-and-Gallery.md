@@ -375,6 +375,12 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
+### Custom Advertisements
+
+![Custom Advertisements](../../static/gallery/55.png)
+
+---
+
 # There are some more details to notice on the website!
 
 ---
@@ -383,4 +389,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on October 11, 2025 by Ayman._
+_Last updated on October 15, 2025 by Ayman._
