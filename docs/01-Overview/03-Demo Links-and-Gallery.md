@@ -264,6 +264,7 @@ The images weren't appearing because the API was hosted at localhost:3000.
 ### Admin: General Settings
 
 ![Admin: General Settings](../../static/gallery/37.png)
+![Admin: General Settings 2](../../static/gallery/37.1.png)
 
 ---
 
@@ -389,4 +390,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on October 15, 2025 by Ayman._
+_Last updated on October 16, 2025 by Ayman._

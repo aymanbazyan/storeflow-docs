@@ -80,7 +80,7 @@ A clean and intuitive interface for customers to browse and purchase.
 
 - **Dynamic Shopping Cart:** A sidebar cart lets users easily view and manage their selected items.
 - **Simple Checkout:** A streamlined, multi-step process for placing orders.
-- **Payment Options:** Cash on Delivery is currently the only option.
+- **Payment Options:** Cash on delivery and direct bank transfers are currently the only options.
 - **Automated Email Notifications:** Customers automatically receive emails for important order updates (e.g., confirmation, rejection, admin's notes).
 - **Reviews:** Customers will be able to leave reviews (Stars rate and a Comment) in products and sets that has been delivered, and other buyers can **Reply** to comments.
 - **Feedback System:** A simple form allows customers to leave general feedback about their shopping experience, helping the store to improve.
@@ -101,4 +101,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on October 15, 2025 by Ayman._
+_Last updated on October 16, 2025 by Ayman._
