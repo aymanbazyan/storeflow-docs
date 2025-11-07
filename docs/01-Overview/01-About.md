@@ -29,7 +29,7 @@ Storeflow is a comprehensive e-commerce platform designed with a powerful admin 
 
 ### **1. Admin Dashboard (Store Management)**
 
-Admins have full control over the store's products, sales, and appearance.
+Admins have variant permissions control over the store's products, sales, orders and appearance (check [Admin Panel Section](/docs/Guides/Store-Management/How-to-open-the-Admin-Panel) for details).
 
 #### **Product & Inventory**
 
@@ -101,4 +101,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on October 16, 2025 by Ayman._
+_Last updated on November 7, 2025 by Ayman._

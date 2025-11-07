@@ -3,7 +3,7 @@
 ## **Tech Stack**
 
 - **Frontend + Backend**: Next.js v15.5.0 (App Router)
-- **Database**: PostgreSQL v16.9 + Prisma v6.17.1
+- **Database**: PostgreSQL v16.9 + Prisma v6.19.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes
 - **Mobile**: React Native 0.81.4 + Expo 54.0.7
@@ -177,7 +177,7 @@ erDiagram
         String slug PK
         String email UK
         String displayName
-        Boolean isAdmin
+        String role
         Boolean emailVerified
         String passwordResetToken "optional, UK"
         String emailVerificationToken "optional, UK"
@@ -271,7 +271,7 @@ erDiagram
     }
 
     RequestLog {
-        Int slug PK
+        String slug PK
         String identifier
         String type
         String description
@@ -345,7 +345,7 @@ model User {
   password_hash             String?    @db.VarChar(255)
   display_name              String     @db.VarChar(100)
   is_google_auth             Boolean    @default(false)
-  is_admin                  Boolean    @default(false)
+  role                      Roles    @default(USER)
   password_reset_token       String?    @unique @db.VarChar(100)
   password_reset_expires     DateTime?
   email_verified            Boolean?   @default(false)
@@ -357,16 +357,16 @@ model User {
   reviews                  Review[]
 
   @@index([email])
-  @@index([is_admin])
+  @@index([role])
   @@index([email_verified])
   @@index([email_verified, created_at])
   @@index([created_at])
 }
 
 model RequestLog {
-  slug          Int      @id @default(autoincrement())
+  slug          String      @id @default(cuid())
   identifier    String
-  type          String   // "review", "checkout", "auth"
+  type          String   // like "review", "checkout", "auth"
   created_at    DateTime @default(now())
   description   String   @default("")
 
@@ -728,6 +728,14 @@ enum FeedbackType {
   GENERAL
 }
 
+enum Roles {
+  USER
+  PRODUCTS_MANAGER
+  ORDERS_MANAGER
+  CONTENT_MANAGER
+  ADMIN
+}
+
 ```
 
 </details>
@@ -1037,6 +1045,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── event-emitter.js
         │   ├── get-ip.js
         │   ├── pages-data.js
+        │   ├── permissions.js
         │   ├── rate-limiter-db.js
         │   ├── review.js
         │   ├── session.js
@@ -1051,4 +1060,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on October 16, 2025 by Ayman._
+_Last updated on November 7, 2025 by Ayman._
