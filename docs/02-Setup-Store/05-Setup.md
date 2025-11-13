@@ -4,24 +4,6 @@ This guide details the steps required to set up and run the application using Do
 
 ## Setup Instructions
 
-<!-- ### 1. Configure Environment Variables -->
-
-<!-- Create a `.env` file in the project root with your database credentials: -->
-
-<!-- ```ini
-# .env
-DATABASE_URL="postgresql://myuser:mypassword@db:5432/mydb?schema=public"
-POSTGRES_USER=myuser
-POSTGRES_PASSWORD=mypassword
-POSTGRES_DB=mydb
-..... See .env.example for the rest of
-``` -->
-
-<!-- **Important Notes:**
-- Replace `myuser`, `mypassword`, and `mydb` with your desired credentials
-- The host must be `db` (not `localhost`) - this is the Docker service name
-- Keep these credentials secure and never commit the `.env` file to version control -->
-
 ### 1. Start the Application
 
 #### Development Mode
@@ -69,9 +51,9 @@ docker-compose down
 
 The database schema is automatically initialized when you start the application. The Docker entrypoint script runs:
 
-1. `prisma generate` - Generates the Prisma client
-2. `prisma migrate deploy` - Applies all migrations
-3. Builds and starts the application
+1.  `prisma generate` - Generates the Prisma client
+2.  `prisma migrate deploy` - Applies all migrations
+3.  Builds and starts the application
 
 ### 3. Add Full-Text Search Functionality
 
@@ -132,9 +114,41 @@ CREATE INDEX IF NOT EXISTS "Product_search_vector_idx" ON "Product" USING GIN(se
 
 Type `\q` to exit the psql terminal.
 
+### 4. Syncing Manual SQL with Prisma Migrations (For feature updates)
+
+After applying the manual SQL for full-text search, you must update Prisma's migration history to prevent errors with future migrations. This process informs Prisma that the manual changes are now part of the official migration history.
+
+**Follow these steps:**
+
+1.  **Create a new, empty migration file:**
+
+    This command generates a new migration folder and a `migration.sql` file but does not apply it to the database.
+
+    ```bash
+    docker-compose exec app npx prisma migrate dev --name add-full-text-search --create-only
+    ```
+
+2.  **Add the manual SQL to the new migration file:**
+
+    Open the newly created file located at `prisma/migrations/TIMESTAMP_add-full-text-search/migration.sql` and paste the exact same SQL code from **Step 3** into it.
+
+3.  **Mark the migration as applied:**
+
+    This final command tells Prisma to add this migration to its history table _without_ re-running the SQL against your database. This resolves the synchronization issue.
+
+    ```bash
+    docker-compose exec app npx prisma migrate resolve --applied TIMESTAMP_add-full-text-search
+    ```
+
+    _Replace `TIMESTAMP_add-full-text-search` with the actual folder name generated in the first step._
+
+After completing these steps, you can run `prisma migrate dev` as usual for any future schema changes.
+
+---
+
 ## Useful Docker Commands
 
-```bash
+```sql
 # View real-time logs
 docker-compose logs -f
 
@@ -181,12 +195,6 @@ If ports 3000 or 5432 are already in use:
 - For code changes in dev mode: They should auto-reload
 - For Docker/environment changes: Run `docker-compose up --build`
 
-<!-- --- -->
-
-<!-- ## Legacy Setup (Without Docker)
-
-If you need to run the application without Docker, see [LEGACY_SETUP.md](./LEGACY_SETUP.md) for manual PostgreSQL and Node.js installation instructions. -->
-
 ---
 
-_Last updated on October 6, 2025 by Ayman._
+_Last updated on November 13, 2025 by Ayman._

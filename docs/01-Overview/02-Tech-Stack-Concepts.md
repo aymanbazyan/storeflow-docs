@@ -893,6 +893,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── RelatedItemsSection.js
         │   │   │   ├── ResetForm.js
         │   │   │   ├── ReviewView.js
+        │   │   │   ├── RoleCell.js
         │   │   │   ├── SearchProduct.js
         │   │   │   ├── SpamManagement.js
         │   │   │   └── TableDisplay.js
@@ -907,6 +908,9 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │       ├── form-helpers.js
         │   │       └── image-helpers.js
         │   ├── api
+        │   │   ├── admin
+        │   │   │   └── change-role
+        │   │   │       └── route.js
         │   │   ├── auth
         │   │   │   ├── me
         │   │   │   │   └── route.js
@@ -1030,7 +1034,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── client-functions.js
         │   ├── config.js
         │   ├── functions.js
-        │   ├── language-ar.js (unused)
+        │   ├── language-en.js
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
@@ -1060,4 +1064,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on November 7, 2025 by Ayman._
+_Last updated on November 13, 2025 by Ayman._

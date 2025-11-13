@@ -36,6 +36,8 @@ This role is responsible for processing and managing customer orders. They have 
 - Orders
 - Discount Codes
 - Users (view only)
+- Reviews
+- Feedback
 
 ### Content Manager (`CONTENT_MANAGER`)
 
@@ -68,7 +70,7 @@ Here is a quick-reference table showing which roles have access to each section 
 | Sets                |        ✅        |                |                 |  ✅   |
 | Users               |                  |       ✅       |                 |  ✅   |
 | Discount Codes      |                  |       ✅       |                 |  ✅   |
-| Reviews             |        ✅        |                |                 |  ✅   |
+| Reviews             |        ✅        |       ✅       |                 |  ✅   |
 | **Content Panels**  |                  |                |                 |       |
 | Ads                 |        ✅        |                |       ✅        |  ✅   |
 | Gallery             |                  |                |       ✅        |  ✅   |
@@ -79,7 +81,7 @@ Here is a quick-reference table showing which roles have access to each section 
 | General (Settings)  |                  |                |                 |  ✅   |
 | Backup              |                  |                |                 |  ✅   |
 | Logs                |                  |                |                 |  ✅   |
-| Feedback            |                  |                |                 |  ✅   |
+| Feedback            |                  |       ✅       |                 |  ✅   |
 | Help                |        ✅        |       ✅       |       ✅        |  ✅   |
 
 ---
