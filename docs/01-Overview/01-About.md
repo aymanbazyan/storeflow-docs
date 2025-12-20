@@ -57,10 +57,11 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Shipping Rules:** Set custom shipping fees based on customer regions.
 - **Site Information:** Easily update general content like team members and partners.
 - **Site theme:** The admin can set the primary, secondary and the header banner from the Themes panel.
+- **Progressive Web App (PWA):** Users can install the website like a mobile app for a better experience ([more details](/docs/03-Setup-mobile-app/1-intro.md)).
 
 #### **Security Management**
 
-- **Export/Import database backup folder:** A function for backing up or restoring the entire site database.
+- **Export/Import database backup folder:** A function for backing up or restoring the entire site database (multiple backups at a time are available).
 - **Timeout Ips:** A dashboard to manage timed-out IP addresses to block spammers.
 - **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
 - **Feedback Management:** A central dashboard to view and manage all customer feedback submitted through the storefront.
@@ -101,4 +102,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on November 7, 2025 by Ayman._
+_Last updated on December 20, 2025 by Ayman._

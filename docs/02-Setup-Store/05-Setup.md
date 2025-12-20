@@ -8,6 +8,10 @@ This guide details the steps required to set up and run the application using Do
 
 #### Development Mode
 
+:::tip
+For faster start time, the `--build` should only be used for the first time running the application.
+:::
+
 ```bash
 # Start services
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
@@ -197,4 +201,4 @@ If ports 3000 or 5432 are already in use:
 
 ---
 
-_Last updated on November 13, 2025 by Ayman._
+_Last updated on December 20, 2025 by Ayman._

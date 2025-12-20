@@ -382,7 +382,17 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
-# There are some more details to notice on the website!
+## Progressive Web App (PWA)
+
+![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-0.png)
+
+![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-1.png)
+
+![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-2.png)
+
+![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-3.png)
+
+![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-4.png)
 
 ---
 
@@ -390,4 +400,8 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 (soon)
 
-_Last updated on October 16, 2025 by Ayman._
+---
+
+# There are some more details to notice on the website!
+
+_Last updated on December 20, 2025 by Ayman._

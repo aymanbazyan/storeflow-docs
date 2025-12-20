@@ -65,7 +65,7 @@ NEXT_PUBLIC_DELIVERY_FEE_INTERIOR_LANDS=70
 # Auth
 JWT_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 # Database
-DATABASE_URL="postgresql://example:123456@db:5432/example_db?connection_limit=1&connect_timeout=30&keepalives_idle=30"
+DATABASE_URL="postgresql://example:123456@db:5432/example_db?connection_limit=1&connect_timeout=30"
 # Rewrite for the 'db' service
 POSTGRES_USER=example
 POSTGRES_PASSWORD=123456
@@ -153,4 +153,40 @@ Replace `myuser` with the actual user (your operating system user).
 
 ---
 
-_Last updated on October 6, 2025 by Ayman._
+> ## PWA MANIFEST
+
+Go to `web/public/`
+
+Edit the `manifest.json` and the icons there (icon-192.png and icon-512.png):
+
+```json
+{
+  "name": "Spring Hardware",
+  "short_name": "Spring Hardware",
+  "theme_color": "#4a8fdf",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/",
+  "start_url": "/",
+  "description": "Spring Hardware E-Store",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator/).
+
+---
+
+_Last updated on December 20, 2025 by Ayman._

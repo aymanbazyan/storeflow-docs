@@ -28,3 +28,12 @@
   --ifm-color-primary-lightest: #a8cdff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* PWA images only */
+img[src*="gallery/pwa"] {
+  max-width: 900px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+}
