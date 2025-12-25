@@ -118,35 +118,214 @@ CREATE INDEX IF NOT EXISTS "Product_search_vector_idx" ON "Product" USING GIN(se
 
 Type `\q` to exit the psql terminal.
 
-### 4. Syncing Manual SQL with Prisma Migrations (For feature updates)
+### 4. Syncing Manual SQL with Prisma Migrations (For Feature Updates)
 
 After applying the manual SQL for full-text search, you must update Prisma's migration history to prevent errors with future migrations. This process informs Prisma that the manual changes are now part of the official migration history.
 
 **Follow these steps:**
 
-1.  **Create a new, empty migration file:**
+#### Step 1: Create an empty migration file
 
-    This command generates a new migration folder and a `migration.sql` file but does not apply it to the database.
+Since the database changes already exist (from the manual SQL above), we create a migration that represents those changes but won't actually execute anything:
 
-    ```bash
-    docker-compose exec app npx prisma migrate dev --name add-full-text-search --create-only
-    ```
+```bash
+docker-compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_add_full_text_search && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- This migration is empty because the changes already exist in the database" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo $MIGRATION_NAME'
+```
 
-2.  **Add the manual SQL to the new migration file:**
+This will output the migration name (e.g., `20251224084447_add_full_text_search`). **Copy this name** for the next step.
 
-    Open the newly created file located at `prisma/migrations/TIMESTAMP_add-full-text-search/migration.sql` and paste the exact same SQL code from **Step 3** into it.
+#### Step 2: Check migration status
 
-3.  **Mark the migration as applied:**
+Verify that Prisma recognizes the new migration:
 
-    This final command tells Prisma to add this migration to its history table _without_ re-running the SQL against your database. This resolves the synchronization issue.
+```bash
+docker-compose exec app npx prisma migrate status
+```
 
-    ```bash
-    docker-compose exec app npx prisma migrate resolve --applied TIMESTAMP_add-full-text-search
-    ```
+You should see the migration you just created listed as "not yet been applied".
 
-    _Replace `TIMESTAMP_add-full-text-search` with the actual folder name generated in the first step._
+#### Step 3: Mark the migration as applied
 
-After completing these steps, you can run `prisma migrate dev` as usual for any future schema changes.
+Tell Prisma that this migration has already been applied to the database. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
+
+```bash
+docker-compose exec app npx prisma migrate resolve --applied MIGRATION_NAME_HERE
+```
+
+**Example:**
+
+```bash
+docker-compose exec app npx prisma migrate resolve --applied 20251224084447_add_full_text_search
+```
+
+#### Step 4: Verify everything is in sync
+
+Confirm that there are no pending migrations and no drift:
+
+```bash
+docker-compose exec app npx prisma migrate status
+```
+
+You should see a message like "Database schema is up to date!"
+
+---
+
+### 5. Updating Schema Without Losing Data (Development Workflow)
+
+When you need to update the Prisma schema during development and already have data in your database:
+
+<!-- #### Understanding Drift with Unsupported Types
+
+Because the `search_vector` field uses `Unsupported("tsvector")` and has a GIN index that Prisma cannot natively track, you will **always** encounter drift warnings when trying to create new migrations with `prisma migrate dev`. This is expected behavior and does not indicate a problem.
+
+**Your schema should look like this:**
+
+```prisma
+model Product {
+  // ... your other fields ...
+
+  search_vector  Unsupported("tsvector")? // search by name/slug for now
+
+  // DO NOT add @@index([search_vector], type: Gin) here
+  // The index exists in the database but Prisma can't track it
+}
+``` -->
+
+#### Recommended Workflow: Use db push for Development
+
+For development when you have manual SQL that Prisma can't track, use `db push` instead of migrations:
+
+```bash
+# Make your schema changes in schema.prisma, then:
+docker-compose exec app npx prisma db push
+
+# Regenerate Prisma client
+docker-compose exec app npx prisma generate
+
+# Restart your dev server
+```
+
+**What `db push` does:**
+
+- Applies schema changes directly to the database
+- Skips the migration system entirely
+- Won't complain about drift
+- Won't lose your data
+- Perfect for development iteration
+
+#### Alternative: Create Migrations Despite Drift (Advanced)
+
+If you need proper migrations for production deployment:
+
+**Step 1:** Create the migration file without applying it:
+
+```bash
+docker-compose exec app npx prisma migrate dev --name your_change_name --create-only
+```
+
+You'll see the drift warning - **ignore it** and let it create the migration anyway by pressing `y` if prompted, or it will exit with an error.
+
+**Step 2:** If it exits with error, manually create the migration:
+
+```bash
+docker-compose exec app npx prisma migrate dev --name your_change_name --create-only --skip-seed
+```
+
+**Step 3:** Inspect the generated migration file:
+
+```bash
+# View the latest migration
+docker-compose exec app cat prisma/migrations/$(ls -t prisma/migrations | head -1)/migration.sql
+```
+
+Verify it contains your actual schema changes (like `ALTER TABLE` statements), not just a comment.
+
+**Step 4:** Apply the migration:
+
+```bash
+docker-compose exec app npx prisma migrate deploy
+```
+
+**Step 5:** Regenerate Prisma client:
+
+```bash
+docker-compose exec app npx prisma generate
+```
+
+#### Important Notes
+
+:::danger
+**Empty Drift Resolution Migrations Don't Apply Schema Changes**
+
+When you create a migration just to resolve drift (like `20251224085842_resolve_drift`), it only contains a comment and doesn't actually modify your database. After resolving drift, you must still apply your schema changes using either:
+
+- `prisma db push` (recommended for development)
+- A new proper migration (for production)
+  :::
+
+:::warning
+**Common Mistake: Forgetting to Apply Changes After Resolving Drift**
+
+1. ❌ **Wrong:** Resolve drift → assume changes are applied → wonder why fields are missing
+2. ✅ **Correct:** Resolve drift → run `db push` or create new migration → changes are applied
+
+Remember: Drift resolution only syncs migration history. Your schema changes still need to be applied separately!
+:::
+
+:::tip
+**Development vs Production Strategy**
+
+- **Development:** Use `prisma db push` for quick iteration without migration files
+- **Production:** Use proper migrations with `prisma migrate deploy`
+- **When to switch:** Before deploying to production, create a proper migration that captures all your development changes
+  :::
+
+#### If you encounter drift errors when resolving drift:
+
+**Only follow this if you see drift when trying to sync migration history (not when making schema changes):**
+
+**Step 1:** Create an empty migration for the drift:
+
+```bash
+docker-compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_resolve_drift && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- Resolving schema drift" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo "Created migration: $MIGRATION_NAME"'
+```
+
+This will output the migration name. **Copy this name** for Step 3.
+
+**Step 2:** Check what migration was created:
+
+```bash
+docker-compose exec app npx prisma migrate status
+```
+
+You should see your new migration listed as "not yet been applied".
+
+**Step 3:** Mark it as applied. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
+
+```bash
+docker-compose exec app npx prisma migrate resolve --applied MIGRATION_NAME_HERE
+```
+
+**Example:**
+
+```bash
+docker-compose exec app npx prisma migrate resolve --applied 20251224085751_resolve_drift
+```
+
+**Step 4:** Verify the drift is resolved:
+
+```bash
+docker-compose exec app npx prisma migrate status
+```
+
+You should see "Database schema is up to date!"
+
+**Step 5:** Now apply your actual schema changes:
+
+```bash
+docker-compose exec app npx prisma db push
+docker-compose exec app npx prisma generate
+```
 
 ---
 
@@ -201,4 +380,4 @@ If ports 3000 or 5432 are already in use:
 
 ---
 
-_Last updated on December 20, 2025 by Ayman._
+_Last updated on December 24, 2025 by Ayman._
