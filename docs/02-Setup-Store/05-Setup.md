@@ -1,6 +1,6 @@
 # Setup Guide
 
-This guide details the steps required to set up and run the application using Docker. Docker handles all dependencies including PostgreSQL, Node.js, and the application itself.
+This guide details the steps required to set up and run the application using Docker. Docker handles all dependencies including PostgreSQL, Bun, and Next.js (the application itself).
 
 ## Setup Instructions
 
@@ -29,7 +29,7 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 
 ```bash
 # Host Prisma studio
-docker-compose exec app npm run prisma:studio
+docker-compose exec app bun prisma:studio
 ```
 
 #### Production Mode

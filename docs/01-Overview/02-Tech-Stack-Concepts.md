@@ -2,14 +2,14 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: Next.js v15.5.9 (App Router)
+- **Frontend + Backend**: Bun 1.3 + Next.js v15.5.9 (App Router)
 - **Database**: PostgreSQL v16.9 + Prisma v7.2.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes
 - **Mobile**: React Native 0.8?.? + Expo ?.? (soon)
 - **Deployment**: [Docker + Nginx (or other hosting services) (soon)](/docs/Setup-Store/Deployment)
 
-**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Node.js, or manage dependencies - just run `docker-compose up` and you're ready to go.
+**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Bun, or manage dependencies - just run `docker-compose up` and you're ready to go.
 
 ---
 

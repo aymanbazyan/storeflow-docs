@@ -132,15 +132,15 @@ Connect the app to the database and initialize the schemas:-
 Open your terminal and run these.
 
 ```
-npm run prisma:init
-npm run prisma:migrate:dev-reset
-npm run prisma:push
+bun run prisma:init
+bun run prisma:migrate:dev-reset
+bun run prisma:push
 ```
 
 ```
-npm run dev
+bun run dev
 OR
-npm run prisma:generate
+bun run prisma:generate
 ``` -->
 
 you might also want to grant files mutating premission to your app (to mutate the items' images).

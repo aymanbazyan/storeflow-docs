@@ -13,7 +13,7 @@ To ensure the system is secure, the very first administrator account must be ass
     After your account is created and verified, open your terminal in the project's root directory and run the following command, replacing `<email>` with the email you just registered:
 
     ```bash
-    docker-compose exec app npm run manage-users -- --change-role <email> ADMIN
+    docker-compose exec app bun run manage-users -- --change-role <email> ADMIN
     ```
 
 3.  **Log in and manage users from the Admin Panel:**
@@ -52,7 +52,7 @@ While all user management can be handled from the Admin Panel, the command-line 
 ### Available Commands
 
 The base command is run from your terminal in the project's root directory:
-`docker-compose exec app npm run manage-users -- <command> [arguments]`
+`docker-compose exec app bun run manage-users -- <command> [arguments]`
 
 | Command                             | Description                                                             |
 | ----------------------------------- | ----------------------------------------------------------------------- |
@@ -68,13 +68,13 @@ For development, you can instantly create pre-verified users with a default pass
 To create a standard test user, run:
 
 ```bash
-docker-compose exec app npm run manage-users -- --create-fake-user test@example.com
+docker-compose exec app bun run manage-users -- --create-fake-user test@example.com
 ```
 
 You can also assign a specific role upon creation:
 
 ```bash
-docker-compose exec app npm run manage-users -- --create-fake-user manager@example.com PRODUCTS_MANAGER
+docker-compose exec app bun run manage-users -- --create-fake-user manager@example.com PRODUCTS_MANAGER
 ```
 
 :::tip
