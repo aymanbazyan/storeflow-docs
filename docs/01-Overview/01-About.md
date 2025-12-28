@@ -44,6 +44,7 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Order Management:** View, approve, or reject incoming orders. Admins can add a note explaining a rejection, and the Orders table is **live-updated** on the screen.
 - **Manual Order Entry:** Log offline purchases, which automatically updates inventory and sales data, and you can search and pick the customer's email to connect the purchase with his account (if he has an account on the website), allowing him to review the products or see the purchase details from his account.
 - **Custom Transactions:** Make manual adjustments to revenue, such as for special circumstances, like a price reduction or a tip.
+- **Staff Order Editing:** Staff can manually edit incoming orders for the customer if needed (e.g., replacing RAM sticks with one that fits with an ordered motherboard) after contacting the customer. Additionally, there is an option to email the customer automatically regarding the edit.
 
 #### **Marketing & Promotions**
 
@@ -102,4 +103,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on December 20, 2025 by Ayman._
+_Last updated on December 28, 2025 by Ayman._
