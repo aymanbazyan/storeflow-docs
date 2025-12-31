@@ -26,9 +26,12 @@ NEXT_PUBLIC_MAP_LINK="https://maps.app.goo.gl/fFvqNZf1TDsLUoQZ6"
 NEXT_PUBLIC_MAP_SHOWCASE_URI="https://www.openstreetmap.org/export/embed.html?bbox=35.25061279535294%2C32.22571954584364%2C35.25491505861283%2C32.22780248703342&amp;layer=mapnik&amp;marker=32.22676102240543%2C35.25276392698288"
 NEXT_PUBLIC_DIRECT_SUPPORT_LINK="https://wsend.co/972598514251"
 NEXT_PUBLIC_SHOW_BRAND_NAME_IN_HEADERS=true
+NEXT_PUBLIC_SHOW_BRAND_NAME_IN_FOOTER=true
 
 # PUBLIC - Store & Checkout
 NEXT_PUBLIC_CURRENCY="₪"
+NEXT_PUBLIC_CURRENCY_POS="before" # Options: 'before' | 'after' | leave empty for auto-detect
+
 # Comma-separated list. No spaces. Leave empty for all cities.
 NEXT_PUBLIC_DELIVERY_ONLY_TO_CITIES="Nablus,Tolkarm"
 # Set to 0 for always free, -1 for no free delivery.
@@ -39,7 +42,6 @@ NEXT_PUBLIC_PRICE_FILTER_STEP=10
 NEXT_PUBLIC_SEARCH_LIMIT=5
 NEXT_PUBLIC_STORE_PAGE_SIZE=12
 NEXT_PUBLIC_WISHLIST_LIMIT=12
-NEXT_PUBLIC_MAX_IMAGES_PER_ITEM=5
 NEXT_PUBLIC_SETS_PAGE_SIZE=4
 NEXT_PUBLIC_ADMIN_TABLE_PAGE_SIZE=5
 
@@ -55,9 +57,11 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID="XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 # PUBLIC - Delivery Fees (you can edit these options as you like, but remember to check DELIVERY_FEES in config.js and language)
 
-NEXT_PUBLIC_DELIVERY_FEE_WEST_BANK=20
-NEXT_PUBLIC_DELIVERY_FEE_QUDS=30
-NEXT_PUBLIC_DELIVERY_FEE_INTERIOR_LANDS=70
+NEXT_PUBLIC_SHIPPING_ZONES='[
+  {"slug": "west-bank", "name": "West Bank", "fee": 20},
+  {"slug": "quds", "name": "Jerusalem", "fee": 30},
+  {"slug": "interior-lands", "name": "Interior Lands (48)", "fee": 70}
+]'
 
 
 # SERVER-SIDE SECRETS - DO NOT EXPOSE
@@ -189,4 +193,4 @@ You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator
 
 ---
 
-_Last updated on December 20, 2025 by Ayman._
+_Last updated on December 31, 2025 by Ayman._

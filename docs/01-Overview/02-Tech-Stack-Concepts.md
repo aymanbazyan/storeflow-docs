@@ -2,12 +2,13 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: Bun 1.3 + Next.js v15.5.9 (App Router)
+- **Frontend + Backend**: Next.js v15.5.9 (App Router)
 - **Database**: PostgreSQL v16.9 + Prisma v7.2.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes
 - **Mobile**: React Native 0.8?.? + Expo ?.? (soon)
-- **Deployment**: [Docker + Nginx (or other hosting services) (soon)](/docs/Setup-Store/Deployment)
+- **Deployment**: [Docker + Nginx (or other hosting services)](/docs/Setup-Store/Deployment)
+- **Runtime**: Bun 1.3
 
 **Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Bun, or manage dependencies - just run `docker-compose up` and you're ready to go.
 
@@ -848,13 +849,14 @@ This project uses the **Next.js App Router**, which organizes the application fi
     │   │   ├── help-roles-1.png
     │   │   └── help-slug-in-url.png
     │   ├── icon-192.png
+    │   ├── icon-2.png
     │   ├── icon-512.png
     │   ├── icon.png
     │   ├── manifest.json
-    │   ├── sw.js
-    │   └── workbox-7144475a.js
+    │   └── TEST_ICON.png
     ├── setup-files
-    │   └── manage-users.js
+    │   ├── manage-users.js
+    │   └── store-customization.pdf
     └── src
         ├── actions
         │   ├── authActions.js
@@ -1071,4 +1073,4 @@ This project uses the **Next.js App Router**, which organizes the application fi
 
 ---
 
-_Last updated on December 28, 2025 by Ayman._
+_Last updated on December 31, 2025 by Ayman._
