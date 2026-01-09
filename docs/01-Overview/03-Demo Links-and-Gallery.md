@@ -59,6 +59,10 @@ The Admin can chose any category to show here in its own list.
 
 ![Store Page with Filters](../../static/gallery/6.png)
 
+Categories as tags (optional style):
+
+![Store Page with Filters](../../static/gallery/6.1.png)
+
 ---
 
 ### Store Page Product Grid
@@ -237,6 +241,12 @@ The images weren't appearing because the API was hosted at localhost:3000.
 
 ---
 
+### Admin: Export as Excel
+
+![Admin: Export as Excel](../../static/gallery/32.1.png)
+
+---
+
 ### Admin: Category Management
 
 ![Admin: Category Management](../../static/gallery/33.png)
@@ -404,4 +414,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 # There are some more details to notice on the website!
 
-_Last updated on December 20, 2025 by Ayman._
+_Last updated on January 2, 2026 by Ayman._

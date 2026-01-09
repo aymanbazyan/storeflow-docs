@@ -48,6 +48,7 @@ NEXT_PUBLIC_ADMIN_TABLE_PAGE_SIZE=5
 # PUBLIC - Feature Flags
 NEXT_PUBLIC_SHOW_PARTNERS_ON_HOME=true
 NEXT_PUBLIC_SHOW_PARTNERS_ON_CONTACT=true
+NEXT_PUBLIC_STORE_CATEGORIES_VARIANT="tags" # "cards" | "tags"
 
 # PUBLIC - General & Third Party
 NEXT_PUBLIC_NODE_ENV='production' # production | development

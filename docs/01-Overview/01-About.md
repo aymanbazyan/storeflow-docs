@@ -37,6 +37,7 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
 - **Rich Content:** Use a simple HTML editor (CKEditor5) for detailed descriptions and upload both images and videos for products.
+- **Export as Excel:** Staff can export tables in the Admin panel to Excel for easy data analysis and can choose wich columns to export.
 
 #### **Sales & Orders**
 
@@ -103,4 +104,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on December 28, 2025 by Ayman._
+_Last updated on January 9, 2026 by Ayman._

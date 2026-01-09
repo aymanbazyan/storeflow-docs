@@ -139,7 +139,7 @@ This will output the migration name (e.g., `20251224084447_add_full_text_search`
 Verify that Prisma recognizes the new migration:
 
 ```bash
-docker-compose exec app npx prisma migrate status
+docker-compose exec app bunx prisma migrate status
 ```
 
 You should see the migration you just created listed as "not yet been applied".
@@ -149,13 +149,13 @@ You should see the migration you just created listed as "not yet been applied".
 Tell Prisma that this migration has already been applied to the database. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
 
 ```bash
-docker-compose exec app npx prisma migrate resolve --applied MIGRATION_NAME_HERE
+docker-compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
 ```
 
 **Example:**
 
 ```bash
-docker-compose exec app npx prisma migrate resolve --applied 20251224084447_add_full_text_search
+docker-compose exec app bunx prisma migrate resolve --applied 20251224084447_add_full_text_search
 ```
 
 #### Step 4: Verify everything is in sync
@@ -163,7 +163,7 @@ docker-compose exec app npx prisma migrate resolve --applied 20251224084447_add_
 Confirm that there are no pending migrations and no drift:
 
 ```bash
-docker-compose exec app npx prisma migrate status
+docker-compose exec app bunx prisma migrate status
 ```
 
 You should see a message like "Database schema is up to date!"
@@ -197,10 +197,10 @@ For development when you have manual SQL that Prisma can't track, use `db push` 
 
 ```bash
 # Make your schema changes in schema.prisma, then:
-docker-compose exec app npx prisma db push
+docker-compose exec app bunx prisma db push
 
 # Regenerate Prisma client
-docker-compose exec app npx prisma generate
+docker-compose exec app bunx prisma generate
 
 # Restart your dev server
 ```
@@ -220,7 +220,7 @@ If you need proper migrations for production deployment:
 **Step 1:** Create the migration file without applying it:
 
 ```bash
-docker-compose exec app npx prisma migrate dev --name your_change_name --create-only
+docker-compose exec app bunx prisma migrate dev --name your_change_name --create-only
 ```
 
 You'll see the drift warning - **ignore it** and let it create the migration anyway by pressing `y` if prompted, or it will exit with an error.
@@ -228,7 +228,7 @@ You'll see the drift warning - **ignore it** and let it create the migration any
 **Step 2:** If it exits with error, manually create the migration:
 
 ```bash
-docker-compose exec app npx prisma migrate dev --name your_change_name --create-only --skip-seed
+docker-compose exec app bunx prisma migrate dev --name your_change_name --create-only --skip-seed
 ```
 
 **Step 3:** Inspect the generated migration file:
@@ -243,13 +243,13 @@ Verify it contains your actual schema changes (like `ALTER TABLE` statements), n
 **Step 4:** Apply the migration:
 
 ```bash
-docker-compose exec app npx prisma migrate deploy
+docker-compose exec app bunx prisma migrate deploy
 ```
 
 **Step 5:** Regenerate Prisma client:
 
 ```bash
-docker-compose exec app npx prisma generate
+docker-compose exec app bunx prisma generate
 ```
 
 #### Important Notes
@@ -295,7 +295,7 @@ This will output the migration name. **Copy this name** for Step 3.
 **Step 2:** Check what migration was created:
 
 ```bash
-docker-compose exec app npx prisma migrate status
+docker-compose exec app bunx prisma migrate status
 ```
 
 You should see your new migration listed as "not yet been applied".
@@ -303,19 +303,19 @@ You should see your new migration listed as "not yet been applied".
 **Step 3:** Mark it as applied. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
 
 ```bash
-docker-compose exec app npx prisma migrate resolve --applied MIGRATION_NAME_HERE
+docker-compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
 ```
 
 **Example:**
 
 ```bash
-docker-compose exec app npx prisma migrate resolve --applied 20251224085751_resolve_drift
+docker-compose exec app bunx prisma migrate resolve --applied 20251224085751_resolve_drift
 ```
 
 **Step 4:** Verify the drift is resolved:
 
 ```bash
-docker-compose exec app npx prisma migrate status
+docker-compose exec app bunx prisma migrate status
 ```
 
 You should see "Database schema is up to date!"
@@ -323,8 +323,8 @@ You should see "Database schema is up to date!"
 **Step 5:** Now apply your actual schema changes:
 
 ```bash
-docker-compose exec app npx prisma db push
-docker-compose exec app npx prisma generate
+docker-compose exec app bunx prisma db push
+docker-compose exec app bunx prisma generate
 ```
 
 ---

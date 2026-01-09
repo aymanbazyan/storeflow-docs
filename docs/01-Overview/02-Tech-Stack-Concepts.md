@@ -2,7 +2,7 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: Next.js v15.5.9 (App Router)
+- **Frontend + Backend**: React 19.2.3 + Next.js v15.5.9 (App Router)
 - **Database**: PostgreSQL v16.9 + Prisma v7.2.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes
@@ -824,6 +824,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
 │       ├── api.ts
 │       └── functions.ts
 └── web
+    ├── bun.lock
     ├── docker-compose.dev.yml
     ├── docker-compose.yml
     ├── docker-entrypoint.sh
@@ -881,6 +882,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── CustomTransaction.js
         │   │   │   ├── Dashboard.js
         │   │   │   ├── DiscountCalculator.js
+        │   │   │   ├── DynamicExportModal.js
+        │   │   │   ├── ExportOrderModal.js
         │   │   │   ├── Feedback.js
         │   │   │   ├── forms
         │   │   │   │   ├── AdForm.js
@@ -920,7 +923,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │       └── image-helpers.js
         │   ├── api
         │   │   ├── admin
-        │   │   │   └── change-role
+        │   │   │   ├── change-role
+        │   │   │   │   └── route.js
+        │   │   │   ├── export-data
+        │   │   │   │   └── route.js
+        │   │   │   └── geo
         │   │   │       └── route.js
         │   │   ├── auth
         │   │   │   ├── me
@@ -997,7 +1004,9 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── ScrollControls.js
         │   │   └── ScrollDots.js
         │   ├── others-components
+        │   │   ├── Activity.js
         │   │   ├── CartSidebar.js
+        │   │   ├── Checkbox.js
         │   │   ├── ContactBox.js
         │   │   ├── CopyBtn.js
         │   │   ├── ExpandableGallery.js
@@ -1069,8 +1078,15 @@ This project uses the **Next.js App Router**, which organizes the application fi
             └── react-paginate.css
 ```
 
+<!-- $ tree -I '.DS_Store|*.orig.*|node_modules|package-lock.js
+on|.pnp|.pnp.*|.yarn|.env.*|*.pem|*.jks|*.p8|*.p12|*.key|*.mobileprovi
+sion|*debug.log*|*error.log*|.next|out|build|.vercel|*.tsbuildinfo|nex
+t-env.d.ts|dev.db|generated|migrations|coverage|backups|uploads|temp|.
+expo|dist|web-build|.metro-health-check*|ios|android|.docusaurus|.cach
+e-loader' -->
+
 </details>
 
 ---
 
-_Last updated on December 31, 2025 by Ayman._
+_Last updated on January 9, 2026 by Ayman._
