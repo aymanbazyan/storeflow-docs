@@ -128,6 +128,8 @@ Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.c
 
 To get the `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, you must go to [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials), create `OAuth 2.0 Client ID`, and copy the `Client ID`, then click on it and add the `NEXT_PUBLIC_APP_BASE_URL` to the **Authorised JavaScript origins**.
 
+You can get the VAPID KEYS from any place like [magicbell](https://www.magicbell.com/web-push/vapid-keys).
+
 ---
 
 <!-- > ## Deploy schemas
@@ -191,6 +193,10 @@ Edit the `manifest.json` and the icons there (icon-192.png and icon-512.png):
 ```
 
 You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator/).
+
+---
+
+[Google search index](https://www.google.com/search/create/new) (soon)
 
 ---
 

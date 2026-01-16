@@ -9,6 +9,12 @@
 - **Mobile**: React Native 0.8?.? + Expo ?.? (soon)
 - **Deployment**: [Docker + Nginx (or other hosting services)](/docs/Setup-Store/Deployment)
 - **Runtime**: Bun 1.3
+- **Push Notifications**: web-push (native)
+- **Email**: Nodemailer + Gmail SMTP (optional)
+
+---
+
+## **Features**
 
 **Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Bun, or manage dependencies - just run `docker-compose up` and you're ready to go.
 
@@ -854,12 +860,14 @@ This project uses the **Next.js App Router**, which organizes the application fi
     │   ├── icon-512.png
     │   ├── icon.png
     │   ├── manifest.json
+    │   ├── push-sw.js
     │   └── TEST_ICON.png
     ├── setup-files
     │   ├── manage-users.js
     │   └── store-customization.pdf
     └── src
         ├── actions
+        │   ├── adminPush.js
         │   ├── authActions.js
         │   └── reviewActions.js
         ├── app
@@ -883,10 +891,10 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── Dashboard.js
         │   │   │   ├── DiscountCalculator.js
         │   │   │   ├── DynamicExportModal.js
-        │   │   │   ├── ExportOrderModal.js
         │   │   │   ├── Feedback.js
         │   │   │   ├── forms
         │   │   │   │   ├── AdForm.js
+        │   │   │   │   ├── AdminPushForm.js
         │   │   │   │   ├── BrandForm.js
         │   │   │   │   ├── CashierForm.js
         │   │   │   │   ├── CategoryForm.js
@@ -927,7 +935,9 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   │   └── route.js
         │   │   │   ├── export-data
         │   │   │   │   └── route.js
-        │   │   │   └── geo
+        │   │   │   ├── geo
+        │   │   │   │   └── route.js
+        │   │   │   └── verify-user
         │   │   │       └── route.js
         │   │   ├── auth
         │   │   │   ├── me
@@ -947,6 +957,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   └── route.js
         │   │   ├── pages-data
         │   │   │   └── [page]
+        │   │   │       └── route.js
+        │   │   ├── push
+        │   │   │   ├── subscribe
+        │   │   │   │   └── route.js
+        │   │   │   └── unsubscribe
         │   │   │       └── route.js
         │   │   ├── tables
         │   │   │   ├── route.js
@@ -1021,6 +1036,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── MobileNav.js
         │   │   ├── NavLink.js
         │   │   ├── NavWrapper.js
+        │   │   ├── NotificationPermissionBtn.js
         │   │   ├── OpenCartBtn.js
         │   │   ├── SetsPagnination.js
         │   │   ├── Spinner.js
@@ -1056,7 +1072,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   └── server-functions.js
         ├── hooks
         │   ├── useIsMobile.js
-        │   └── useOutsideClick.js
+        │   ├── useOutsideClick.js
+        │   └── usePushNotifications.js
         ├── lib
         │   ├── auth.js
         │   ├── backup.js
@@ -1065,6 +1082,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── email.js
         │   ├── event-emitter.js
         │   ├── get-ip.js
+        │   ├── notifications.js
         │   ├── order-operations.js
         │   ├── pages-data.js
         │   ├── permissions.js
@@ -1089,4 +1107,4 @@ e-loader' -->
 
 ---
 
-_Last updated on January 9, 2026 by Ayman._
+_Last updated on January 14, 2026 by Ayman._

@@ -99,9 +99,10 @@ A dedicated area for registered customers to manage their activity.
 - **Order History & Control:** View all past orders and their current status (e.g., pending, approved). Customers can also cancel a recently placed order.
 - **Wishlist:** Save favorite products for later purchase.
 - **Email Confirmation:** Customer receive confirmation code on his email.
+- **Push Notifications:** Customer receive push notifications for his wishlist and orders (optional).
 
 ---
 
 #### **And there's more!**
 
-_Last updated on January 9, 2026 by Ayman._
+_Last updated on January 14, 2026 by Ayman._

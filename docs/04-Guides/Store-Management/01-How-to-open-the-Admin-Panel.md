@@ -28,6 +28,7 @@ This role focuses on managing the store's catalog. They have access to:
 - Sets
 - Reviews
 - Ads
+- Notifications
 
 ### Orders Manager (`ORDERS_MANAGER`)
 
@@ -48,6 +49,7 @@ This role manages the website's visual and informational content. They have acce
 - Partners
 - Team
 - Themes
+- Notifications
 
 ### Administrator (`ADMIN`)
 
@@ -73,6 +75,7 @@ Here is a quick-reference table showing which roles have access to each section 
 | Reviews             |        ✅        |       ✅       |                 |  ✅   |
 | **Content Panels**  |                  |                |                 |       |
 | Ads                 |        ✅        |                |       ✅        |  ✅   |
+| Notifications       |        ✅        |                |       ✅        |  ✅   |
 | Gallery             |                  |                |       ✅        |  ✅   |
 | Partners            |                  |                |       ✅        |  ✅   |
 | Team                |                  |                |       ✅        |  ✅   |
