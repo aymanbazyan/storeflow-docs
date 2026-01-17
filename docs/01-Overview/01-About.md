@@ -38,6 +38,7 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
 - **Rich Content:** Use a simple HTML editor (CKEditor5) for detailed descriptions and upload both images and videos for products.
 - **Export as Excel:** Staff can export tables in the Admin panel to Excel for easy data analysis and can choose wich columns to export.
+- **Active users Counter:** A simple counter for the number of current active users on the website.
 
 #### **Sales & Orders**
 
@@ -105,4 +106,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on January 14, 2026 by Ayman._
+_Last updated on January 17, 2026 by Ayman._

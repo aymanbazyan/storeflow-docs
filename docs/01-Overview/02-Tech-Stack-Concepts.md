@@ -884,6 +884,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │       └── page.js
         │   ├── admin
         │   │   ├── components
+        │   │   │   ├── ActiveUsers.js
         │   │   │   ├── AdminHeader.js
         │   │   │   ├── AutoSlugifyButton.js
         │   │   │   ├── Backup.js
@@ -936,6 +937,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── export-data
         │   │   │   │   └── route.js
         │   │   │   ├── geo
+        │   │   │   │   └── route.js
+        │   │   │   ├── online-users
         │   │   │   │   └── route.js
         │   │   │   └── verify-user
         │   │   │       └── route.js
@@ -1025,6 +1028,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── ContactBox.js
         │   │   ├── CopyBtn.js
         │   │   ├── ExpandableGallery.js
+        │   │   ├── FeatureOffOverlay.js
         │   │   ├── FloatingCartButton.js
         │   │   ├── Footer.js
         │   │   ├── HeaderAccount.js
@@ -1037,6 +1041,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── NavLink.js
         │   │   ├── NavWrapper.js
         │   │   ├── NotificationPermissionBtn.js
+        │   │   ├── OnlineHeartbeat.js
         │   │   ├── OpenCartBtn.js
         │   │   ├── SetsPagnination.js
         │   │   ├── Spinner.js
@@ -1071,6 +1076,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── language.js
         │   └── server-functions.js
         ├── hooks
+        │   ├── useHeartbeat.js
         │   ├── useIsMobile.js
         │   ├── useOutsideClick.js
         │   └── usePushNotifications.js
@@ -1083,6 +1089,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── event-emitter.js
         │   ├── get-ip.js
         │   ├── notifications.js
+        │   ├── online-tracking.js
         │   ├── order-operations.js
         │   ├── pages-data.js
         │   ├── permissions.js
@@ -1090,7 +1097,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── review.js
         │   ├── session.js
         │   └── wishlist.js
-        ├── middleware-out.js
+        ├── middleware.js
         └── styles
             ├── globals.css
             └── react-paginate.css
@@ -1107,4 +1114,4 @@ e-loader' -->
 
 ---
 
-_Last updated on January 14, 2026 by Ayman._
+_Last updated on January 17, 2026 by Ayman._
