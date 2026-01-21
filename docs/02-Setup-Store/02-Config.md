@@ -7,7 +7,6 @@
 You can create the **.env** here:
 
 - Storeflow/web
-
   - .env
 
 :::danger
@@ -24,9 +23,12 @@ NEXT_PUBLIC_EMAIL="xxxxxxxxxx@gmail.com"
 NEXT_PUBLIC_ADDRESS="Store Flow, 123 Main St, Nablus, Palestine"
 NEXT_PUBLIC_MAP_LINK="https://maps.app.goo.gl/fFvqNZf1TDsLUoQZ6"
 NEXT_PUBLIC_MAP_SHOWCASE_URI="https://www.openstreetmap.org/export/embed.html?bbox=35.25061279535294%2C32.22571954584364%2C35.25491505861283%2C32.22780248703342&amp;layer=mapnik&amp;marker=32.22676102240543%2C35.25276392698288"
-NEXT_PUBLIC_DIRECT_SUPPORT_LINK="https://wsend.co/972598514251"
+NEXT_PUBLIC_DIRECT_SUPPORT_LINK="https://wsend.co/1111111111"
 NEXT_PUBLIC_SHOW_BRAND_NAME_IN_HEADERS=true
 NEXT_PUBLIC_SHOW_BRAND_NAME_IN_FOOTER=true
+
+NEXT_PUBLIC_DEV_SUPPORT_LINK="https://wa.me/+1111111111"
+NEXT_PUBLIC_DEV_SUPPORT_MAIL="mailto:dev@dev.com"
 
 # PUBLIC - Store & Checkout
 NEXT_PUBLIC_CURRENCY="₪"
@@ -193,10 +195,6 @@ Edit the `manifest.json` and the icons there (icon-192.png and icon-512.png):
 ```
 
 You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator/).
-
----
-
-[Google search index](https://www.google.com/search/create/new) (soon)
 
 ---
 

@@ -53,28 +53,105 @@ We need to tell Nginx to take traffic from the internet and forward it to your a
 2.  **Paste the following configuration:**
     _Replace `your-domain.duckdns.org` with your actual domain or Public IP._
 
-    ```nginx
+```nginx
+
+    user nginx;
+    worker_processes auto;
+
+error_log /var/log/nginx/error.log notice;
+pid /run/nginx.pid;
+
+events {
+worker_connections 1024;
+}
+
+http {
+include /etc/nginx/mime.types;
+default_type application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    client_max_body_size 100G;
+    keepalive_timeout  120;
+
+    # Rate Limiting
+    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=30r/s;
+
+    # =========================================================
+    # BLOCK 1: HTTPS (Fixed 443 - usually required for SSL)
+    # =========================================================
     server {
+        server_name your-domain.duckdns.org;
+        listen 443 ssl;
+
+        ssl_certificate /etc/letsencrypt/live/your-domain.duckdns.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/your-domain.duckdns.org/privkey.pem;
+        include /etc/letsencrypt/options-ssl-nginx.conf;
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+        location / {
+            limit_req zone=mylimit burst=110 nodelay;
+
+            # VARIABLE HERE
+            proxy_pass http://localhost:3000;
+
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $http_host;
+            proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+
+    # =========================================================
+    # BLOCK 2: HTTP (DYNAMIC PORT)
+    # =========================================================
+    server {
+        # VARIABLE HERE
         listen 80;
         server_name your-domain.duckdns.org;
 
         location / {
-            # Forward traffic to the App (Port 3000)
+            limit_req zone=mylimit burst=20 nodelay;
+
+            # VARIABLE HERE
             proxy_pass http://localhost:3000;
 
-            # Standard Headers for Next.js/React functionality
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection 'upgrade';
             proxy_set_header Host $host;
             proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
 
-            # Pass Real IP to the app (for logging/security)
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        location /api/live {
+            proxy_buffering off;
+            proxy_cache off;
+
+            # VARIABLE HERE
+            proxy_pass http://localhost:3000;
+
+            proxy_http_version 1.1;
+            proxy_set_header Connection '';
+            proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
-    ```
+
+    include /etc/nginx/conf.d/*.conf;
+
+}
+```
 
 3.  **Save and Exit:** `Ctrl + X`, then `Y`, then `Enter`.
 
@@ -128,6 +205,12 @@ If this is a private internal tool, you can password-protect the entire site usi
 ---
 
 # And you can use any other method, like Asura hosting, Ngrok, and others.
+
+---
+
+> ## Search Engine Indexing
+
+[Google search index](https://www.google.com/search/create/new) (soon)
 
 ---
 
