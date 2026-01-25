@@ -66,6 +66,12 @@ NEXT_PUBLIC_SHIPPING_ZONES='[
   {"slug": "interior-lands", "name": "Interior Lands (48)", "fee": 70}
 ]'
 
+NEXT_PUBLIC_SHIPPING_AND_RETURN_INFO='[
+  {"icon": "mdi:truck", "title": "Free Shipping", "description": "Orders over 30 will qualify for free shipping"},
+  {"icon": "mdi:shield-check", "title": "2 Year Warranty", "description": "Our products are backed by a comprehensive warranty"},
+  {"icon": "heroicons:arrow-path-16-solid", "title": "30-Day Returns", "description": "Not satisfied? Return within 30 days for a full refund"}
+]'
+
 
 # SERVER-SIDE SECRETS - DO NOT EXPOSE
 

@@ -54,102 +54,133 @@ We need to tell Nginx to take traffic from the internet and forward it to your a
     _Replace `your-domain.duckdns.org` with your actual domain or Public IP._
 
 ```nginx
+user  nginx;
+# Auto usually maps to CPU cores.
+worker_processes  auto;
 
-    user nginx;
-    worker_processes auto;
+# CRITICAL: Increases the limit of open files the OS allows Nginx to use.
+# Must be higher than worker_connections * worker_processes
+worker_rlimit_nofile 65535;
 
-error_log /var/log/nginx/error.log notice;
-pid /run/nginx.pid;
+error_log  /var/log/nginx/error.log notice;
+pid        /run/nginx.pid;
 
 events {
-worker_connections 1024;
+    # CRITICAL: Allows handling 10k+ simultaneous connections
+    worker_connections  10240;
+
+    # Optimizes connection processing on Linux
+    use epoll;
+
+    # Allows a worker to accept all new connections at once
+    multi_accept on;
 }
 
 http {
-include /etc/nginx/mime.types;
-default_type application/octet-stream;
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
 
+    # OPTIMIZATION: Buffer logs to save Disk I/O during high traffic
+    # Writes to disk only when 32k buffer is full or every 3 seconds
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log  /var/log/nginx/access.log  main;
+    access_log  /var/log/nginx/access.log  main buffer=32k flush=3s;
 
     sendfile        on;
+    tcp_nopush      on; # Optimizes sending headers + files
+    tcp_nodelay     on; # Don't buffer data-sends (faster feeling for users)
+
     client_max_body_size 100G;
-    keepalive_timeout  120;
+
+    # Lower timeout to close dead connections faster to free up slots for new 10k users
+    keepalive_timeout  30;
+    client_body_timeout 10;
+    client_header_timeout 10;
 
     # Rate Limiting
-    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=30r/s;
+    # Increased to 100r/s to handle your "40+ requests" requirement comfortably
+    # 10m zone can store states for ~160,000 IP addresses
+    limit_req_zone $binary_remote_addr zone=mylimit:10m rate=100r/s;
+
+    # UPSTREAM CONFIGURATION
+    # Keeps connections to your backend open so we don't reconnect 10,000 times/sec
+    upstream backend_app {
+        server localhost:3000;
+        keepalive 64;
+    }
 
     # =========================================================
-    # BLOCK 1: HTTPS (Fixed 443 - usually required for SSL)
+    # BLOCK 1: HTTPS
     # =========================================================
     server {
-        server_name your-domain.duckdns.org;
+        server_name spring-hardware.duckdns.org;
         listen 443 ssl;
+        # HTTP/2 is highly recommended for loading 40+ images in parallel
+        http2 on;
 
-        ssl_certificate /etc/letsencrypt/live/your-domain.duckdns.org/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/your-domain.duckdns.org/privkey.pem;
+        ssl_certificate /etc/letsencrypt/live/spring-hardware.duckdns.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/spring-hardware.duckdns.org/privkey.pem;
         include /etc/letsencrypt/options-ssl-nginx.conf;
         ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
         location / {
-            limit_req zone=mylimit burst=110 nodelay;
+            # Burst=200 allows a user to "spike" 200 requests instantly (rendering the page)
+            # nodelay ensures they are processed immediately, not slowed down
+            limit_req zone=mylimit burst=200 nodelay;
 
-            # VARIABLE HERE
-            proxy_pass http://localhost:3000;
+            proxy_pass http://backend_app;
 
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
+            proxy_set_header Connection "upgrade"; # Important for websockets
             proxy_set_header Host $http_host;
             proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
 
     # =========================================================
-    # BLOCK 2: HTTP (DYNAMIC PORT)
+    # BLOCK 2: HTTP
     # =========================================================
     server {
-        # VARIABLE HERE
         listen 80;
-        server_name your-domain.duckdns.org;
+        server_name spring-hardware.duckdns.org;
 
         location / {
-            limit_req zone=mylimit burst=20 nodelay;
+            # Consistent limits with HTTPS
+            limit_req zone=mylimit burst=200 nodelay;
 
-            # VARIABLE HERE
-            proxy_pass http://localhost:3000;
+            proxy_pass http://backend_app;
 
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
+            proxy_set_header Connection "upgrade";
             proxy_set_header Host $host;
             proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
 
         location /api/live {
             proxy_buffering off;
             proxy_cache off;
 
-            # VARIABLE HERE
-            proxy_pass http://localhost:3000;
+            proxy_pass http://backend_app;
 
             proxy_http_version 1.1;
-            proxy_set_header Connection '';
+            # Connection set to Upgrade or keep-alive depending on need,
+            # usually "" allows keepalive to upstream
+            proxy_set_header Connection "";
             proxy_set_header Host $http_host;
-        proxy_set_header X-Real-IP $remote_addr;
-    	    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
 
     include /etc/nginx/conf.d/*.conf;
-
 }
 ```
 

@@ -3,7 +3,7 @@
 ## **Tech Stack**
 
 - **Frontend + Backend**: React 19.2.3 + Next.js v15.5.9 (App Router)
-- **Database**: PostgreSQL v16.9 + Prisma v7.2.0
+- **Database**: PostgreSQL latest (build time) + Prisma v7.3.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes
 - **Mobile**: React Native 0.8?.? + Expo ?.? (soon)
@@ -338,6 +338,7 @@ String slug PK
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["fullTextSearchPostgres"]
+  compilerBuild = "fast" // "fast" | "small"
 }
 
 datasource db {
@@ -361,12 +362,24 @@ model User {
   wishlist                 Product[]
   wishlistSets             Set[]     @relation("UserWishlistSets")
   reviews                  Review[]
+  subscriptions            PushSubscription[]
 
   @@index([email])
   @@index([role])
   @@index([email_verified])
   @@index([email_verified, created_at])
   @@index([created_at])
+}
+
+model PushSubscription {
+  slug        String   @id @default(cuid())
+  endpoint  String   @unique // The unique URL for the user's browser
+  keys      Json     // Stores 'p256dh' and 'auth' keys
+  user_slug String   @db.VarChar(100)
+  user      User     @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
+  created_at DateTime @default(now())
+
+  @@index([user_slug])
 }
 
 model RequestLog {
@@ -416,6 +429,7 @@ model Category {
 
   @@index([is_featured])
   @@index([created_at])
+  @@index([is_featured, created_at]) // OPTIMIZED: Combined index for featured categories query
 }
 
 model Brand {
@@ -463,6 +477,7 @@ model Product {
   variants           ProductVariant[] // A product has many variants
   brand              Brand?      @relation(fields: [brand_slug], references: [slug], onDelete: Restrict)
 
+  // CORE INDEXES
   @@index([category])
   @@index([brand_slug])
   @@index([featured_promotion])
@@ -475,18 +490,33 @@ model Product {
   @@index([min_price])
   @@index([max_price])
   @@index([max_discount])
-  @@index([total_quantity, created_at])
-  @@index([total_quantity, min_price])
+  @@index([total_quantity])
 
-  @@index([category, name])
-  @@index([category, brand_slug])
+  // OPTIMIZED COMPOSITE INDEXES FOR STOCK-AWARE SORTING
+  // These indexes support queries that prioritize in-stock items
+  @@index([total_quantity, created_at])   // For "newest" queries with stock priority
+  @@index([total_quantity, items_sold])   // For "top selling" queries with stock priority
+  @@index([total_quantity, min_price])    // For price sorting with stock priority
+  @@index([total_quantity, max_price])    // For price sorting (DESC) with stock priority
+  @@index([total_quantity, max_discount]) // For discount sorting with stock priority
+  @@index([total_quantity, average_rating]) // For rating sorting with stock priority
+
+  // FEATURE-SPECIFIC COMPOSITE INDEXES
+  @@index([featured_promotion, total_quantity, created_at]) // Featured products with stock priority
+  @@index([top_selling, total_quantity, items_sold])        // Top selling with stock priority
+  @@index([is_new, total_quantity, created_at])             // New products with stock priority
+
+  // CATEGORY-SPECIFIC COMPOSITE INDEXES
+  @@index([category, total_quantity, created_at])      // Category browsing with stock priority
+  @@index([category, total_quantity, items_sold])      // Category top sellers
+  @@index([category, total_quantity, min_price])       // Category price sorting
+  @@index([category, total_quantity, average_rating])  // Category rating sorting
+  @@index([category, brand_slug, total_quantity])      // Category + brand filtering
+  @@index([category, featured_promotion])
   @@index([category, top_selling])
-  @@index([category, created_at])
-  @@index([category, items_sold])
-  @@index([category, average_rating])
-  @@index([category, min_price])
-  @@index([category, max_price])
-  @@index([category, max_discount])
+
+  // BRAND-SPECIFIC INDEX
+  @@index([brand_slug, total_quantity, created_at]) // Brand browsing with stock priority
 }
 
 model ProductVariant {
@@ -507,10 +537,10 @@ model ProductVariant {
   @@index([product_slug])
   @@index([price])
   @@index([quantity])
-  @@index([name])
   @@index([discount])
-  @@index([product_slug, price])
-  @@index([product_slug, discount])
+  @@index([product_slug, discount, price]) // OPTIMIZED: For variant selection with discount priority
+  @@index([product_slug, quantity])        // OPTIMIZED: For stock checks
+  @@index([quantity, price])               // OPTIMIZED: For in-stock variant searches
 }
 
 model Review {
@@ -538,11 +568,9 @@ model Review {
 
   @@index([user_slug])
   @@index([created_at])
-  @@index([product_slug, updated_at, created_at])
-  @@index([set_slug, updated_at, created_at])
+  @@index([product_slug, is_reply, updated_at]) // OPTIMIZED: Combined for review listing
+  @@index([set_slug, is_reply, updated_at])     // OPTIMIZED: Combined for review listing
   @@index([parent_review_slug])
-  @@index([product_slug, is_reply])
-  @@index([set_slug, is_reply])
 }
 
 model Set {
@@ -578,6 +606,12 @@ model Set {
   @@index([featured_promotion])
   @@index([top_selling])
   @@index([is_new])
+  @@index([average_rating])
+
+  // OPTIMIZED COMPOSITE INDEXES FOR SETS
+  @@index([featured_promotion, created_at]) // Featured sets listing
+  @@index([top_selling, items_sold])        // Top selling sets
+  @@index([is_new, created_at])             // New sets listing
 }
 
 model SetComponent {
@@ -589,7 +623,8 @@ model SetComponent {
   variant ProductVariant @relation(fields: [product_variant_slug], references: [slug], onDelete: Cascade)
 
   @@id([set_slug, product_variant_slug])
-  @@index([set_slug, quantity])
+  @@index([set_slug])
+  @@index([product_variant_slug])
 }
 
 model Team {
@@ -656,10 +691,13 @@ model Order {
 
   @@index([created_at])
   @@index([email])
-  @@index([created_at, email])
   @@index([status])
   @@index([discount_code])
-  @@index([email, status])
+
+  // OPTIMIZED COMPOSITE INDEXES FOR ORDER QUERIES
+  @@index([status, created_at])        // OPTIMIZED: For dashboard revenue queries (delivered orders)
+  @@index([email, status, created_at]) // OPTIMIZED: User order history with status filter
+  @@index([status, email])             // OPTIMIZED: Alternative for user status queries
 }
 
 model OrderItem {
@@ -696,6 +734,7 @@ model DiscountCode {
 
   @@index([slug])
   @@index([created_at])
+  @@index([is_active, expires_at]) // OPTIMIZED: For validating active discount codes
 }
 
 model CustomTransaction {
@@ -712,6 +751,7 @@ model Feedback {
 
   @@index([created_at])
   @@index([is_closed])
+  @@index([is_closed, created_at]) // OPTIMIZED: For filtering open/closed feedback
 }
 
 model Ad {
