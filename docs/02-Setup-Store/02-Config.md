@@ -109,13 +109,18 @@ AUTH_LIMIT=13
 AUTH_LIMIT_RESET_TIME=3600000
 FEEDBACK_LIMIT=3
 FEEDBACK_LIMIT_RESET_TIME=3600000
+
+MIDDLEWARE_CLIENT_MAX_BODY_SIZE_MB=3000
+SERVER_ACTIONS_BODY_SIZE_LIMIT_MB=3000
+
+NEXT_PUBLIC_ALLOWED_ORIGINS="localhost:3000,https://my-domain1.duckdns.org,https://my-domain2.com"
 ```
 
-Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
+Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS`, `NEXT_PUBLIC_ALLOWED_ORIGINS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
 
----
+<!-- --- -->
 
-:::warning
+<!-- :::warning
 Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.config.mjs** allowedOrigins like this: -
 :::
 
@@ -130,7 +135,7 @@ Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.c
       ],
     },
   },
-```
+``` -->
 
 ---
 

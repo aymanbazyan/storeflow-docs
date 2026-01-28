@@ -174,13 +174,14 @@ You should see a message like "Database schema is up to date!"
 
 When you need to update the Prisma schema during development and already have data in your database:
 
-<!-- #### Understanding Drift with Unsupported Types
+<!--
+#### Understanding Drift with Unsupported Types
 
 Because the `search_vector` field uses `Unsupported("tsvector")` and has a GIN index that Prisma cannot natively track, you will **always** encounter drift warnings when trying to create new migrations with `prisma migrate dev`. This is expected behavior and does not indicate a problem.
 
 **Your schema should look like this:**
 
-```prisma
+//```prisma
 model Product {
   // ... your other fields ...
 
@@ -189,7 +190,8 @@ model Product {
   // DO NOT add @@index([search_vector], type: Gin) here
   // The index exists in the database but Prisma can't track it
 }
-``` -->
+//```
+-->
 
 #### Recommended Workflow: Use db push for Development
 
@@ -356,6 +358,9 @@ docker-compose exec app sh
 
 # Access the database container
 docker-compose exec db psql -U myuser -d mydb
+
+# In-case the app didn't recognize the tables at first launch
+docker compose exec app bunx dotenv -e .env.local -- bunx prisma db push --force-reset
 ```
 
 ## Troubleshooting
@@ -380,4 +385,4 @@ If ports 3000 or 5432 are already in use:
 
 ---
 
-_Last updated on December 24, 2025 by Ayman._
+_Last updated on January 28, 2026 by Ayman._

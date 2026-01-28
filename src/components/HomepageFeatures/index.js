@@ -8,8 +8,8 @@ const FeatureList = [
     Svg: require("@site/static/img/analytics.svg").default,
     description: (
       <>
-        Manage products, categories, sales, promotions, and theme colors and
-        more from a single, feature-rich admin panel.
+        Manage products, categories, sales, promotions, theme colors, and more
+        from a single, feature-rich, optimized admin panel.
       </>
     ),
   },
@@ -18,7 +18,7 @@ const FeatureList = [
     Svg: require("@site/static/img/modern-desktop-computer.svg").default,
     description: (
       <>
-        Built with Next.js, Storeflow has a fast, beautiful interface with
+        Built with Next.js, Storeflow has a quick, beautiful interface with
         advanced search, filtering, and sorting to help customers find products
         easily.
       </>

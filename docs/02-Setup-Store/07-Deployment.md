@@ -1,18 +1,43 @@
 # Deployment
 
-## Option 1: Self-Hosting with Nginx
-
-This guide covers how to host this project on your own Linux machine (Ubuntu/Debian) using Nginx as a Reverse Proxy. This allows you to expose the app to the internet securely using your own domain or a dynamic DNS.
-
-Instead of using our plain IP address, we'll use **DuckDNS** for testing for now.
-
 ### Prerequisites
 
 - A Linux machine (VPS or Home PC with Ubuntu).
 - The project running locally (e.g., on `localhost:3000` via Docker).
 - Access to your Router (if hosting from home) to forward ports.
 
+#### Server requirements
+
+| Traffic Tier | Monthly Visits (Est.) | CPU (vCores) | RAM (Memory)  | Storage (SSD/NVMe) |
+| :----------- | :-------------------- | :----------- | :------------ | :----------------- |
+| **Low**      | < 10,000              | **2 vCPUs**  | **4 GB**      | 40 GB              |
+| **Medium**   | 10k - 100k            | **4 vCPUs**  | **8 - 16 GB** | 80 GB              |
+| **High**     | 100k - 500k+          | **8+ vCPUs** | **32 GB+**    | 160 GB+            |
+
+#### Storage Requirements (Disk)
+
+Storage needs are calculated based on the number of products in your catalog.
+
+**Assumptions for Calculation:**
+
+- **Average Images per Product:** 3.5
+- **Avg Image Size:** 2MB (High Res Source) + Next.js Optimized Cache Variants.
+- **Database Growth:** Includes product metadata, user accounts, and order history logs.
+
+| Scale          | Product Count | Est. Image Count | Database Vol (Postgres) | Media Vol (Local Uploads) | **Total Disk Rec.** |
+| :------------- | :------------ | :--------------- | :---------------------- | :------------------------ | :------------------ |
+| **Startup**    | **2,000**     | ~7,000           | 1 GB                    | ~15 GB                    | **25 GB SSD**       |
+| **Growth**     | **10,000**    | ~35,000          | 5 GB                    | ~75 GB                    | **100 GB NVMe**     |
+| **Scale**      | **50,000**    | ~175,000         | 20 GB                   | ~375 GB                   | **500 GB NVMe**     |
+| **Enterprise** | **100,000+**  | ~350,000+        | 50 GB+                  | ~750 GB+                  | **1 TB+ NVMe**      |
+
 ---
+
+## Option 1: Self-Hosting with Nginx
+
+This guide covers how to host this project on your own Linux machine (Ubuntu/Debian) using Nginx as a Reverse Proxy. This allows you to expose the app to the internet securely using your own domain or a dynamic DNS.
+
+Instead of using our plain IP address, we'll use [**DuckDNS**](https://www.duckdns.org/) for testing for now.
 
 ### Step 1: Network Setup (Port Forwarding)
 
