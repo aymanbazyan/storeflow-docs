@@ -33,11 +33,82 @@ Storage needs are calculated based on the number of products in your catalog.
 
 ---
 
+## VPS Deployment: Optimize with Pre-Built Cache (Optional)
+
+**Performance Boost:** If you're deploying to a VPS (DigitalOcean, AWS, Linode, etc.), you can transfer a pre-built cache to skip the 5-10 minute build process and start your app in ~30-60 seconds!
+
+**Skip this section if you're self-hosting at home** - you can build directly on your machine.
+
+### On Your Local Machine:
+
+1. **Build the Docker cache locally:**
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   This creates `.docker-cache/node_modules` and `.docker-cache/.next` in your project directory.
+
+2. **Create a compressed archive:**
+   ```bash
+   tar -czf docker-cache.tar.gz .docker-cache
+   ```
+3. **Check the archive size:**
+
+   ```bash
+   ls -lh docker-cache.tar.gz
+   # Typically 200-500MB
+   ```
+
+4. **Transfer to your VPS:**
+
+   ```bash
+   # Replace with your VPS details
+   scp docker-cache.tar.gz user@your-vps-ip:/path/to/project/
+   ```
+
+   **Alternative - use rsync for faster incremental transfers:**
+
+   ```bash
+   rsync -avz --progress docker-cache.tar.gz user@your-vps-ip:/path/to/project/
+   ```
+
+### On Your VPS:
+
+1. **Extract the cache:**
+
+   ```bash
+   cd /path/to/project
+   tar -xzf docker-cache.tar.gz
+   ```
+
+2. **Verify extraction:**
+
+   ```bash
+   ls -la .docker-cache/
+   # Should show: node_modules/ and .next/
+   ```
+
+3. **Clean up the archive (optional):**
+   ```bash
+   rm docker-cache.tar.gz
+   ```
+
+**Result:** When you run `docker-compose up` later, it will use the pre-built cache instead of rebuilding everything from scratch!
+
+:::info
+If you skip this step, Docker will build everything on the VPS (takes 5-10 minutes on first run).
+:::
+
+---
+
 ## Option 1: Self-Hosting with Nginx
 
 This guide covers how to host this project on your own Linux machine (Ubuntu/Debian) using Nginx as a Reverse Proxy. This allows you to expose the app to the internet securely using your own domain or a dynamic DNS.
 
 Instead of using our plain IP address, we'll use [**DuckDNS**](https://www.duckdns.org/) for testing for now.
+
+---
 
 ### Step 1: Network Setup (Port Forwarding)
 
@@ -243,6 +314,67 @@ Secure your connection with a free Let's Encrypt certificate.
 
 Your site is now live and secure at `https://your-domain.duckdns.org`.
 
+---
+
+## VPS Cache Management (For Cloud VPS Deployments Only)
+
+If you deployed to a cloud VPS and used the pre-built cache from earlier, here's how to manage it:
+
+### Updating Your App with Cache
+
+When you need to deploy updates:
+
+**Method 1: Full Cache Transfer (Recommended for major updates)**
+
+```bash
+# On local machine:
+docker-compose up --build
+tar -czf docker-cache.tar.gz .docker-cache
+scp docker-cache.tar.gz user@vps:/path/to/project/
+
+# On VPS:
+cd /path/to/project
+docker-compose down
+tar -xzf docker-cache.tar.gz
+docker-compose up -d
+```
+
+**Method 2: Incremental Sync (Faster for minor updates)**
+
+```bash
+# On local machine:
+rsync -avz --progress .docker-cache/ user@vps:/path/to/project/.docker-cache/
+
+# On VPS:
+docker-compose restart app
+```
+
+### Clearing Cache on VPS
+
+If you encounter issues or need to force a rebuild:
+
+```bash
+# Stop containers
+docker-compose down
+
+# Remove cache
+rm -rf .docker-cache
+
+# Rebuild (will take 5-10 minutes)
+docker-compose up --build -d
+```
+
+### Checking Cache Status
+
+```bash
+# View cache size
+du -sh .docker-cache/node_modules
+du -sh .docker-cache/.next
+
+# View total cache size
+du -sh .docker-cache
+```
+
 <!-- ---
 
 ### Advanced: Password Protection 🔐
@@ -270,4 +402,4 @@ If this is a private internal tool, you can password-protect the entire site usi
 
 ---
 
-_Last updated on December 20, 2025 by Ayman._
+_Last updated on January 30, 2026 by Ayman._

@@ -1172,12 +1172,15 @@ This project uses the **Next.js App Router**, which organizes the application fi
             └── react-paginate.css
 ```
 
-<!-- $ tree -I '.DS_Store|*.orig.*|node_modules|package-lock.js
+<!--
+tree -I '.DS_Store|*.orig.*|node_modules|package-lock.js
 on|.pnp|.pnp.*|.yarn|.env.*|*.pem|*.jks|*.p8|*.p12|*.key|*.mobileprovi
 sion|*debug.log*|*error.log*|.next|out|build|.vercel|*.tsbuildinfo|nex
 t-env.d.ts|dev.db|generated|migrations|coverage|backups|uploads|temp|.
 expo|dist|web-build|.metro-health-check*|ios|android|.docusaurus|.cach
 e-loader'
+
+or:
 
 tree --gitignore -I "temp"
 -->

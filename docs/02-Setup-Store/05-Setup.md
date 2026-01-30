@@ -6,26 +6,21 @@ This guide details the steps required to set up and run the application using Do
 
 ### 1. Start the Application
 
-#### Development Mode
-
 :::tip
-For faster start time, the `--build` should only be used for the first time running the application.
+For faster start time, the `--build` option should only be used for the first time running the application, not using it will make the app depend on cache.
 :::
+
+#### Development Mode
 
 ```bash
 # Start services
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 ```
 
-```bash
-# View logs
-docker-compose logs -f
-```
-
-```bash
+<!-- ```bash
 # Stop services
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
-```
+``` -->
 
 ```bash
 # Host Prisma studio
@@ -39,14 +34,21 @@ docker-compose exec app bun prisma:studio
 docker-compose up --build -d
 ```
 
+#### Combined
+
+```bash
+# Stop services
+docker-compose down
+```
+
 ```bash
 # View logs
 docker-compose logs -f
 ```
 
 ```bash
-# Stop services
-docker-compose down
+# Delete cache (.next and node_modules, not database)
+sudo rm -r ./.docker-cache
 ```
 
 **Note:** The first startup will take longer as it builds the Next.js application and runs database migrations.
@@ -359,8 +361,11 @@ docker-compose exec app sh
 # Access the database container
 docker-compose exec db psql -U myuser -d mydb
 
-# In-case the app didn't recognize the tables at first launch
+# In-case the app didn't recognize the DB tables at first launch
 docker compose exec app bunx dotenv -e .env.local -- bunx prisma db push --force-reset
+
+# In-case the app didn't recognize the whole DB migrations and failed to start at first launch
+docker compose run --entrypoint /bin/sh --rm app -c "bunx prisma migrate reset --force"
 ```
 
 ## Troubleshooting
@@ -385,4 +390,4 @@ If ports 3000 or 5432 are already in use:
 
 ---
 
-_Last updated on January 28, 2026 by Ayman._
+_Last updated on January 30, 2026 by Ayman._

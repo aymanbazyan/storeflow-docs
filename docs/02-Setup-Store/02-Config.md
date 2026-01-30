@@ -4,10 +4,12 @@
 
 > ## Enviorment variables
 
-You can create the **.env** here:
+You must create the **.env** in the root folder:
 
 - Storeflow/web
-  - .env
+  - **.env**
+  - package.json
+  - ...
 
 :::danger
 Nobody should see this file.
