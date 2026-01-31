@@ -111,8 +111,16 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Tutorial",
+                label: "About",
                 to: "/docs/category/about-the-app",
+              },
+              {
+                label: "Tutorial",
+                to: "/docs/Setup-Store/intro",
+              },
+              {
+                label: "Guides",
+                to: "/docs/Guides/Store-Management/How-to-open-the-Admin-Panel",
               },
             ],
           },
@@ -147,7 +155,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Storeflow, Inc.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Storeflow.`,
       },
       prism: {
         theme: prismThemes.github,

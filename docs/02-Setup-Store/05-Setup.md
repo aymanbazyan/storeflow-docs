@@ -10,6 +10,11 @@ This guide details the steps required to set up and run the application using Do
 For faster start time, the `--build` option should only be used for the first time running the application, not using it will make the app depend on cache.
 :::
 
+```bash
+# Delete cache (.next and node_modules, not database)
+sudo rm -r ./.docker-cache
+```
+
 #### Development Mode
 
 ```bash
@@ -22,11 +27,6 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
 ``` -->
 
-```bash
-# Host Prisma studio
-docker-compose exec app bun prisma:studio
-```
-
 #### Production Mode
 
 ```bash
@@ -34,7 +34,12 @@ docker-compose exec app bun prisma:studio
 docker-compose up --build -d
 ```
 
-#### Combined
+#### Runtime commands
+
+```bash
+# Host Prisma studio
+docker-compose exec app bun prisma:studio
+```
 
 ```bash
 # Stop services
@@ -44,11 +49,6 @@ docker-compose down
 ```bash
 # View logs
 docker-compose logs -f
-```
-
-```bash
-# Delete cache (.next and node_modules, not database)
-sudo rm -r ./.docker-cache
 ```
 
 **Note:** The first startup will take longer as it builds the Next.js application and runs database migrations.

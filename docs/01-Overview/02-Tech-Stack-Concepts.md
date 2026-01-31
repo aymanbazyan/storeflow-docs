@@ -2,7 +2,7 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: React 19.2.3 + Next.js v15.5.9 (App Router)
+- **Frontend + Backend**: React 19.2.3 + Next.js v15 (latest patch for v15 as of build time) (App Router)
 - **Database**: PostgreSQL v16 + Prisma v7.3.0
 - **Styling**: Tailwind CSS v4
 - **API**: Next.js API routes

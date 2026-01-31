@@ -21,9 +21,10 @@ function HomepageHeader() {
             className="button button--secondary button--lg"
             to="/docs/category/about-the-app"
           >
-            Storeflow Tutorial - 5min ⏱️
+            Explore Storeflow - 5min ⏱️
           </Link>
         </div>
+        <p style={{ marginTop: "10px" }}>v0.0.9 beta</p>
       </div>
     </header>
   );
