@@ -21,16 +21,21 @@ Copy this to the .env file:
 # PUBLIC - Branding & Contact
 NEXT_PUBLIC_BRAND_NAME="Store Flow"
 NEXT_PUBLIC_PHONE_NUMBER="+970 111 111 111"
+NEXT_PUBLIC_EXTRA_PHONE_NUMBERS='[
+  { "number": "0000000000", "title": "Management" },
+  { "number": "0000000000", "title": "Sales" },
+  { "number": "0000000000", "title": "Warehouse" }
+  ]'
 NEXT_PUBLIC_EMAIL="xxxxxxxxxx@gmail.com"
 NEXT_PUBLIC_ADDRESS="Store Flow, 123 Main St, Nablus, Palestine"
 NEXT_PUBLIC_MAP_LINK="https://maps.app.goo.gl/fFvqNZf1TDsLUoQZ6"
 NEXT_PUBLIC_MAP_SHOWCASE_URI="https://www.openstreetmap.org/export/embed.html?bbox=35.25061279535294%2C32.22571954584364%2C35.25491505861283%2C32.22780248703342&amp;layer=mapnik&amp;marker=32.22676102240543%2C35.25276392698288"
-NEXT_PUBLIC_DIRECT_SUPPORT_LINK="https://wsend.co/1111111111"
+NEXT_PUBLIC_DIRECT_SUPPORT_LINK="https://wsend.co/11111111"
 NEXT_PUBLIC_SHOW_BRAND_NAME_IN_HEADERS=true
 NEXT_PUBLIC_SHOW_BRAND_NAME_IN_FOOTER=true
 
 NEXT_PUBLIC_DEV_SUPPORT_LINK="https://wa.me/+1111111111"
-NEXT_PUBLIC_DEV_SUPPORT_MAIL="mailto:dev@dev.com"
+NEXT_PUBLIC_DEV_SUPPORT_MAIL="mailto:dev@gmail.com"
 
 # PUBLIC - Store & Checkout
 NEXT_PUBLIC_CURRENCY="₪"
@@ -48,14 +53,19 @@ NEXT_PUBLIC_STORE_PAGE_SIZE=12
 NEXT_PUBLIC_WISHLIST_LIMIT=12
 NEXT_PUBLIC_SETS_PAGE_SIZE=4
 NEXT_PUBLIC_ADMIN_TABLE_PAGE_SIZE=5
+NEXT_PUBLIC_ALLOW_COMMENTS=true
 
 # PUBLIC - Feature Flags
 NEXT_PUBLIC_SHOW_PARTNERS_ON_HOME=true
 NEXT_PUBLIC_SHOW_PARTNERS_ON_CONTACT=true
+NEXT_PUBLIC_LOGO_SIZE_IN_HEADER=50
+NEXT_PUBLIC_LOGO_SIZE_IN_HEADER_MOBILE=45
+NEXT_PUBLIC_LOGO_SIZE_IN_FOOTER=30
 NEXT_PUBLIC_STORE_CATEGORIES_VARIANT="tags" # "cards" | "tags"
 
 # PUBLIC - General & Third Party
 NEXT_PUBLIC_NODE_ENV='production' # production | development
+NEXT_PUBLIC_APP_VERSION=storeflow v0.9.0-beta
 NEXT_PUBLIC_APP_BASE_URL="http://localhost:3000" # No '/' at the end
 NEXT_PUBLIC_GOOGLE_CLIENT_ID="XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
@@ -74,8 +84,40 @@ NEXT_PUBLIC_SHIPPING_AND_RETURN_INFO='[
   {"icon": "heroicons:arrow-path-16-solid", "title": "30-Day Returns", "description": "Not satisfied? Return within 30 days for a full refund"}
 ]'
 
+NEXT_PUBLIC_SOCIAL_MEDIA='[
+      {
+        "icon": "devicon:facebook",
+        "link": "https://facebook.com",
+        "label": "Facebook",
+        "footerIcon": "mingcute:facebook-line"
+      },
+      {
+        "icon": "skill-icons:twitter",
+        "link": "https://x.com",
+        "label": "Twitter",
+        "footerIcon": "line-md:twitter"
+      },
+      {
+        "icon": "logos:whatsapp-icon",
+        "link": "https://whatsapp.com",
+        "label": "WhatsApp",
+        "footerIcon": "ic:baseline-whatsapp"
+      },
+      {
+        "icon": "skill-icons:instagram",
+        "link": "https://instagram.com",
+        "label": "Instagram",
+        "footerIcon": "mdi:instagram"
+      }
+    ]'
+
+
+NEXT_PUBLIC_VAPID_PUBLIC_KEY="<your_generated_public_key>"
 
 # SERVER-SIDE SECRETS - DO NOT EXPOSE
+
+VAPID_PRIVATE_KEY="<your_generated_private_key>"
+VAPID_SUBJECT="mailto:support@yourdomain.com"
 
 # Auth
 JWT_SECRET="XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
@@ -96,7 +138,6 @@ EMAIL_PASS=xxxxxxx xxxxxx xxxxxx xxxxx
 # Session
 SESSION_DURATION=7d
 SHORT_LIVED_TOKEN_HOURS=1
-SESSION_COOKIE="session"
 
 # Rate Limits (in milliseconds)
 CHECKOUT_LIMIT=3
@@ -115,7 +156,7 @@ FEEDBACK_LIMIT_RESET_TIME=3600000
 MIDDLEWARE_CLIENT_MAX_BODY_SIZE_MB=3000
 SERVER_ACTIONS_BODY_SIZE_LIMIT_MB=3000
 
-NEXT_PUBLIC_ALLOWED_ORIGINS="localhost:3000,https://my-domain1.duckdns.org,https://my-domain2.com"
+NEXT_PUBLIC_ALLOWED_ORIGINS="localhost:3000,https://my-domain.org"
 ```
 
 Make sure you replace `JWT_SECRET`, `DATABASE_URL`, `NEXT_PUBLIC_APP_BASE_URL`, `NEXT_PUBLIC_NODE_ENV`, `EMAIL_MAIL`, `EMAIL_PASS`, `NEXT_PUBLIC_ALLOWED_ORIGINS` and `NEXT_PUBLIC_GOOGLE_CLIENT_ID`.
@@ -144,6 +185,8 @@ Add any potential domain for the `NEXT_PUBLIC_APP_BASE_URL` in the file **next.c
 To get the `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, you must go to [Google Cloud Credentials](https://console.cloud.google.com/apis/credentials), create `OAuth 2.0 Client ID`, and copy the `Client ID`, then click on it and add the `NEXT_PUBLIC_APP_BASE_URL` to the **Authorised JavaScript origins**.
 
 You can get the VAPID KEYS from any place like [magicbell](https://www.magicbell.com/web-push/vapid-keys).
+
+You can get the preview map link from the **share** button at [openstreetmap.org](https://www.openstreetmap.org), copy as HTML and strip it from the href attribute.
 
 ---
 
@@ -211,4 +254,4 @@ You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator
 
 ---
 
-_Last updated on December 31, 2025 by Ayman._
+_Last updated on February 2, 2026 by Ayman._
