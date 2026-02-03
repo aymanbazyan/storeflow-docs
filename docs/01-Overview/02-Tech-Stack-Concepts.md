@@ -2,15 +2,15 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: React 19.2.3 + Next.js v15 (latest patch for v15 as of build time) (App Router)
-- **Database**: PostgreSQL v16 + Prisma v7.3.0
-- **Styling**: Tailwind CSS v4
-- **API**: Next.js API routes
-- **Mobile**: React Native 0.8?.? + Expo ?.? (soon)
-- **Deployment**: [Docker + Nginx (or other hosting services)](/docs/Setup-Store/Deployment)
-- **Runtime**: Bun 1.3
-- **Push Notifications**: web-push (native)
-- **Email**: Nodemailer + Gmail SMTP (optional)
+- **Frontend + Backend**: React ^19.2.4 + Next.js ^15 (latest patch for v15 as of build time) (App Router).
+- **Database**: PostgreSQL v16 + Prisma ^7.3.0.
+- **Styling**: Tailwind CSS v4.
+- **API**: Next.js API routes.
+- **Mobile**: [React Native 0.8?.? + Expo ?.? (soon)](/docs/03-Setup-mobile-app/1-intro.md).
+- **Deployment**: [Docker + Nginx (or other hosting services)](/docs/Setup-Store/Deployment).
+- **Runtime**: Bun 1.3.
+- **Push Notifications**: web-push (native library).
+- **Email**: Nodemailer + Gmail SMTP (optional).
 
 ---
 
@@ -411,6 +411,7 @@ model Config {
   partners_description     String?  @default("") @db.Text
   connect_description      String?  @default("") @db.Text
   delivery_policies        String[] @default([])
+  allow_email_verification Boolean  @default(true)
   checkout_enable_cod      Boolean  @default(true)
   checkout_enable_bank_transfer  Boolean  @default(false)
   bank_accounts        String[] @default(["Here are our bank accounts:-","Bank of Palestine: 1234567890"])
@@ -447,6 +448,7 @@ model Brand {
 // The parent product, holds shared data
 model Product {
   created_at          DateTime   @default(now())
+  updated_at          DateTime   @updatedAt @default(now())
   slug                String     @id @db.VarChar(100)
   name                String     @db.VarChar(100)
   category            String     @db.VarChar(100)
@@ -581,6 +583,7 @@ model Set {
   description        String          @default("")
   tags               String[]        @default([])
   created_at         DateTime        @default(now())
+  updated_at         DateTime        @updatedAt @default(now())
   price              Float           @default(0) @db.DoublePrecision
   discount           Float           @default(0) @db.DoublePrecision
   items_sold         Int             @default(0) @db.SmallInt
@@ -803,75 +806,74 @@ This project uses the **Next.js App Router**, which organizes the application fi
 ```bash
 .
 ├── mobile
-│   ├── app
-│   │   ├── (drawer)
-│   │   │   ├── _layout.tsx
-│   │   │   └── (tabs)
-│   │   │       ├── account.tsx
-│   │   │       ├── index.tsx
-│   │   │       ├── _layout.tsx
-│   │   │       ├── login.tsx
-│   │   │       ├── sets.tsx
-│   │   │       ├── store.tsx
-│   │   │       └── tos.tsx
-│   │   ├── _layout.tsx
-│   │   └── +not-found.tsx
-│   ├── app-env.d.ts
-│   ├── app.json
-│   ├── assets
-│   │   ├── fonts
-│   │   │   └── SpaceMono-Regular.ttf
-│   │   └── images
-│   │       ├── adaptive-icon.png
-│   │       ├── anonymous.png
-│   │       ├── favicon.png
-│   │       ├── icon.png
-│   │       ├── image-placeholder.png
-│   │       └── splash-icon.png
-│   ├── babel.config.js
-│   ├── cesconfig.jsonc
-│   ├── components
-│   │   ├── BrandFilterDropdown.tsx
-│   │   ├── ContactBox.tsx
-│   │   ├── Footer.tsx
-│   │   ├── ItemsSlider.tsx
-│   │   ├── Logo.tsx
-│   │   ├── MediaDisplay.tsx
-│   │   ├── MultiRangeSlider.tsx
-│   │   ├── NewTag.tsx
-│   │   ├── Pagination.tsx
-│   │   ├── SearchForm.tsx
-│   │   ├── Spinner.tsx
-│   │   ├── StarRating.tsx
-│   │   ├── Typography.tsx
-│   │   └── Underline.tsx
-│   ├── constants
-│   │   ├── config.ts
-│   │   ├── language.ts
-│   │   └── types
-│   │       ├── data.d.ts
-│   │       └── general.ts
-│   ├── context
-│   │   └── AppDataContext.tsx
-│   ├── eslint.config.js
-│   ├── global.css
-│   ├── hooks
-│   │   ├── useApi.ts
-│   │   └── useDebounce.ts
-│   ├── metro.config.js
-│   ├── nativewind-env.d.ts
-│   ├── package.json
-│   ├── prettier.config.js
-│   ├── styles
-│   │   └── colors.ts
-│   ├── tailwind.config.js
-│   ├── tsconfig.json
-│   └── utils
-│       ├── api.ts
-│       └── functions.ts
+│   ├── app
+│   │   ├── (drawer)
+│   │   │   ├── _layout.tsx
+│   │   │   └── (tabs)
+│   │   │       ├── account.tsx
+│   │   │       ├── index.tsx
+│   │   │       ├── _layout.tsx
+│   │   │       ├── login.tsx
+│   │   │       ├── sets.tsx
+│   │   │       ├── store.tsx
+│   │   │       └── tos.tsx
+│   │   ├── _layout.tsx
+│   │   └── +not-found.tsx
+│   ├── app-env.d.ts
+│   ├── app.json
+│   ├── assets
+│   │   ├── fonts
+│   │   │   └── SpaceMono-Regular.ttf
+│   │   └── images
+│   │       ├── adaptive-icon.png
+│   │       ├── anonymous.png
+│   │       ├── favicon.png
+│   │       ├── icon.png
+│   │       ├── image-placeholder.png
+│   │       └── splash-icon.png
+│   ├── babel.config.js
+│   ├── cesconfig.jsonc
+│   ├── components
+│   │   ├── BrandFilterDropdown.tsx
+│   │   ├── ContactBox.tsx
+│   │   ├── Footer.tsx
+│   │   ├── ItemsSlider.tsx
+│   │   ├── Logo.tsx
+│   │   ├── MediaDisplay.tsx
+│   │   ├── MultiRangeSlider.tsx
+│   │   ├── NewTag.tsx
+│   │   ├── Pagination.tsx
+│   │   ├── SearchForm.tsx
+│   │   ├── Spinner.tsx
+│   │   ├── StarRating.tsx
+│   │   ├── Typography.tsx
+│   │   └── Underline.tsx
+│   ├── constants
+│   │   ├── config.ts
+│   │   ├── language.ts
+│   │   └── types
+│   │       ├── data.d.ts
+│   │       └── general.ts
+│   ├── context
+│   │   └── AppDataContext.tsx
+│   ├── eslint.config.js
+│   ├── global.css
+│   ├── hooks
+│   │   ├── useApi.ts
+│   │   └── useDebounce.ts
+│   ├── metro.config.js
+│   ├── nativewind-env.d.ts
+│   ├── package.json
+│   ├── prettier.config.js
+│   ├── styles
+│   │   └── colors.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   └── utils
+│       ├── api.ts
+│       └── functions.ts
 └── web
     ├── backups
-    ├── bun.lock
     ├── db
     ├── docker-compose.dev.yml
     ├── docker-compose.yml
@@ -882,290 +884,291 @@ This project uses the **Next.js App Router**, which organizes the application fi
     ├── package.json
     ├── postcss.config.mjs
     ├── prisma
-    │   └── schema.prisma
+    │   └── schema.prisma
     ├── prisma.config.ts
     ├── public
-    │   ├── android-chrome-192x192.png
-    │   ├── android-chrome-512x512.png
-    │   ├── apple-touch-icon.png
-    │   ├── favicon-16x16.png
-    │   ├── favicon-32x32.png
-    │   ├── favicon.ico
-    │   ├── help-page
-    │   │   ├── help-auto-slug.png
-    │   │   ├── help-copy-html-1.png
-    │   │   ├── help-copy-html-2.png
-    │   │   ├── help-copy-html-3.png
-    │   │   ├── help-html-example.png
-    │   │   ├── help-open-html-editor-1.png
-    │   │   ├── help-open-html-editor-2.png
-    │   │   ├── help-order-life-cycle-1.png
-    │   │   ├── help-order-life-cycle-2.png
-    │   │   ├── help-roles-1.png
-    │   │   └── help-slug-in-url.png
-    │   ├── icon-192.png
-    │   ├── icon-2.png
-    │   ├── icon-512.png
-    │   ├── icon.png
-    │   ├── manifest.json
-    │   ├── push-sw.js
-    │   ├── site.webmanifest
-    │   ├── TEST_ICON.png
-    │   └── uploads
+    │   ├── android-chrome-192x192.png
+    │   ├── android-chrome-512x512.png
+    │   ├── apple-touch-icon.png
+    │   ├── favicon-16x16.png
+    │   ├── favicon-32x32.png
+    │   ├── favicon.ico
+    │   ├── help-page
+    │   │   ├── help-auto-slug.png
+    │   │   ├── help-copy-html-1.png
+    │   │   ├── help-copy-html-2.png
+    │   │   ├── help-copy-html-3.png
+    │   │   ├── help-html-example.png
+    │   │   ├── help-open-html-editor-1.png
+    │   │   ├── help-open-html-editor-2.png
+    │   │   ├── help-order-life-cycle-1.png
+    │   │   ├── help-order-life-cycle-2.png
+    │   │   ├── help-roles-1.png
+    │   │   └── help-slug-in-url.png
+    │   ├── icon-192.png
+    │   ├── icon-2.png
+    │   ├── icon-512.png
+    │   ├── icon.png
+    │   ├── manifest.json
+    │   ├── push-sw.js
+    │   ├── site.webmanifest
+    │   ├── TEST_ICON.png
+    │   └── uploads
     ├── setup-files
-    │   ├── manage-users.js
-    │   └── store-customization.pdf
+    │   ├── manage-users.js
+    │   └── store-customization.pdf
     └── src
         ├── actions
-        │   ├── adminPush.js
-        │   ├── authActions.js
-        │   └── reviewActions.js
+        │   ├── adminPush.js
+        │   ├── authActions.js
+        │   └── reviewActions.js
         ├── app
-        │   ├── about
-        │   │   └── page.js
-        │   ├── account
-        │   │   ├── layout.js
-        │   │   ├── orders
-        │   │   │   ├── page.js
-        │   │   │   └── [slug]
-        │   │   │       └── page.js
-        │   │   ├── page.js
-        │   │   └── wishlist
-        │   │       └── page.js
-        │   ├── admin
-        │   │   ├── components
-        │   │   │   ├── ActiveUsers.js
-        │   │   │   ├── AdminHeader.js
-        │   │   │   ├── AutoSlugifyButton.js
-        │   │   │   ├── Backup.js
-        │   │   │   ├── CustomTransaction.js
-        │   │   │   ├── Dashboard.js
-        │   │   │   ├── DiscountCalculator.js
-        │   │   │   ├── DynamicExportModal.js
-        │   │   │   ├── Feedback.js
-        │   │   │   ├── forms
-        │   │   │   │   ├── AdForm.js
-        │   │   │   │   ├── BrandForm.js
-        │   │   │   │   ├── CashierForm.js
-        │   │   │   │   ├── CategoryForm.js
-        │   │   │   │   ├── CodesForm.js
-        │   │   │   │   ├── FormWrapper.js
-        │   │   │   │   ├── GalleryForm.js
-        │   │   │   │   ├── GeneralForm.js
-        │   │   │   │   ├── PartnersForm.js
-        │   │   │   │   ├── ProductForm.js
-        │   │   │   │   ├── PushForm.js
-        │   │   │   │   ├── SetForm.js
-        │   │   │   │   ├── TeamForm.js
-        │   │   │   │   └── ThemesForm.js
-        │   │   │   ├── Help.js
-        │   │   │   ├── HtmlEditor.js
-        │   │   │   ├── ImageList.js
-        │   │   │   ├── NavigationTabs.js
-        │   │   │   ├── OrdersQuickStats.js
-        │   │   │   ├── OrderView.js
-        │   │   │   ├── RelatedItemsSection.js
-        │   │   │   ├── ResetForm.js
-        │   │   │   ├── ReviewView.js
-        │   │   │   ├── RoleCell.js
-        │   │   │   ├── SearchProduct.js
-        │   │   │   ├── SpamManagement.js
-        │   │   │   ├── table
-        │   │   │   │   ├── TableComponents.js
-        │   │   │   │   └── tableConfigs.js
-        │   │   │   ├── TableDisplay.js
-        │   │   │   └── ui
-        │   │   │       ├── Badge.js
-        │   │   │       ├── Button.js
-        │   │   │       ├── Card.js
-        │   │   │       ├── EmptyState.js
-        │   │   │       ├── FormField.js
-        │   │   │       ├── index.js
-        │   │   │       └── LoadingState.js
-        │   │   ├── hooks
-        │   │   │   ├── useDebouncedSearch.js
-        │   │   │   ├── useEntityData.js
-        │   │   │   └── useFormSubmit.js
-        │   │   ├── layout.js
-        │   │   ├── page.js
-        │   │   ├── styles
-        │   │   │   └── admin.css
-        │   │   └── utils
-        │   │       ├── api-helpers.js
-        │   │       ├── constants.js
-        │   │       ├── form-helpers.js
-        │   │       └── image-helpers.js
-        │   ├── api
-        │   │   ├── admin
-        │   │   │   ├── backup
-        │   │   │   │   └── route.js
-        │   │   │   ├── change-role
-        │   │   │   │   └── route.js
-        │   │   │   ├── export-data
-        │   │   │   │   └── route.js
-        │   │   │   ├── geo
-        │   │   │   │   └── route.js
-        │   │   │   ├── online-users
-        │   │   │   │   └── route.js
-        │   │   │   └── verify-user
-        │   │   │       └── route.js
-        │   │   ├── auth
-        │   │   │   ├── me
-        │   │   │   │   └── route.js
-        │   │   │   └── route.js
-        │   │   ├── cleanup
-        │   │   │   └── route.js
-        │   │   ├── custom-transactions
-        │   │   │   └── route.js
-        │   │   ├── feedback
-        │   │   │   └── route.js
-        │   │   ├── healthcheck
-        │   │   │   └── route.js
-        │   │   ├── live
-        │   │   │   └── route.js
-        │   │   ├── pages-data
-        │   │   │   └── [page]
-        │   │   │       └── route.js
-        │   │   ├── push
-        │   │   │   ├── subscribe
-        │   │   │   │   └── route.js
-        │   │   │   └── unsubscribe
-        │   │   │       └── route.js
-        │   │   ├── tables
-        │   │   │   ├── route.js
-        │   │   │   └── [table]
-        │   │   │       └── [slug]
-        │   │   │           └── route.js
-        │   │   ├── uploads
-        │   │   │   └── [...path]
-        │   │   │       └── route.js
-        │   │   └── user
-        │   │       ├── orders
-        │   │       │   └── route.js
-        │   │       └── wishlist
-        │   │           ├── route.js
-        │   │           └── [slug]
-        │   │               └── route.js
-        │   ├── checkout
-        │   │   ├── layout.js
-        │   │   └── page.js
-        │   ├── contact
-        │   │   └── page.js
-        │   ├── error.js
-        │   ├── feedback
-        │   │   └── page.js
-        │   ├── layout.js
-        │   ├── loading.js
-        │   ├── login
-        │   │   ├── layout.js
-        │   │   └── page.js
-        │   ├── not-found.js
-        │   ├── page.js
-        │   ├── sets
-        │   │   ├── page.js
-        │   │   └── [slug]
-        │   │       └── page.js
-        │   ├── store
-        │   │   ├── page.js
-        │   │   └── [slug]
-        │   │       └── page.js
-        │   └── tos
-        │       └── page.js
+        │   ├── about
+        │   │   └── page.js
+        │   ├── account
+        │   │   ├── layout.js
+        │   │   ├── orders
+        │   │   │   ├── page.js
+        │   │   │   └── [slug]
+        │   │   │       └── page.js
+        │   │   ├── page.js
+        │   │   └── wishlist
+        │   │       └── page.js
+        │   ├── admin
+        │   │   ├── components
+        │   │   │   ├── ActiveUsers.js
+        │   │   │   ├── AdminHeader.js
+        │   │   │   ├── AutoSlugifyButton.js
+        │   │   │   ├── Backup.js
+        │   │   │   ├── CustomTransaction.js
+        │   │   │   ├── Dashboard.js
+        │   │   │   ├── DiscountCalculator.js
+        │   │   │   ├── DynamicExportModal.js
+        │   │   │   ├── Feedback.js
+        │   │   │   ├── forms
+        │   │   │   │   ├── AdForm.js
+        │   │   │   │   ├── BrandForm.js
+        │   │   │   │   ├── CashierForm.js
+        │   │   │   │   ├── CategoryForm.js
+        │   │   │   │   ├── CodesForm.js
+        │   │   │   │   ├── FormWrapper.js
+        │   │   │   │   ├── GalleryForm.js
+        │   │   │   │   ├── GeneralForm.js
+        │   │   │   │   ├── PartnersForm.js
+        │   │   │   │   ├── ProductForm.js
+        │   │   │   │   ├── PushForm.js
+        │   │   │   │   ├── SetForm.js
+        │   │   │   │   ├── TeamForm.js
+        │   │   │   │   └── ThemesForm.js
+        │   │   │   ├── Help.js
+        │   │   │   ├── HtmlEditor.js
+        │   │   │   ├── ImageList.js
+        │   │   │   ├── NavigationTabs.js
+        │   │   │   ├── OrdersQuickStats.js
+        │   │   │   ├── OrderView.js
+        │   │   │   ├── RelatedItemsSection.js
+        │   │   │   ├── ResetForm.js
+        │   │   │   ├── ReviewView.js
+        │   │   │   ├── RoleCell.js
+        │   │   │   ├── SearchProduct.js
+        │   │   │   ├── SpamManagement.js
+        │   │   │   ├── table
+        │   │   │   │   ├── TableComponents.js
+        │   │   │   │   └── tableConfigs.js
+        │   │   │   ├── TableDisplay.js
+        │   │   │   └── ui
+        │   │   │       ├── Badge.js
+        │   │   │       ├── Button.js
+        │   │   │       ├── Card.js
+        │   │   │       ├── EmptyState.js
+        │   │   │       ├── FormField.js
+        │   │   │       ├── index.js
+        │   │   │       └── LoadingState.js
+        │   │   ├── hooks
+        │   │   │   ├── useDebouncedSearch.js
+        │   │   │   ├── useEntityData.js
+        │   │   │   └── useFormSubmit.js
+        │   │   ├── layout.js
+        │   │   ├── page.js
+        │   │   ├── styles
+        │   │   │   └── admin.css
+        │   │   └── utils
+        │   │       ├── api-helpers.js
+        │   │       ├── constants.js
+        │   │       ├── form-helpers.js
+        │   │       └── image-helpers.js
+        │   ├── api
+        │   │   ├── admin
+        │   │   │   ├── backup
+        │   │   │   │   └── route.js
+        │   │   │   ├── change-role
+        │   │   │   │   └── route.js
+        │   │   │   ├── export-data
+        │   │   │   │   └── route.js
+        │   │   │   ├── geo
+        │   │   │   │   └── route.js
+        │   │   │   ├── online-users
+        │   │   │   │   └── route.js
+        │   │   │   └── verify-user
+        │   │   │       └── route.js
+        │   │   ├── auth
+        │   │   │   ├── me
+        │   │   │   │   └── route.js
+        │   │   │   └── route.js
+        │   │   ├── cleanup
+        │   │   │   └── route.js
+        │   │   ├── custom-transactions
+        │   │   │   └── route.js
+        │   │   ├── feedback
+        │   │   │   └── route.js
+        │   │   ├── healthcheck
+        │   │   │   └── route.js
+        │   │   ├── live
+        │   │   │   └── route.js
+        │   │   ├── pages-data
+        │   │   │   └── [page]
+        │   │   │       └── route.js
+        │   │   ├── push
+        │   │   │   ├── subscribe
+        │   │   │   │   └── route.js
+        │   │   │   └── unsubscribe
+        │   │   │       └── route.js
+        │   │   ├── tables
+        │   │   │   ├── route.js
+        │   │   │   └── [table]
+        │   │   │       └── [slug]
+        │   │   │           └── route.js
+        │   │   ├── uploads
+        │   │   │   └── [...path]
+        │   │   │       └── route.js
+        │   │   └── user
+        │   │       ├── orders
+        │   │       │   └── route.js
+        │   │       └── wishlist
+        │   │           ├── route.js
+        │   │           └── [slug]
+        │   │               └── route.js
+        │   ├── checkout
+        │   │   ├── layout.js
+        │   │   └── page.js
+        │   ├── contact
+        │   │   └── page.js
+        │   ├── error.js
+        │   ├── feedback
+        │   │   └── page.js
+        │   ├── layout.js
+        │   ├── loading.js
+        │   ├── login
+        │   │   ├── layout.js
+        │   │   └── page.js
+        │   ├── not-found.js
+        │   ├── page.js
+        │   ├── sets
+        │   │   ├── page.js
+        │   │   └── [slug]
+        │   │       └── page.js
+        │   ├── sitemap.js
+        │   ├── store
+        │   │   ├── page.js
+        │   │   └── [slug]
+        │   │       └── page.js
+        │   └── tos
+        │       └── page.js
         ├── assets
-        │   └── header-bg.png
+        │   └── header-bg.png
         ├── components
-        │   ├── account-components
-        │   │   ├── MenuLink.js
-        │   │   ├── OrderActions.js
-        │   │   ├── Orders.js
-        │   │   ├── SignOutButton.js
-        │   │   ├── WishlistActions.js
-        │   │   └── Wishlist.js
-        │   ├── home-components
-        │   │   ├── HomeListItems.js
-        │   │   ├── HomePageSlider.js
-        │   │   ├── Partners.js
-        │   │   ├── PromotedComponent.js
-        │   │   ├── Promotions.js
-        │   │   ├── ScrollControls.js
-        │   │   └── ScrollDots.js
-        │   ├── others-components
-        │   │   ├── Activity.js
-        │   │   ├── CartSidebar.js
-        │   │   ├── Checkbox.js
-        │   │   ├── ContactBox.js
-        │   │   ├── CopyBtn.js
-        │   │   ├── ExpandableGallery.js
-        │   │   ├── FeatureOffOverlay.js
-        │   │   ├── FloatingCartButton.js
-        │   │   ├── Footer.js
-        │   │   ├── HeaderAccount.js
-        │   │   ├── HeaderForm.js
-        │   │   ├── Header.js
-        │   │   ├── Invoice.js
-        │   │   ├── Logo.js
-        │   │   ├── MediaDisplay.js
-        │   │   ├── MobileNav.js
-        │   │   ├── NavLink.js
-        │   │   ├── NavWrapper.js
-        │   │   ├── NotificationPermissionBtn.js
-        │   │   ├── OnlineHeartbeat.js
-        │   │   ├── OpenCartBtn.js
-        │   │   ├── SetsPagnination.js
-        │   │   ├── Spinner.js
-        │   │   ├── Stars.js
-        │   │   ├── SystemTimeChecker.js
-        │   │   └── ThemeScript.js
-        │   └── store-components
-        │       ├── BrandDescription.js
-        │       ├── ExpandableWrapper.js
-        │       ├── ImageSelect.js
-        │       ├── NewTag.js
-        │       ├── ProductCard.js
-        │       ├── ProductCardVariantsStatus.js
-        │       ├── ProductDescription.js
-        │       ├── ProductForm.js
-        │       ├── ProductsGridSkeleton.js
-        │       ├── RelatedProducts.js
-        │       ├── RelatedSets.js
-        │       ├── ReviewsForm.js
-        │       ├── ReviewsItem.js
-        │       ├── ReviewsList.js
-        │       ├── ReviewsReplyForm.js
-        │       └── StoreFilterOptions.js
+        │   ├── account-components
+        │   │   ├── MenuLink.js
+        │   │   ├── OrderActions.js
+        │   │   ├── Orders.js
+        │   │   ├── SignOutButton.js
+        │   │   ├── WishlistActions.js
+        │   │   └── Wishlist.js
+        │   ├── home-components
+        │   │   ├── HomeListItems.js
+        │   │   ├── HomePageSlider.js
+        │   │   ├── Partners.js
+        │   │   ├── PromotedComponent.js
+        │   │   ├── Promotions.js
+        │   │   ├── ScrollControls.js
+        │   │   └── ScrollDots.js
+        │   ├── others-components
+        │   │   ├── Activity.js
+        │   │   ├── CartSidebar.js
+        │   │   ├── Checkbox.js
+        │   │   ├── ContactBox.js
+        │   │   ├── CopyBtn.js
+        │   │   ├── ExpandableGallery.js
+        │   │   ├── FeatureOffOverlay.js
+        │   │   ├── FloatingCartButton.js
+        │   │   ├── Footer.js
+        │   │   ├── HeaderAccount.js
+        │   │   ├── HeaderForm.js
+        │   │   ├── Header.js
+        │   │   ├── Invoice.js
+        │   │   ├── Logo.js
+        │   │   ├── MediaDisplay.js
+        │   │   ├── MobileNav.js
+        │   │   ├── NavLink.js
+        │   │   ├── NavWrapper.js
+        │   │   ├── NotificationPermissionBtn.js
+        │   │   ├── OnlineHeartbeat.js
+        │   │   ├── OpenCartBtn.js
+        │   │   ├── SetsPagnination.js
+        │   │   ├── Spinner.js
+        │   │   ├── Stars.js
+        │   │   ├── SystemTimeChecker.js
+        │   │   └── ThemeScript.js
+        │   └── store-components
+        │       ├── BrandDescription.js
+        │       ├── ExpandableWrapper.js
+        │       ├── ImageSelect.js
+        │       ├── NewTag.js
+        │       ├── ProductCard.js
+        │       ├── ProductCardVariantsStatus.js
+        │       ├── ProductDescription.js
+        │       ├── ProductForm.js
+        │       ├── ProductsGridSkeleton.js
+        │       ├── RelatedProducts.js
+        │       ├── RelatedSets.js
+        │       ├── ReviewsForm.js
+        │       ├── ReviewsItem.js
+        │       ├── ReviewsList.js
+        │       ├── ReviewsReplyForm.js
+        │       └── StoreFilterOptions.js
         ├── context
-        │   ├── AuthContext.js
-        │   ├── ConfirmModal.js
-        │   └── WishlistContext.js
+        │   ├── AuthContext.js
+        │   ├── ConfirmModal.js
+        │   └── WishlistContext.js
         ├── helpers
-        │   ├── client-functions.js
-        │   ├── config.js
-        │   ├── functions.js
-        │   ├── language-en.js
-        │   ├── language.js
-        │   └── server-functions.js
+        │   ├── client-functions.js
+        │   ├── config.js
+        │   ├── functions.js
+        │   ├── language-en.js
+        │   ├── language.js
+        │   └── server-functions.js
         ├── hooks
-        │   ├── useHeartbeat.js
-        │   ├── useIsMobile.js
-        │   ├── useOutsideClick.js
-        │   └── usePushNotifications.js
+        │   ├── useHeartbeat.js
+        │   ├── useIsMobile.js
+        │   ├── useOutsideClick.js
+        │   └── usePushNotifications.js
         ├── lib
-        │   ├── auth.js
-        │   ├── backup.js
-        │   ├── data.js
-        │   ├── db.js
-        │   ├── email.js
-        │   ├── event-emitter.js
-        │   ├── get-ip.js
-        │   ├── notifications.js
-        │   ├── online-tracking.js
-        │   ├── order-operations.js
-        │   ├── pages-data.js
-        │   ├── permissions.js
-        │   ├── rate-limiter-db.js
-        │   ├── review.js
-        │   ├── session.js
-        │   └── wishlist.js
+        │   ├── auth.js
+        │   ├── backup.js
+        │   ├── data.js
+        │   ├── db.js
+        │   ├── email.js
+        │   ├── event-emitter.js
+        │   ├── get-ip.js
+        │   ├── notifications.js
+        │   ├── online-tracking.js
+        │   ├── order-operations.js
+        │   ├── pages-data.js
+        │   ├── permissions.js
+        │   ├── rate-limiter-db.js
+        │   ├── review.js
+        │   ├── session.js
+        │   └── wishlist.js
         ├── middleware.js
         └── styles
             ├── globals.css

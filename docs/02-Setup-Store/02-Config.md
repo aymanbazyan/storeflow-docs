@@ -211,17 +211,9 @@ OR
 bun run prisma:generate
 ``` -->
 
-you might also want to grant files mutating premission to your app (to mutate the items' images).
-
-```
-sudo chown -R myuser:myuser public/uploads
-```
-
-Replace `myuser` with the actual user (your operating system user).
-
 ---
 
-> ## PWA MANIFEST
+> ## PWA Manifest
 
 Go to `web/public/`
 
@@ -254,6 +246,18 @@ Edit the `manifest.json` and the icons there (icon-192.png and icon-512.png):
 ```
 
 You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator/).
+
+---
+
+> ## Permissions fix
+
+you might also want to grant files mutating premission to your app (to mutate the items' images).
+
+```
+sudo chown -R myuser:myuser public/uploads
+```
+
+Replace `myuser` with the actual user (your operating system user).
 
 ---
 
