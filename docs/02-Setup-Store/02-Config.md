@@ -65,7 +65,7 @@ NEXT_PUBLIC_STORE_CATEGORIES_VARIANT="tags" # "cards" | "tags"
 
 # PUBLIC - General & Third Party
 NEXT_PUBLIC_NODE_ENV='production' # production | development
-NEXT_PUBLIC_APP_VERSION=storeflow v0.9.0-beta
+NEXT_PUBLIC_APP_VERSION=storeflow v0.9.1-beta
 NEXT_PUBLIC_APP_BASE_URL="http://localhost:3000" # No '/' at the end
 NEXT_PUBLIC_GOOGLE_CLIENT_ID="XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
@@ -152,6 +152,9 @@ AUTH_LIMIT=13
 AUTH_LIMIT_RESET_TIME=3600000
 FEEDBACK_LIMIT=3
 FEEDBACK_LIMIT_RESET_TIME=3600000
+DISCOUNT_CODE_TRY_LIMIT=7
+DISCOUNT_CODE_TRY_RESET_TIME=7200000
+# 2 Hours
 
 MIDDLEWARE_CLIENT_MAX_BODY_SIZE_MB=3000
 SERVER_ACTIONS_BODY_SIZE_LIMIT_MB=3000
@@ -254,4 +257,4 @@ You can use [web-manifest-generator](https://codeshack.io/web-manifest-generator
 
 ---
 
-_Last updated on February 2, 2026 by Ayman._
+_Last updated on February 3, 2026 by Ayman._
