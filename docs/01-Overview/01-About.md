@@ -37,7 +37,8 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
 - **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
 - **Rich Content:** Use a simple HTML editor (CKEditor5) for detailed descriptions and upload both images and videos for products.
-- **Export as Excel:** Staff can export tables in the Admin panel to Excel for easy data analysis and can choose wich columns to export.
+- **Export data as Excel:** Staff can export tables in the Admin panel to Excel for easy data analysis and can choose which columns to export.
+- **Import Excel data**: Staff can toggle the **IMPORT MODE** before exporting tables to make the file show raw data for easier editing, and then they can reimport the file after editing into the database.
 - **Active users Counter:** A simple counter for the number of current active users on the website.
 
 #### **Sales & Orders**
@@ -68,6 +69,7 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Timeout Ips:** A dashboard to manage timed-out IP addresses to block spammers.
 - **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
 - **Feedback Management:** A central dashboard to view and manage all customer feedback submitted through the storefront.
+- **Block account verification:** The admins can toggle if verification codes can be sent to allow anyone to do transactions; otherwise, the admins will have to verify the emails themselves from the dashboard if they only sell to specific customers; non-verified accounts will be deleted after 1 week of creation.
 
 ---
 
@@ -106,4 +108,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on January 17, 2026 by Ayman._
+_Last updated on February 4, 2026 by Ayman._

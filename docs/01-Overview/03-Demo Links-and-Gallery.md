@@ -12,7 +12,9 @@
 
 # Gallery
 
-**Note: Pictures are taken with full screen to avoid quality loss.**
+**Note: Pictures are taken on a full screen to avoid quality loss.**
+
+**Note: The admin menu table here is currently showing the legacy version; it has been revamped with a better UI + performance.**
 
 ## Desktop Web
 
