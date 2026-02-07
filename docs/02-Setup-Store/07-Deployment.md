@@ -307,9 +307,9 @@ http {
     client_max_body_size 100G;
 
     # Timeouts
-    keepalive_timeout 65;
-    client_body_timeout 20;
-    client_header_timeout 20;
+    keepalive_timeout  300;
+    client_body_timeout 300;
+    client_header_timeout 300;
 
     # Rate Limiting (100 req/sec, burst 200)
     limit_req_zone $binary_remote_addr zone=mylimit:10m rate=100r/s;
@@ -433,13 +433,15 @@ sudo systemctl restart nginx
 
 Your site is now live at `https://your-domain.com` 🎉
 
+You can then implement other things such as default fallback page when the server is down and so on.
+
 ---
 
 ## SEO & Indexing
 
 ### Dynamic Sitemap Generation
 
-You'll have `src/app/sitemap.js` to automatically list all products:
+You'll have this sitemap generator: `src/app/sitemap.js` to automatically list all products every 24 hours, you can edit it if you want.
 
 <!-- ```javascript
 import { APP_BASE_URL } from "@/helpers/config";
@@ -597,4 +599,4 @@ docker compose logs db
 
 ---
 
-_Last updated on February 3, 2026 by Ayman._
+_Last updated on February 7, 2026 by Ayman._

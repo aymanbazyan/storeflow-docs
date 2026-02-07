@@ -70,6 +70,7 @@ Admins have variant permissions control over the store's products, sales, orders
 - **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
 - **Feedback Management:** A central dashboard to view and manage all customer feedback submitted through the storefront.
 - **Block account verification:** The admins can toggle if verification codes can be sent to allow anyone to do transactions; otherwise, the admins will have to verify the emails themselves from the dashboard if they only sell to specific customers; non-verified accounts will be deleted after 1 week of creation.
+- **Orders Push Notifications:** Admins receive push notifications for new orders and cancellations (optional).
 
 ---
 
@@ -102,10 +103,10 @@ A dedicated area for registered customers to manage their activity.
 - **Order History & Control:** View all past orders and their current status (e.g., pending, approved). Customers can also cancel a recently placed order.
 - **Wishlist:** Save favorite products for later purchase.
 - **Email Confirmation:** Customer receive confirmation code on his email.
-- **Push Notifications:** Customer receive push notifications for his wishlist and orders (optional).
+- **Wishlist Push Notifications:** Customer receive push notifications for his wishlist (optional).
 
 ---
 
 #### **And there's more!**
 
-_Last updated on February 4, 2026 by Ayman._
+_Last updated on February 7, 2026 by Ayman._

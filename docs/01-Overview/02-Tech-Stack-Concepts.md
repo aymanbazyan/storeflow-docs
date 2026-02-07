@@ -372,14 +372,17 @@ model User {
 }
 
 model PushSubscription {
-  slug        String   @id @default(cuid())
-  endpoint  String   @unique // The unique URL for the user's browser
-  keys      Json     // Stores 'p256dh' and 'auth' keys
-  user_slug String   @db.VarChar(100)
-  user      User     @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
-  created_at DateTime @default(now())
+  slug        String           @id @default(cuid())
+  endpoint    String           // The unique URL for the user's browser
+  keys        Json             // Stores 'p256dh' and 'auth' keys
+  user_slug   String           @db.VarChar(100)
+  type        SubscriptionType @default(WISHLIST)
+  user        User             @relation(fields: [user_slug], references: [slug], onDelete: Cascade)
+  created_at  DateTime         @default(now())
 
+  @@unique([endpoint, type]) // Same endpoint can have different subscription types
   @@index([user_slug])
+  @@index([type])
 }
 
 model RequestLog {
@@ -788,6 +791,12 @@ enum Roles {
   ADMIN
 }
 
+enum SubscriptionType {
+  WISHLIST      // Customer notifications for wishlisted items
+  ADMIN_ORDERS  // Admin notifications for new/cancelled orders
+}
+
+
 ```
 
 </details>
@@ -1033,6 +1042,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   └── [page]
         │   │   │       └── route.js
         │   │   ├── push
+        │   │   │   ├── check
+        │   │   │   │   └── route.js
         │   │   │   ├── subscribe
         │   │   │   │   └── route.js
         │   │   │   └── unsubscribe
@@ -1169,6 +1180,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   ├── order-operations.js
         │   ├── pages-data.js
         │   ├── permissions.js
+        │   ├── push-notifications.js
         │   ├── rate-limiter-db.js
         │   ├── review.js
         │   ├── session.js
@@ -1196,4 +1208,4 @@ tree --gitignore -I "temp"
 
 ---
 
-_Last updated on February 4, 2026 by Ayman._
+_Last updated on February 7, 2026 by Ayman._
