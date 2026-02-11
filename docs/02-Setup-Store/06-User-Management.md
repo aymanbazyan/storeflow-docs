@@ -81,4 +81,4 @@ docker-compose exec app bun run manage-users -- --create-fake-user manager@examp
 The default password for all fake users is `12345678`.
 :::
 
-_Last updated on November 13, 2025 by Ayman._
+_Last updated on November 13, 2025, by Ayman._

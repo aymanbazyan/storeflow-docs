@@ -982,6 +982,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── RoleCell.js
         │   │   │   ├── SearchProduct.js
         │   │   │   ├── SpamManagement.js
+        │   │   │   ├── StorageWidget.js
         │   │   │   ├── table
         │   │   │   │   ├── TableComponents.js
         │   │   │   │   └── tableConfigs.js
@@ -1034,8 +1035,6 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   └── route.js
         │   │   ├── feedback
         │   │   │   └── route.js
-        │   │   ├── healthcheck
-        │   │   │   └── route.js
         │   │   ├── live
         │   │   │   └── route.js
         │   │   ├── pages-data
@@ -1047,6 +1046,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── subscribe
         │   │   │   │   └── route.js
         │   │   │   └── unsubscribe
+        │   │   │       └── route.js
+        │   │   ├── system
+        │   │   │   ├── health
+        │   │   │   │   └── route.js
+        │   │   │   └── space
         │   │   │       └── route.js
         │   │   ├── tables
         │   │   │   ├── route.js
@@ -1208,4 +1212,4 @@ tree --gitignore -I "temp"
 
 ---
 
-_Last updated on February 7, 2026 by Ayman._
+_Last updated on February 11, 2026, by Ayman._

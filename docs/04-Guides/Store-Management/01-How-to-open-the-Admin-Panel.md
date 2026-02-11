@@ -89,4 +89,4 @@ Here is a quick-reference table showing which roles have access to each section 
 
 ---
 
-_Last updated on November 7, 2025 by Ayman._
+_Last updated on November 7, 2025, by Ayman._

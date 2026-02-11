@@ -390,4 +390,4 @@ If ports 3000 or 5432 are already in use:
 
 ---
 
-_Last updated on January 30, 2026 by Ayman._
+_Last updated on January 30, 2026, by Ayman._

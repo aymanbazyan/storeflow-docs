@@ -24,7 +24,7 @@ function HomepageHeader() {
             Explore Storeflow - 5min ⏱️
           </Link>
         </div>
-        <p style={{ marginTop: "10px" }}>v0.9.3 beta</p>
+        <p style={{ marginTop: "10px" }}>v0.9.4 beta</p>
       </div>
     </header>
   );

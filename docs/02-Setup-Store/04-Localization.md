@@ -35,4 +35,4 @@ export const messages = {
 
 ---
 
-_Last updated on June 12, 2025 by Ayman._
+_Last updated on June 12, 2025, by Ayman._

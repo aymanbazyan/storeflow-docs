@@ -599,4 +599,4 @@ docker compose logs db
 
 ---
 
-_Last updated on February 7, 2026 by Ayman._
+_Last updated on February 7, 2026, by Ayman._

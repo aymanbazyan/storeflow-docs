@@ -17,7 +17,7 @@ I implemented a feature-rich admin panel where most things in the store are adju
 
 ![Performance test](../../static/img/performance-test.png)
 
-Performance test results for the Homepage (by Google's Lighthouse)
+Performance test results for the homepage (by Google's Lighthouse)
 
 ---
 
@@ -29,17 +29,17 @@ Storeflow is a comprehensive e-commerce platform designed with a powerful admin 
 
 ### **1. Admin Dashboard (Store Management)**
 
-Admins have variant permissions control over the store's products, sales, orders and appearance (check [Admin Panel Section](/docs/Guides/Store-Management/How-to-open-the-Admin-Panel) for details).
+Admins have variant permissions control over the store's products, sales, orders, and appearance (check the [Admin Panel Section](/docs/Guides/Store-Management/How-to-open-the-Admin-Panel) for details).
 
 #### **Product & Inventory**
 
-- **Product Management:** Easily create, edit, and delete products, categories, brands, and **product bundles (Sets)**.
-- **Product Variants:** For minor differeces between the same products (e.g color, size, etc), you can add "variants" for any product.
-- **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and write any private information for any product, such as its location in the store.
+- **Product Management:** Easily create, edit, and delete products, categories, brands, and **product bundles (sets)**.
+- **Product Variants:** For minor differences between the same products (e.g., color, size, etc.), you can add "variants" for any product.
+- **Inventory Control:** Set stock levels, including "out-of-stock" and "unlimited" options. Stock is automatically updated when sets are sold, and any private information about any product, such as its location in the store, is written.
 - **Rich Content:** Use a simple HTML editor (CKEditor5) for detailed descriptions and upload both images and videos for products.
 - **Export data as Excel:** Staff can export tables in the Admin panel to Excel for easy data analysis and can choose which columns to export.
 - **Import Excel data**: Staff can toggle the **IMPORT MODE** before exporting tables to make the file show raw data for easier editing, and then they can reimport the file after editing into the database.
-- **Active users Counter:** A simple counter for the number of current active users on the website.
+- **Active Users Counter:** A simple counter for the number of current active users on the website.
 
 #### **Sales & Orders**
 
@@ -51,26 +51,27 @@ Admins have variant permissions control over the store's products, sales, orders
 
 #### **Marketing & Promotions**
 
-- **Sales**: Set up discounts on products and sets, with a simple discount calculator.
+- **Sales**: Set up discounts on products and sets with a simple discount calculator.
 - **Discount Codes:** Create and manage custom discount codes for customers.
-- **Promotions:** Run sitewide sales, **Custom Advertisements**, feature promotional and new items on the storefront.
+- **Promotions:** Run sitewide sales, **custom advertisements**, and featured promotional and new items on the storefront.
 
 #### **Store Customization**
 
-- **Homepage Content:** Control featured categories, the main banner, an interactive map on the website and a gallery for store photos.
+- **Homepage Content:** Control featured categories, the main banner, an interactive map on the website, and a gallery for store photos.
 - **Shipping Rules:** Set custom shipping fees based on customer regions.
 - **Site Information:** Easily update general content like team members and partners.
-- **Site theme:** The admin can set the primary, secondary and the header banner from the Themes panel.
+- **Site theme:** The admin can set the primary, secondary, and header banner from the Themes panel.
 - **Progressive Web App (PWA):** Users can install the website like a mobile app for a better experience ([more details](/docs/03-Setup-mobile-app/1-intro.md)).
 
 #### **Security Management**
 
 - **Export/Import database backup folder:** A function for backing up or restoring the entire site database (multiple backups at a time are available).
-- **Timeout Ips:** A dashboard to manage timed-out IP addresses to block spammers.
-- **Users Management:** A dashboard to view/delete accounts created on the website, and the ability to delete old unverified accounts.
+- **Timeout IPs:** A dashboard to manage timed-out IP addresses to block spammers.
+- **User Management:** A dashboard to view/delete accounts created on the website and the ability to delete old unverified accounts.
 - **Feedback Management:** A central dashboard to view and manage all customer feedback submitted through the storefront.
 - **Block account verification:** The admins can toggle if verification codes can be sent to allow anyone to do transactions; otherwise, the admins will have to verify the emails themselves from the dashboard if they only sell to specific customers; non-verified accounts will be deleted after 1 week of creation.
 - **Orders Push Notifications:** Admins receive push notifications for new orders and cancellations (optional).
+- **System Storage Panel:** A simple panel to monitor the space left on the VPS/server.
 
 ---
 
@@ -89,7 +90,7 @@ A clean and intuitive interface for customers to browse and purchase.
 - **Simple Checkout:** A streamlined, multi-step process for placing orders.
 - **Payment Options:** Cash on delivery and direct bank transfers are currently the only options.
 - **Automated Email Notifications:** Customers automatically receive emails for important order updates (e.g., confirmation, rejection, admin's notes).
-- **Reviews:** Customers will be able to leave reviews (Stars rate and a Comment) in products and sets that has been delivered, and other buyers can **Reply** to comments.
+- **Reviews:** Customers will be able to leave reviews (**star ratings and comments**) on products and sets that have been delivered, and other buyers can **reply** to comments.
 - **Feedback System:** A simple form allows customers to leave general feedback about their shopping experience, helping the store to improve.
 
 ---
@@ -98,15 +99,15 @@ A clean and intuitive interface for customers to browse and purchase.
 
 A dedicated area for registered customers to manage their activity.
 
-- **Secure Authentication:** Standard email/password login, with a **Reset password** form, and support for **Google Oauth Login**.
+- **Secure Authentication:** Standard email/password login, with a **reset password** form, and support for **Google OAuth login**.
 - **Personal Dashboard:** A central "My Account" page to manage personal info, wishlists, and orders.
 - **Order History & Control:** View all past orders and their current status (e.g., pending, approved). Customers can also cancel a recently placed order.
 - **Wishlist:** Save favorite products for later purchase.
-- **Email Confirmation:** Customer receive confirmation code on his email.
-- **Wishlist Push Notifications:** Customer receive push notifications for his wishlist (optional).
+- **Email Confirmation:** The customer receives a confirmation code in his email.
+- **Wishlist Push Notifications:** The customer receives push notifications for his wishlist (optional).
 
 ---
 
 #### **And there's more!**
 
-_Last updated on February 7, 2026 by Ayman._
+_Last updated on February 11, 2026, by Ayman._

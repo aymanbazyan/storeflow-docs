@@ -261,4 +261,4 @@ Replace `myuser` with the actual user (your operating system user).
 
 ---
 
-_Last updated on February 3, 2026 by Ayman._
+_Last updated on February 3, 2026, by Ayman._

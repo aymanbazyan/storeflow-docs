@@ -34,4 +34,4 @@ cd storeflow/web
 
 ---
 
-_Last updated on October 6, 2025 by Ayman._
+_Last updated on October 6, 2025, by Ayman._

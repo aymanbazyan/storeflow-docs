@@ -14,7 +14,7 @@
 
 **Note: Pictures are taken on a full screen to avoid quality loss.**
 
-**Note: The admin menu table here is currently showing the legacy version; it has been revamped with a better UI + performance.**
+**Note: The admin menu here is mostly showing the legacy version; it has been revamped with a better UI + performance.**
 
 ## Desktop Web
 
@@ -394,6 +394,24 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
+### Admin: Storage Panel
+
+![Storage Panel](../../static/gallery/56.png)
+
+---
+
+### Admin: Dropdown menu
+
+![Dropdown menu](../../static/gallery/57.png)
+
+---
+
+### Admin: Database private menu (prisma)
+
+![Database private menu](../../static/gallery/58.png)
+
+---
+
 ## Progressive Web App (PWA)
 
 ![Progressive Web App (PWA)](../../static/gallery/pwa/pwa-0.png)
@@ -408,7 +426,7 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 ---
 
-## Mobile
+## Mobile (Native)
 
 (soon)
 
@@ -416,4 +434,4 @@ You can also write any hidden info about the product in the forms (e.g. The loca
 
 # There are some more details to notice on the website!
 
-_Last updated on January 2, 2026 by Ayman._
+_Last updated on February 11, 2026, by Ayman._
