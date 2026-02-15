@@ -2,13 +2,13 @@
 
 ## **Tech Stack**
 
-- **Frontend + Backend**: React ^19.2.4 + Next.js ^15 (latest patch for v15 as of build time) (App Router).
-- **Database**: PostgreSQL v16 + Prisma ^7.3.0.
+- **Frontend + Backend**: React ^19.2 + Next.js ^15 (latest patch for v15 as of build time) (App Router).
+- **Database**: PostgreSQL v16 + Prisma ^7.
 - **Styling**: Tailwind CSS v4.
 - **API**: Next.js API routes.
 - **Mobile**: [React Native 0.8?.? + Expo ?.? (soon)](/docs/03-Setup-mobile-app/1-intro.md).
 - **Deployment**: [Docker + Nginx (or other hosting services)](/docs/Setup-Store/Deployment).
-- **Runtime**: Bun 1.3.
+- **Runtime**: Bun ^1.3
 - **Push Notifications**: web-push (native library).
 - **Email**: Nodemailer + Gmail SMTP (optional).
 
@@ -1096,14 +1096,20 @@ This project uses the **Next.js App Router**, which organizes the application fi
         ├── assets
         │   └── header-bg.png
         ├── components
-        │   ├── account-components
+        │   ├── account
         │   │   ├── MenuLink.js
         │   │   ├── OrderActions.js
         │   │   ├── Orders.js
         │   │   ├── SignOutButton.js
         │   │   ├── WishlistActions.js
         │   │   └── Wishlist.js
-        │   ├── home-components
+        │   ├── cart
+        │   │   ├── CartSidebar.js
+        │   │   ├── FloatingCartButton.js
+        │   │   └── OpenCartBtn.js
+        │   ├── feedback
+        │   │   └── ConfirmModal.js
+        │   ├── home
         │   │   ├── HomeListItems.js
         │   │   ├── HomePageSlider.js
         │   │   ├── Partners.js
@@ -1111,84 +1117,85 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── Promotions.js
         │   │   ├── ScrollControls.js
         │   │   └── ScrollDots.js
-        │   ├── others-components
-        │   │   ├── Activity.js
-        │   │   ├── CartSidebar.js
-        │   │   ├── Checkbox.js
-        │   │   ├── ContactBox.js
-        │   │   ├── CopyBtn.js
-        │   │   ├── ExpandableGallery.js
-        │   │   ├── FeatureOffOverlay.js
-        │   │   ├── FloatingCartButton.js
+        │   ├── layout
         │   │   ├── Footer.js
         │   │   ├── HeaderAccount.js
         │   │   ├── HeaderForm.js
         │   │   ├── Header.js
-        │   │   ├── Invoice.js
         │   │   ├── Logo.js
-        │   │   ├── MediaDisplay.js
         │   │   ├── MobileNav.js
         │   │   ├── NavLink.js
-        │   │   ├── NavWrapper.js
-        │   │   ├── NotificationPermissionBtn.js
-        │   │   ├── OnlineHeartbeat.js
-        │   │   ├── OpenCartBtn.js
-        │   │   ├── SetsPagnination.js
-        │   │   ├── Spinner.js
-        │   │   ├── Stars.js
-        │   │   ├── SystemTimeChecker.js
-        │   │   └── ThemeScript.js
-        │   └── store-components
-        │       ├── BrandDescription.js
-        │       ├── ExpandableWrapper.js
-        │       ├── ImageSelect.js
-        │       ├── NewTag.js
-        │       ├── ProductCard.js
-        │       ├── ProductCardVariantsStatus.js
-        │       ├── ProductDescription.js
-        │       ├── ProductForm.js
-        │       ├── ProductsGridSkeleton.js
-        │       ├── RelatedProducts.js
-        │       ├── RelatedSets.js
-        │       ├── ReviewsForm.js
-        │       ├── ReviewsItem.js
-        │       ├── ReviewsList.js
-        │       ├── ReviewsReplyForm.js
-        │       └── StoreFilterOptions.js
+        │   │   └── NavWrapper.js
+        │   ├── store
+        │   │   ├── BrandDescription.js
+        │   │   ├── ExpandableWrapper.js
+        │   │   ├── ImageSelect.js
+        │   │   ├── NewTag.js
+        │   │   ├── ProductCard.js
+        │   │   ├── ProductCardVariantsStatus.js
+        │   │   ├── ProductDescription.js
+        │   │   ├── ProductForm.js
+        │   │   ├── ProductsGridSkeleton.js
+        │   │   ├── RelatedProducts.js
+        │   │   ├── RelatedSets.js
+        │   │   ├── ReviewsForm.js
+        │   │   ├── ReviewsItem.js
+        │   │   ├── ReviewsList.js
+        │   │   ├── ReviewsReplyForm.js
+        │   │   └── StoreFilterOptions.js
+        │   └── ui
+        │       ├── Activity.js
+        │       ├── Checkbox.js
+        │       ├── ContactBox.js
+        │       ├── CopyBtn.js
+        │       ├── ExpandableGallery.js
+        │       ├── FeatureOffOverlay.js
+        │       ├── Invoice.js
+        │       ├── MediaDisplay.js
+        │       ├── NotificationPermissionBtn.js
+        │       ├── OnlineHeartbeat.js
+        │       ├── SetsPagination.js
+        │       ├── Spinner.js
+        │       ├── Stars.js
+        │       ├── SystemTimeChecker.js
+        │       └── ThemeScript.js
         ├── context
         │   ├── AuthContext.js
-        │   ├── ConfirmModal.js
         │   └── WishlistContext.js
         ├── helpers
-        │   ├── client-functions.js
         │   ├── config.js
-        │   ├── functions.js
+        │   ├── formatting.js
         │   ├── language-en.js
         │   ├── language.js
-        │   └── server-functions.js
+        │   ├── sanitize.js
+        │   └── server-utils.js
         ├── hooks
         │   ├── useHeartbeat.js
         │   ├── useIsMobile.js
         │   ├── useOutsideClick.js
         │   └── usePushNotifications.js
         ├── lib
-        │   ├── auth.js
-        │   ├── backup.js
-        │   ├── data.js
-        │   ├── db.js
-        │   ├── email.js
-        │   ├── event-emitter.js
-        │   ├── get-ip.js
-        │   ├── notifications.js
-        │   ├── online-tracking.js
-        │   ├── order-operations.js
-        │   ├── pages-data.js
-        │   ├── permissions.js
-        │   ├── push-notifications.js
-        │   ├── rate-limiter-db.js
-        │   ├── review.js
-        │   ├── session.js
-        │   └── wishlist.js
+        │   ├── auth
+        │   │   ├── auth.js
+        │   │   ├── permissions.js
+        │   │   └── session.js
+        │   ├── db
+        │   │   ├── data.js
+        │   │   ├── prisma.js
+        │   │   └── rate-limiter.js
+        │   ├── services
+        │   │   ├── backup.js
+        │   │   ├── email.js
+        │   │   ├── notifications.js
+        │   │   ├── online-tracking.js
+        │   │   ├── order-operations.js
+        │   │   ├── pages-data.js
+        │   │   ├── push-notifications.js
+        │   │   ├── review.js
+        │   │   └── wishlist.js
+        │   └── utils
+        │       ├── event-emitter.js
+        │       └── get-ip.js
         ├── middleware.js
         └── styles
             ├── globals.css
@@ -1212,4 +1219,4 @@ tree --gitignore -I "temp"
 
 ---
 
-_Last updated on February 11, 2026, by Ayman._
+_Last updated on February 15, 2026, by Ayman._
