@@ -148,7 +148,7 @@ Skip the 5-10 minute build process by transferring a pre-built cache.
 
 ```bash
 # Build Docker cache locally
-docker-compose up --build
+docker compose up --build
 
 # Create compressed archive
 tar -czf docker-cache.tar.gz .docker-cache
@@ -180,7 +180,7 @@ ls -la .docker-cache/
 rm docker-cache.tar.gz
 
 # Start containers (uses pre-built cache)
-docker-compose up -d
+docker compose up -d
 ```
 
 #### Cache Management Commands
@@ -189,15 +189,15 @@ docker-compose up -d
 
 ```bash
 # Local:
-docker-compose up --build
+docker compose up --build
 tar -czf docker-cache.tar.gz .docker-cache
 scp docker-cache.tar.gz user@vps:/path/to/project/
 
 # VPS:
 cd /path/to/project
-docker-compose down
+docker compose down
 tar -xzf docker-cache.tar.gz
-docker-compose up -d
+docker compose up -d
 ```
 
 **Incremental Sync (minor updates):**
@@ -207,15 +207,15 @@ docker-compose up -d
 rsync -avz --progress .docker-cache/ user@vps:/path/to/project/.docker-cache/
 
 # VPS:
-docker-compose restart app
+docker compose restart app
 ```
 
 **Clear Cache (force rebuild):**
 
 ```bash
-docker-compose down
+docker compose down
 rm -rf .docker-cache
-docker-compose up --build -d  # Takes 5-10 minutes
+docker compose up --build -d  # Takes 5-10 minutes
 ```
 
 **Check Cache Status:**
@@ -362,7 +362,7 @@ http {
     #     }
     #
     #     # SSE / Live Streams (No Buffering)
-    #     location /api/live {
+    #     location /api/admin/live {
     #         proxy_buffering off;
     #         proxy_cache off;
     #         gzip off;
@@ -599,4 +599,4 @@ docker compose logs db
 
 ---
 
-_Last updated on February 7, 2026, by Ayman._
+_Last updated on February 16, 2026, by Ayman._

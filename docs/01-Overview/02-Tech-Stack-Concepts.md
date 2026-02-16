@@ -16,7 +16,7 @@
 
 ## **Features**
 
-**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Bun, or manage dependencies - just run `docker-compose up` and you're ready to go.
+**Fully Dockerized**: The application is containerized with Docker, making deployment simple and consistent across different environments. No need to manually install PostgreSQL, Bun, or manage dependencies - just run `docker compose up` and you're ready to go.
 
 ---
 
@@ -889,6 +889,8 @@ This project uses the **Next.js App Router**, which organizes the application fi
     ├── docker-entrypoint.sh
     ├── Dockerfile
     ├── jsconfig.json
+    ├── lang
+    │   └── lang.json
     ├── next.config.mjs
     ├── package.json
     ├── postcss.config.mjs
@@ -924,8 +926,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
     │   ├── TEST_ICON.png
     │   └── uploads
     ├── setup-files
-    │   ├── manage-users.js
-    │   └── store-customization.pdf
+    │   └── manage-users.js
     └── src
         ├── actions
         │   ├── adminPush.js
@@ -1014,6 +1015,10 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   │   └── route.js
         │   │   │   ├── change-role
         │   │   │   │   └── route.js
+        │   │   │   ├── cleanup
+        │   │   │   │   └── route.js
+        │   │   │   ├── custom-transactions
+        │   │   │   │   └── route.js
         │   │   │   ├── excel
         │   │   │   │   ├── export-data
         │   │   │   │   │   └── route.js
@@ -1021,7 +1026,11 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   │       └── route.js
         │   │   │   ├── geo
         │   │   │   │   └── route.js
+        │   │   │   ├── live
+        │   │   │   │   └── route.js
         │   │   │   ├── online-users
+        │   │   │   │   └── route.js
+        │   │   │   ├── space
         │   │   │   │   └── route.js
         │   │   │   └── verify-user
         │   │   │       └── route.js
@@ -1029,13 +1038,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   ├── me
         │   │   │   │   └── route.js
         │   │   │   └── route.js
-        │   │   ├── cleanup
-        │   │   │   └── route.js
-        │   │   ├── custom-transactions
-        │   │   │   └── route.js
         │   │   ├── feedback
-        │   │   │   └── route.js
-        │   │   ├── live
         │   │   │   └── route.js
         │   │   ├── pages-data
         │   │   │   └── [page]
@@ -1048,9 +1051,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   │   └── unsubscribe
         │   │   │       └── route.js
         │   │   ├── system
-        │   │   │   ├── health
-        │   │   │   │   └── route.js
-        │   │   │   └── space
+        │   │   │   └── health
         │   │   │       └── route.js
         │   │   ├── tables
         │   │   │   ├── route.js
@@ -1135,6 +1136,7 @@ This project uses the **Next.js App Router**, which organizes the application fi
         │   │   ├── ProductCardVariantsStatus.js
         │   │   ├── ProductDescription.js
         │   │   ├── ProductForm.js
+        │   │   ├── ProductPriceDisplay.js
         │   │   ├── ProductsGridSkeleton.js
         │   │   ├── RelatedProducts.js
         │   │   ├── RelatedSets.js
@@ -1165,7 +1167,6 @@ This project uses the **Next.js App Router**, which organizes the application fi
         ├── helpers
         │   ├── config.js
         │   ├── formatting.js
-        │   ├── language-en.js
         │   ├── language.js
         │   ├── sanitize.js
         │   └── server-utils.js
@@ -1219,4 +1220,4 @@ tree --gitignore -I "temp"
 
 ---
 
-_Last updated on February 15, 2026, by Ayman._
+_Last updated on February 16, 2026, by Ayman._

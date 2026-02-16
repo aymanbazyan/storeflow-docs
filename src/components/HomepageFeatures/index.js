@@ -29,8 +29,8 @@ const FeatureList = [
     Svg: require("@site/static/img/security.svg").default,
     description: (
       <>
-        Storeflow secures your data with HS256 encryption, a reliable PostgreSQL
-        database, secure authentication, and spammer IP blocking.
+        Storeflow secures sensitive data with HS256 encryption, a reliable
+        PostgreSQL database, secure authentication, and spammer IP blocking.
       </>
     ),
   },

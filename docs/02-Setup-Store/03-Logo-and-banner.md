@@ -9,13 +9,9 @@ Go to `./public/` and change the `icon-2.png`. (for footer - dark background)
 
 And for different sizes and devices, upload your icon to [favicon.io](https://favicon.io/favicon-converter/), download the ZIP file, uncompress it, move all the icons to the `/public` folder too.
 
-### Website's default banner (optional)
+### Website's banner (optional)
 
-Go to `./src/app/assets` and change the default `header-bg.png`.
-
-:::tip
-This is for the default banner, but you can also always change the banner dynamically from admin panel.
-:::
+You can also always change the banner dynamically from admin panel in the `/admin?tab=Theme`.
 
 ---
 

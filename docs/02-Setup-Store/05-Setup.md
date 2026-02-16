@@ -19,36 +19,36 @@ sudo rm -r ./.docker-cache
 
 ```bash
 # Start services
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 ```
 
 <!-- ```bash
 # Stop services
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+docker compose -f docker-compose.yml -f docker-compose.dev.yml down
 ``` -->
 
 #### Production Mode
 
 ```bash
 # Start services
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 #### Runtime commands
 
 ```bash
 # Host Prisma studio
-docker-compose exec app bun prisma:studio
+docker compose exec app bun prisma:studio
 ```
 
 ```bash
 # Stop services
-docker-compose down
+docker compose down
 ```
 
 ```bash
 # View logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 **Note:** The first startup will take longer as it builds the Next.js application and runs database migrations.
@@ -71,7 +71,7 @@ The application's search feature relies on advanced PostgreSQL functions that **
 
 ```bash
 # Access the PostgreSQL container
-docker-compose exec db psql -U myuser -d mydb
+docker compose exec db psql -U myuser -d mydb
 ```
 
 Replace `myuser` and `mydb` with the values from your `.env` file.
@@ -131,7 +131,7 @@ After applying the manual SQL for full-text search, you must update Prisma's mig
 Since the database changes already exist (from the manual SQL above), we create a migration that represents those changes but won't actually execute anything:
 
 ```bash
-docker-compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_add_full_text_search && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- This migration is empty because the changes already exist in the database" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo $MIGRATION_NAME'
+docker compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_add_full_text_search && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- This migration is empty because the changes already exist in the database" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo $MIGRATION_NAME'
 ```
 
 This will output the migration name (e.g., `20251224084447_add_full_text_search`). **Copy this name** for the next step.
@@ -141,7 +141,7 @@ This will output the migration name (e.g., `20251224084447_add_full_text_search`
 Verify that Prisma recognizes the new migration:
 
 ```bash
-docker-compose exec app bunx prisma migrate status
+docker compose exec app bunx prisma migrate status
 ```
 
 You should see the migration you just created listed as "not yet been applied".
@@ -151,13 +151,13 @@ You should see the migration you just created listed as "not yet been applied".
 Tell Prisma that this migration has already been applied to the database. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
 
 ```bash
-docker-compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
+docker compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
 ```
 
 **Example:**
 
 ```bash
-docker-compose exec app bunx prisma migrate resolve --applied 20251224084447_add_full_text_search
+docker compose exec app bunx prisma migrate resolve --applied 20251224084447_add_full_text_search
 ```
 
 #### Step 4: Verify everything is in sync
@@ -165,7 +165,7 @@ docker-compose exec app bunx prisma migrate resolve --applied 20251224084447_add
 Confirm that there are no pending migrations and no drift:
 
 ```bash
-docker-compose exec app bunx prisma migrate status
+docker compose exec app bunx prisma migrate status
 ```
 
 You should see a message like "Database schema is up to date!"
@@ -201,10 +201,10 @@ For development when you have manual SQL that Prisma can't track, use `db push` 
 
 ```bash
 # Make your schema changes in schema.prisma, then:
-docker-compose exec app bunx prisma db push
+docker compose exec app bunx prisma db push
 
 # Regenerate Prisma client
-docker-compose exec app bunx prisma generate
+docker compose exec app bunx prisma generate
 
 # Restart your dev server
 ```
@@ -224,7 +224,7 @@ If you need proper migrations for production deployment:
 **Step 1:** Create the migration file without applying it:
 
 ```bash
-docker-compose exec app bunx prisma migrate dev --name your_change_name --create-only
+docker compose exec app bunx prisma migrate dev --name your_change_name --create-only
 ```
 
 You'll see the drift warning - **ignore it** and let it create the migration anyway by pressing `y` if prompted, or it will exit with an error.
@@ -232,14 +232,14 @@ You'll see the drift warning - **ignore it** and let it create the migration any
 **Step 2:** If it exits with error, manually create the migration:
 
 ```bash
-docker-compose exec app bunx prisma migrate dev --name your_change_name --create-only --skip-seed
+docker compose exec app bunx prisma migrate dev --name your_change_name --create-only --skip-seed
 ```
 
 **Step 3:** Inspect the generated migration file:
 
 ```bash
 # View the latest migration
-docker-compose exec app cat prisma/migrations/$(ls -t prisma/migrations | head -1)/migration.sql
+docker compose exec app cat prisma/migrations/$(ls -t prisma/migrations | head -1)/migration.sql
 ```
 
 Verify it contains your actual schema changes (like `ALTER TABLE` statements), not just a comment.
@@ -247,13 +247,13 @@ Verify it contains your actual schema changes (like `ALTER TABLE` statements), n
 **Step 4:** Apply the migration:
 
 ```bash
-docker-compose exec app bunx prisma migrate deploy
+docker compose exec app bunx prisma migrate deploy
 ```
 
 **Step 5:** Regenerate Prisma client:
 
 ```bash
-docker-compose exec app bunx prisma generate
+docker compose exec app bunx prisma generate
 ```
 
 #### Important Notes
@@ -291,7 +291,7 @@ Remember: Drift resolution only syncs migration history. Your schema changes sti
 **Step 1:** Create an empty migration for the drift:
 
 ```bash
-docker-compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_resolve_drift && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- Resolving schema drift" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo "Created migration: $MIGRATION_NAME"'
+docker compose exec app sh -c 'MIGRATION_NAME=$(date +%Y%m%d%H%M%S)_resolve_drift && mkdir -p prisma/migrations/$MIGRATION_NAME && echo "-- Resolving schema drift" > prisma/migrations/$MIGRATION_NAME/migration.sql && echo "Created migration: $MIGRATION_NAME"'
 ```
 
 This will output the migration name. **Copy this name** for Step 3.
@@ -299,7 +299,7 @@ This will output the migration name. **Copy this name** for Step 3.
 **Step 2:** Check what migration was created:
 
 ```bash
-docker-compose exec app bunx prisma migrate status
+docker compose exec app bunx prisma migrate status
 ```
 
 You should see your new migration listed as "not yet been applied".
@@ -307,19 +307,19 @@ You should see your new migration listed as "not yet been applied".
 **Step 3:** Mark it as applied. **Replace `MIGRATION_NAME_HERE` with the name from Step 1:**
 
 ```bash
-docker-compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
+docker compose exec app bunx prisma migrate resolve --applied MIGRATION_NAME_HERE
 ```
 
 **Example:**
 
 ```bash
-docker-compose exec app bunx prisma migrate resolve --applied 20251224085751_resolve_drift
+docker compose exec app bunx prisma migrate resolve --applied 20251224085751_resolve_drift
 ```
 
 **Step 4:** Verify the drift is resolved:
 
 ```bash
-docker-compose exec app bunx prisma migrate status
+docker compose exec app bunx prisma migrate status
 ```
 
 You should see "Database schema is up to date!"
@@ -327,8 +327,8 @@ You should see "Database schema is up to date!"
 **Step 5:** Now apply your actual schema changes:
 
 ```bash
-docker-compose exec app bunx prisma db push
-docker-compose exec app bunx prisma generate
+docker compose exec app bunx prisma db push
+docker compose exec app bunx prisma generate
 ```
 
 ---
@@ -337,29 +337,29 @@ docker-compose exec app bunx prisma generate
 
 ```sql
 # View real-time logs
-docker-compose logs -f
+docker compose logs -f
 
 # View logs for a specific service
-docker-compose logs -f app
-docker-compose logs -f db
+docker compose logs -f app
+docker compose logs -f db
 
 # Show existing logs and exit
-docker-compose logs
+docker compose logs
 
 # Restart services
-docker-compose restart
+docker compose restart
 
 # Stop and remove all containers, networks, and volumes
-docker-compose down -v
+docker compose down -v
 
 # Rebuild without cache
-docker-compose build --no-cache
+docker compose build --no-cache
 
 # Access the app container shell
-docker-compose exec app sh
+docker compose exec app sh
 
 # Access the database container
-docker-compose exec db psql -U myuser -d mydb
+docker compose exec db psql -U myuser -d mydb
 
 # In-case the app didn't recognize the DB tables at first launch
 docker compose exec app bunx dotenv -e .env.local -- bunx prisma db push --force-reset
@@ -373,8 +373,8 @@ docker compose run --entrypoint /bin/sh --rm app -c "bunx prisma migrate reset -
 ### Database connection errors
 
 - Ensure the `.env` file uses `db` as the host (not `localhost`)
-- Check that all services are running: `docker-compose ps`
-- View logs: `docker-compose logs db`
+- Check that all services are running: `docker compose ps`
+- View logs: `docker compose logs db`
 
 ### Port already in use
 
@@ -386,7 +386,7 @@ If ports 3000 or 5432 are already in use:
 ### Changes not reflecting
 
 - For code changes in dev mode: They should auto-reload
-- For Docker/environment changes: Run `docker-compose up --build`
+- For Docker/environment changes: Run `docker compose up --build`
 
 ---
 

@@ -84,6 +84,7 @@ A clean and intuitive interface for customers to browse and purchase.
 - **Powerful Built-in Search:** A prominent search bar helps customers quickly find any product or set.
 - **Advanced Filtering:** Sort and filter products by category, price, brand, discount, and other criteria.
 - **Search Engines Compatibility:** Offers search engines (e.g., Google) a dynamic sitemap generator that caches all the products and updates them weekly.
+- **Skeleton Loading:** A nice skeleton that appears before items with little animation.
 
 #### **Shopping & Checkout**
 
@@ -111,4 +112,4 @@ A dedicated area for registered customers to manage their activity.
 
 #### **And there's more!**
 
-_Last updated on February 15, 2026, by Ayman._
+_Last updated on February 16, 2026, by Ayman._
